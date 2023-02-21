@@ -1,0 +1,71 @@
+﻿@page "/post"
+
+@attribute [Authorize]
+
+@using Blazored.LocalStorage;
+@using Models.Dto.GetModels;
+@using Models.Entity;
+@using Models.QuerySupporter;
+@using System.Security.Claims;
+@using Models.Utility;
+@using WEB.Data.Services.Base;
+@using WEB.Utility;
+
+
+
+<PageTitle>Должности</PageTitle>
+
+
+
+<AuthorizeView Roles="Администратор, Отдел кадров">
+    <Authorized>
+        <RadzenContent Container="main">
+            <ChildContent>
+                <RadzenHeading Size="H1" Text="Должности">
+                </RadzenHeading>
+                <div class="row">
+                    <div class="col-md-12">
+                        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Добавить" Click="@AddPost">
+                        </RadzenButton>
+                        <RadzenDataGrid @ref="grid" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" AllowSorting="true" TItem="Post" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
+                                        EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
+                                        StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
+                                        GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
+                                        PagerAlwaysVisible="true" Count="@(posts!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@LoadData" Data="@(posts.Collection)"
+                                        ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ContextMenu" AllowColumnResize="true">
+                            <Columns>
+                                <RadzenDataGridColumn TItem="Post" Property="Name" Width="70%" MinWidth="180px" Title="Название должности">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="Post" Property="Salary" Width="40%" MinWidth="180px" Title="Зарплата">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="Post" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
+                                    <Template Context="_context">
+                                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(() => EditPost(_context))">
+                                        </RadzenButton>
+                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeletePost(_context))">
+                                        </RadzenButton>
+                                    </Template>
+                                </RadzenDataGridColumn>
+                            </Columns>
+                        </RadzenDataGrid>
+                    </div>
+                </div>
+
+                </ChildContent>
+            </RadzenContent>
+        </Authorized>
+        <NotAuthorized>
+            <RadzenLabel Style="text-align:center" Text="@ConstantValues.ERROR_CLAIMS" />
+        </NotAuthorized>
+    </AuthorizeView>
+
+
+@code {
+    private void ContextMenu(DataGridCellMouseEventArgs<Post> args) => ContextMenuService!.Open(args, ds =>
+    @<RadzenMenu Click="@((value) => ContextMenuSelector(args, value))">
+        <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
+        <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
+
+    </RadzenMenu>
+    );
+}

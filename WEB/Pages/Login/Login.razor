@@ -1,0 +1,68 @@
+﻿@page "/"
+
+@using Blazored.LocalStorage;
+@using Models.Dto.PostPutModels.AccountModels
+@using WEB.Data.Services.Base;
+@using WEB.Utility;
+@layout LoginLayout
+
+<PageTitle>Авторизация</PageTitle>
+
+<RadzenContent Container="main">
+    <ChildContent>
+
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenTemplateForm Data="@auth" TItem="AuthModel" Submit="@HandleLogin">
+                    <ChildContent>
+                        <RadzenHeading Size="H1" Text="Авторизация">
+                        </RadzenHeading>
+                        <DataAnnotationsValidator />
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Логин/Электронная почта" Component="Login" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="255" style="display: block; width: 100%" @bind-Value="@(auth.Login)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => auth.Login)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Пароль" Component="Password" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenPassword MaxLength="30" style="display: block; width: 100%" @bind-Value="@(auth.Password)">
+                                </RadzenPassword>
+                                <ValidationMessage For="@(() => auth.Password)" />
+                            </div>
+                        </div>
+                        <div class="flex-row" style="white-space: nowrap; margin: 1rem">
+                            <div style="display: inline-block">
+                                <RadzenSwitch @bind-Value=@(auth.RememberMe) />
+                            </div>
+                            <div style="display: inline-block; margin-right: 1rem; margin-left: 1rem">
+                                <RadzenText TagName="TagName.H2">Запомнить меня</RadzenText>
+                            </div>
+                        </div>
+                        <div class="row footer">
+                            <div>
+                                <RadzenButton ButtonType="ButtonType.Submit" Text="Войти" ButtonStyle="ButtonStyle.Primary">
+                                </RadzenButton>
+                                <RadzenButton ButtonType="ButtonType.Button" Text="Регистрация" ButtonStyle="ButtonStyle.Danger" Click="@ToRegistration">
+                                </RadzenButton>
+                            </div>
+                        </div>
+                    </ChildContent>
+                </RadzenTemplateForm>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>
+
+
+
+

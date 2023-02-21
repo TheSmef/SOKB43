@@ -1,0 +1,29 @@
+﻿<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <RedirectToLogin></RedirectToLogin>
+                </NotAuthorized>
+            </AuthorizeRouteView>
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </Found>
+        <NotFound>
+            <AuthorizeView>
+                <Authorized>
+                    <PageTitle>Not found</PageTitle>
+                    <LayoutView Layout="@typeof(MainLayout)">
+                        <p role="alert">Ошибочный адрес, по данному адресу ничего нет</p>
+                    </LayoutView>
+                </Authorized>
+                <NotAuthorized>
+                    <PageTitle>Not found</PageTitle>
+                    <LayoutView Layout="@typeof(LoginLayout)">
+                        <p role="alert">Ошибочный адрес, по данному адресу ничего нет</p>
+                    </LayoutView>
+                </NotAuthorized>
+            </AuthorizeView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>
+

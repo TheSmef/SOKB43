@@ -1,0 +1,165 @@
+﻿@using AutoMapper;
+@using Blazored.LocalStorage;
+@using Models.Dto.GetModels;
+@using Models.Dto.PostPutModels;
+@using Models.Entity;
+@using Models.QuerySupporter;
+@using Models.Utility;
+@using WEB.Data.Services.Base;
+@using WEB.Pages.DataPages.Users.UserPostsModal;
+@using WEB.Utility;
+
+@page "/users"
+@attribute [Authorize]
+
+
+<PageTitle>Сотрудники</PageTitle>
+
+
+
+
+
+
+<AuthorizeView Roles="Администратор, Отдел кадров">
+    <Authorized>
+        <RadzenContent Container="main">
+            <ChildContent>
+                <RadzenHeading Size="H1" Text="Сотрудники">
+                </RadzenHeading>
+                <div class="row">
+                    <div class="col-md-12">
+                        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Добавить" Click="@AddUser">
+                        </RadzenButton>
+                        <RadzenDataGrid @ref="grid" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" ExpandMode=DataGridExpandMode.Single AllowSorting="true" TItem="User" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
+                                        EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
+                                        StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
+                                        GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
+                                        PagerAlwaysVisible="true" Count="@(users!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@LoadData" Data="@(users.Collection)"
+                                        ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ContextMenu" AllowColumnResize="true" RowExpand="@RowExpended">
+                            <Template Context="data">
+                                <RadzenTabs>
+                                    <Tabs>
+                                        <RadzenTabsItem Text="Должности сотрудника">
+
+                                                <div style="display: inline-block; white-space: nowrap">
+                                                <RadzenButton Icon="add_circle_outline" style="margin-left: 10px; margin-right: 10px; margin-bottom: 10px" Text="Добавить" Click="@(() => @AddUserPost(data))" />
+                                                <RadzenButton Icon="delete_forever" ButtonStyle="ButtonStyle.Warning" style="margin-left: 10px; margin-right: 10px; margin-bottom: 10px" Text="Просмотр корзины" Click="@(() => CheckRecyclerBin(data))" />
+                                                </div>
+
+
+                                            <RadzenDataGrid @ref=childgrid Data="@(userPosts!.Collection)" TItem="UserPost" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" ExpandMode=DataGridExpandMode.Single AllowSorting="true" TItem="User" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
+                                                            EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
+                                                            StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
+                                                            GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
+                                                            PagerAlwaysVisible="true" Count="@(userPosts!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@((args) => LoadChildData(args, data))"
+                                                            ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ChildContextMenu">
+                                                <Columns>
+                                                    <RadzenDataGridColumn TItem="UserPost" Property="Post.Name" Width="30%" MinWidth="250px" Title="Название должности">
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="UserPost" Property="Share" Width="25%" MinWidth="200px" Title="Ставка">
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="UserPost" Property="Post.Salary" Width="30%" MinWidth="200px" Title="Зарплата должности">
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="UserPost" Filterable="false" Sortable="false" Width="30%" MinWidth="250px" Title="Зарплата сотрудника">
+                                                        <Template Context="post">
+                                                            @((double)(post.Share * post.Post!.Salary))
+                                                        </Template>
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="UserPost" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
+                                                        <Template Context="_context">
+                                                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(() => EditUserPost(_context))">
+                                                            </RadzenButton>
+                                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeleteUserPost(_context))">
+                                                            </RadzenButton>
+                                                        </Template>
+                                                    </RadzenDataGridColumn>
+                                                </Columns>
+                                            </RadzenDataGrid>
+                                        </RadzenTabsItem>
+                                        <RadzenTabsItem Text="Роли сотрудника">
+                                            <RadzenContent Container="second">
+                                                <ChildContent>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div>
+                                                                <RadzenListBox AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value=@(data.Account!.Roles) Multiple="true" Data=@roles TValue="List<Role>"
+                                                                               TextProperty="Name" Style="height:280px" class="w-100" />
+                                                            </div>
+                                                            <div>
+                                                                <RadzenButton style="margin-top: 10px; margin-bottom: 10px" Text="Сохранить" Click="(() => ChangeRoles(data))">
+                                                                </RadzenButton>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ChildContent>
+                                            </RadzenContent>
+
+                                        </RadzenTabsItem>
+                                    </Tabs>
+                                </RadzenTabs>
+                            </Template>
+                            <Columns>
+                                <RadzenDataGridColumn TItem="User" Property="Last_name" Width="20%" MinWidth="250px" Title="Фамилия">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="User" Property="First_name" Width="20%" MinWidth="250px" Title="Имя">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="User" Property="Otch" Width="20%" MinWidth="240px" Title="Отчество">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="User" Property="BirthDate" Width="15%" MinWidth="180px" Title="Дата рождения">
+                                    <Template Context="data">
+                                        @(data.BirthDate.ToShortDateString())
+                                    </Template>
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="User" Property="PassportSeries" Width="15%" MinWidth="190px" Title="Серия паспорта">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="User" Property="PassportNumber" Width="15%" MinWidth="190px" Title="Номер паспорта">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="User" Property="PhoneNumber" Width="20%" MinWidth="190px" Title="Номер телефона">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="User" Property="Account.Login" Width="20%" MinWidth="200px" SortProperty="Account.Login" GroupProperty="Account.Login" FilterProperty="Account.Login" Title="Логин">
+                                    <Template Context="data">
+                                        @(data.Account!.Login)
+                                    </Template>
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="User" Property="Account.Email" Width="20%" MinWidth="220px" SortProperty="Account.Email" GroupProperty="Account.Email" FilterProperty="Account.Email" Title="Электронная почта">
+                                    <Template Context="data">
+                                        @(data.Account!.Email)
+                                    </Template>
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="User" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
+                                    <Template Context="_context">
+                                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(() => EditUser(_context))">
+                                        </RadzenButton>
+                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeleteUser(_context))">
+                                        </RadzenButton>
+                                    </Template>
+                                </RadzenDataGridColumn>
+                            </Columns>
+                        </RadzenDataGrid>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </Authorized>
+    <NotAuthorized>
+        <RadzenLabel Style="text-align:center" Text="@ConstantValues.ERROR_CLAIMS" />
+    </NotAuthorized>
+</AuthorizeView>
+
+@code{
+    private void ContextMenu(DataGridCellMouseEventArgs<User> args) => ContextMenuService!.Open(args, ds =>
+    @<RadzenMenu Click="@((value) => ContextMenuSelector(args, value))">
+        <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
+        <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
+
+    </RadzenMenu>
+    );
+
+    private void ChildContextMenu(DataGridCellMouseEventArgs<UserPost> args) => ContextMenuService!.Open(args, ds =>
+    @<RadzenMenu Click="@((value) => ChildContextMenuSelector(args, value))">
+        <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
+        <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
+
+    </RadzenMenu>
+    );
+}

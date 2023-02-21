@@ -1,0 +1,150 @@
+﻿@using Models.Dto.PostPutModels.AccountModels;
+@using WEB.Data.Services.Base;
+@using WEB.Utility;
+@layout LoginLayout
+
+
+
+<RadzenContent Container="main">
+    <ChildContent>
+
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenTemplateForm Data="@reg" TItem="RegModel" Submit="@HandleRegistration">
+                    <ChildContent>
+                        <DataAnnotationsValidator />
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Фамилия" Component="Lastname" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(reg.Last_name)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => reg.Last_name)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Имя" Component="Name" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(reg.First_name)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => reg.First_name)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Отчество" Component="Otch" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(reg.Otch)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => reg.Otch)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Дата рождения" Component="Date" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenDatePicker @bind-Value=@reg.BirthDate DateFormat="d" Class="w-100" />
+                                <ValidationMessage For="@(() => reg.BirthDate)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Электронная почта" Component="Email" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="255" style="display: block; width: 100%" @bind-Value="@(reg.Email)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => reg.Email)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Серия паспорта" Component="PassportSeries" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenMask MaxLength="4" Mask="****" CharacterPattern="[0-9]" Placeholder="0000" style="display: block; width: 100%" @bind-Value="@(reg.PassportSeries)">
+                                </RadzenMask>
+                                <ValidationMessage For="@(() => reg.PassportSeries)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Номер паспорта" Component="PassportNumber" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenMask MaxLength="6" Mask="******" CharacterPattern="[0-9]" Placeholder="000000" style="display: block; width: 100%" @bind-Value="@(reg.PassportNumber)">
+                                </RadzenMask>
+                                <ValidationMessage For="@(() => reg.PassportNumber)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Номер телефон" Component="PhoneNumber" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenMask MaxLength="11" Mask="***********" CharacterPattern="[0-9]" Placeholder="00000000000" style="display: block; width: 100%" @bind-Value="@(reg.PhoneNumber)">
+                                </RadzenMask>
+                                <ValidationMessage For="@(() => reg.PhoneNumber)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Логин" Component="Login" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="40" style="display: block; width: 100%" @bind-Value="@(reg.Login)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => reg.Login)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Пароль" Component="Password" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenPassword MaxLength="30" style="display: block; width: 100%" @bind-Value="@(reg.Password)">
+                                </RadzenPassword>
+                                <ValidationMessage For="@(() => reg.Password)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Повторите пароль" Component="Password" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenPassword MaxLength="30" style="display: block; width: 100%" @bind-Value="@(reg.PasswordConfirm)">
+                                </RadzenPassword>
+                                <ValidationMessage For="@(() => reg.PasswordConfirm)" />
+                            </div>
+                        </div>
+                        <div class="row footer">
+                            <div>
+                                <RadzenButton ButtonType="ButtonType.Submit" Text="Зарегистрироваться" ButtonStyle="ButtonStyle.Primary">
+                                </RadzenButton>
+                                <RadzenButton ButtonType="ButtonType.Button" Text="Закрыть" ButtonStyle="ButtonStyle.Danger" Click="@Close">
+                                </RadzenButton>
+                            </div>
+                        </div>
+                    </ChildContent>
+                </RadzenTemplateForm>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>
+

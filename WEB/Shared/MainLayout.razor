@@ -1,0 +1,127 @@
+﻿@using Blazored.LocalStorage;
+@using WEB.Data.Services.Base;
+@using WEB.Utility;
+@inherits LayoutComponentBase
+
+@attribute [Authorize]
+
+<RadzenDialog />
+<RadzenNotification />
+<RadzenContextMenu />
+<RadzenTooltip />
+
+<PageTitle>WEB</PageTitle>
+
+
+<RadzenLayout>
+    <ChildContent>
+        <RadzenHeader>
+            <ChildContent>
+                <div class="row justify-content-start align-items-center">
+                    <div class="col-6 d-flex  align-items-center">
+                        <RadzenSidebarToggle Click="@SidebarToggle"/>
+                        <RadzenLabel Text="СОКБ-43">
+                        </RadzenLabel>
+                    </div>
+                    <div class="col-6" style="text-align: right">
+                        <RadzenProfileMenu Click="@ProfileMenuClick">
+                            <ChildContent>
+                                <RadzenProfileMenuItem Text="Профиль" Path="profile" Icon="settings">
+                                </RadzenProfileMenuItem>
+                                <RadzenProfileMenuItem Text="Выйти" Icon="power_settings_new" Value="Logout">
+                                </RadzenProfileMenuItem>
+                            </ChildContent>
+                            <Template>
+                                <RadzenIcon Icon="account_circle" class="d-xl-flex" />
+                            </Template>
+                        </RadzenProfileMenu>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenHeader>
+        <RadzenBody>
+            <ChildContent>
+                <RadzenContentContainer Name="main">
+                    @Body
+                </RadzenContentContainer>
+            </ChildContent>
+        </RadzenBody>
+        <RadzenSidebar @ref="sidebar">
+            <ChildContent>
+                <RadzenPanelMenu style="height: 100%">
+                    <ChildContent>
+                        <AuthorizeView Roles="Администратор, Отдел кадров">
+                            <Authorized>
+                                <RadzenPanelMenuItem Text="Отдел кадров" Icon="account_box">
+                                    <RadzenPanelMenuItem Text="Должности" Path="post">
+                                    </RadzenPanelMenuItem>
+                                    <RadzenPanelMenuItem Text="Сотрудники" Path="users">
+                                    </RadzenPanelMenuItem>
+                                </RadzenPanelMenuItem>
+                            </Authorized>
+                        </AuthorizeView>
+                    </ChildContent>
+                </RadzenPanelMenu>
+            </ChildContent>
+        </RadzenSidebar>
+        <RadzenFooter>
+            <ChildContent>
+                <RadzenLabel Text="АО «Корпорация «Комета»»" />
+            </ChildContent>
+        </RadzenFooter>
+    </ChildContent>
+</RadzenLayout>
+
+
+@code {
+    private RadzenSidebar? sidebar;
+    [Inject]
+    private IProfileService? ProfileService { get; set; }
+    [Inject]
+    private NotificationService? NotificationService { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+    [Inject]
+    private ILocalStorageService? StorageService { get; set; }
+    [Inject]
+    private AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
+
+    protected async Task ProfileMenuClick(dynamic args)
+    {
+        if (args.Value == "Logout")
+        {
+            try
+            {
+                await ProfileService!.LogOut();
+            }
+            catch (AppException e)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+            }
+            catch(UnAuthException)
+            {
+                if ((await AuthenticationStateTask!).User?.Identity != null)
+                {
+                    await StorageService!.RemoveItemAsync("jwttoken");
+                    await AuthenticationStateProvider!.GetAuthenticationStateAsync();
+                    await ProfileMenuClick(args);
+                }
+                else
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!"
+                        , "Произошла ошибка доступа к серверу, повторно авторизируйтесь", 4000);
+                }
+            }
+            catch
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!"
+                    , "Произошла неизвестная ошибка при запросе к серверу, попробуйте повторить запрос позже", 4000);
+            }
+        }
+    }
+
+    protected async Task SidebarToggle()
+    {
+        await InvokeAsync(() => { sidebar!.Toggle(); });
+    }
+}

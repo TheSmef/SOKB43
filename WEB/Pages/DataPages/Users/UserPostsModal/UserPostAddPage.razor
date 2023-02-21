@@ -1,0 +1,62 @@
+﻿@using Blazored.LocalStorage;
+@using Models.Dto.GetModels;
+@using Models.Dto.PostPutModels;
+@using Models.Entity;
+@using Models.QuerySupporter;
+@using WEB.Data.Services.Base;
+@using WEB.Utility;
+@layout MainLayout
+
+@attribute [Authorize(Roles = "Администратор, Отдел кадров")]
+
+<RadzenContent Container="main">
+    <ChildContent>
+
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenTemplateForm Data="@userpost" TItem="UserPost" Submit="@HandleAdd">
+                    <ChildContent>
+                        <DataAnnotationsValidator />
+                        <div>
+                            <RadzenLabel Text="Должность" Component="Post" style="width: 100%">
+                            </RadzenLabel>
+                        </div>
+                        <div>
+                            <RadzenDropDownDataGrid SearchText="Поиск по названию" AllowFiltering=true  PageSize="5" AllowColumnResize="true" TValue="Post" Data="@(posts!.Collection)" Count="@(posts.ElementsCount)" Multiple="false" SelectedItemsText="Выбранных элементов" TextProperty="Name" @bind-Value="@(userpost.Post)" style="width: 100%"
+                                                    LoadData="@LoadData" ShowPagingSummary="true" PagerAlwaysVisible="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" EmptyText="@ConstantValues.COLLECTION_EMPTY">
+                                <Columns>
+                                    <RadzenDropDownDataGridColumn Property="Name" Title="Название должности">
+                                    </RadzenDropDownDataGridColumn>
+                                    <RadzenDropDownDataGridColumn Property="Salary" Title="Зарплата">
+                                    </RadzenDropDownDataGridColumn>
+                                </Columns>
+                            </RadzenDropDownDataGrid>
+                            <ValidationMessage For="@(() => userpost.Post)" />
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Ставка" Component="Share" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenNumeric MaxLength="3" style="display: block; width: 100%" @bind-Value="@(userpost.Share)" Min="(decimal)0.01" Max="(decimal)1">
+                                </RadzenNumeric>
+                                <ValidationMessage For="@(() => userpost.Share)" />
+                            </div>
+                        </div>
+                        <div class="row footer">
+                            <div>
+                                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Сохранить" ButtonStyle="ButtonStyle.Primary">
+                                </RadzenButton>
+                                <RadzenButton ButtonType="ButtonType.Button" Text="Закрыть" ButtonStyle="ButtonStyle.Danger" Click="@Close">
+                                </RadzenButton>
+                            </div>
+                        </div>
+                    </ChildContent>
+                </RadzenTemplateForm>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>
+
+

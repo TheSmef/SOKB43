@@ -1,0 +1,36 @@
+﻿@inherits LayoutComponentBase
+
+
+
+
+<RadzenDialog />
+<RadzenNotification />
+<RadzenTooltip />
+<RadzenContextMenu />
+
+
+<RadzenDialog />
+<RadzenNotification />
+<RadzenTooltip />
+<RadzenContextMenu />
+
+<RadzenBody style="margin-left: 0px" Expanded="true">
+    <ChildContent>
+        <div class="row justify-content-center">
+            <div class="justify-content-center col-xl-5 col-md-7">
+                <RadzenCard style="margin-top: 8rem">
+                    <ChildContent>
+                        <RadzenContentContainer Name="main">
+                            @Body
+                        </RadzenContentContainer>
+                    </ChildContent>
+                </RadzenCard>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenBody>
+<RadzenFooter>
+    <ChildContent>
+        <RadzenLabel Text="АО «Корпорация «Комета»»" />
+    </ChildContent>
+</RadzenFooter>

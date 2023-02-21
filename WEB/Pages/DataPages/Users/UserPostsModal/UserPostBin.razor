@@ -1,0 +1,58 @@
+﻿@using Blazored.LocalStorage;
+@using Models.Dto.GetModels;
+@using Models.Dto.PostPutModels;
+@using Models.Entity;
+@using Models.QuerySupporter;
+@using WEB.Data.Services.Base;
+@using WEB.Utility;
+
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+    <ChildContent>
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenDataGrid @ref="grid" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" AllowSorting="true" TItem="UserPost" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
+                                EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
+                                StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
+                                GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
+                                PagerAlwaysVisible="true" Count="@(bin!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@LoadData" Data="@(bin.Collection)"
+                                ShowPagingSummary="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ContextMenu">
+                    <Columns>
+                        <RadzenDataGridColumn TItem="UserPost" Property="Post.Name" Width="30%" MinWidth="250px" Title="Название должности">
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="UserPost" Property="Share" Width="25%" MinWidth="200px" Title="Ставка">
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="UserPost" Property="Post.Salary" Width="30%" MinWidth="200px" Title="Зарплата должности">
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="UserPost" Filterable="false" Sortable="false" Width="30%" MinWidth="250px" Title="Зарплата сотрудника">
+                            <Template Context="post">
+                                @((double)(post.Share * post.Post!.Salary))
+                            </Template>
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="UserPost" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
+                            <Template Context="_context">
+                                <RadzenButton Icon="assignment_return" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(() => RestoreUserPost(_context))">
+                                </RadzenButton>
+                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeleteUserPost(_context))">
+                                </RadzenButton>
+                            </Template>
+                        </RadzenDataGridColumn>
+                    </Columns>
+                </RadzenDataGrid>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>
+
+
+@code{
+    private void ContextMenu(DataGridCellMouseEventArgs<UserPost> args) => ContextMenuService!.Open(args, ds =>
+    @<RadzenMenu Click="@((value) => ContextMenuSelector(args, value))">
+        <RadzenMenuItem Icon="assignment_return" Text="Восстановить запись" Value="1"></RadzenMenuItem>
+        <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
+
+    </RadzenMenu>
+    );
+}

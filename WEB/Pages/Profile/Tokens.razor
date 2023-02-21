@@ -1,0 +1,51 @@
+﻿@using Blazored.LocalStorage;
+@using Models.Dto.GetModels;
+@using Models.Entity;
+@using Models.QuerySupporter;
+@using WEB.Data.Services.Base;
+@using WEB.Utility;
+
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+    <ChildContent>
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenDataGrid @ref="grid" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" AllowSorting="true" TItem="Token" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
+                                EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
+                                StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
+                                GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
+                                PagerAlwaysVisible="true" Count="@(tokens!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@LoadData" Data="@(tokens.Collection)"
+                                ShowPagingSummary="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ContextMenu">
+                    <Columns>
+                        <RadzenDataGridColumn TItem="Token" Property="TokenStr" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Frozen="true" Width="100px" Title="Ваш токен">
+                            <Template Context="data">
+                                <RadzenCheckBox Value="@(data.TokenStr == token)" Disabled="true" />
+                            </Template>
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="Token" Property="Date" Title="Дата создания" />
+                        <RadzenDataGridColumn TItem="Token" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="80px" TextAlign="TextAlign.Center" Frozen="true">
+                            <Template Context="_context">
+                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeleteToken(_context))">
+                                </RadzenButton>
+                            </Template>
+                        </RadzenDataGridColumn>
+                    </Columns>
+                    
+                </RadzenDataGrid>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>
+
+
+@code{
+    private void ContextMenu(DataGridCellMouseEventArgs<Token> args) => ContextMenuService!.Open(args, ds =>
+    @<RadzenMenu Click="@(() => DeleteToken(args.Data))">
+
+        <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="1"></RadzenMenuItem>
+
+    </RadzenMenu>);
+
+}
