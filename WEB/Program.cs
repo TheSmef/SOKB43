@@ -2,10 +2,13 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.DependencyInjection;
 using Models.Mapper;
 using Radzen;
 using WEB.Data.Services;
 using WEB.Data.Services.Base;
+using WEB.Data.UtilityServices;
+using WEB.Data.UtilityServices.Base;
 using WEB.Security;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +22,7 @@ builder.Services.AddAuthenticationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthProvider>();
 builder.Services.AddAuthorizationCore();
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7030/api/") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetSection("AppSettings:API").Value!) });
 
 builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NotificationService>();
@@ -31,7 +34,10 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthInterceptor, AuthInterceptor>();
+builder.Services.AddScoped<IEquipmentTypeService, EquipmentTypeService>();
 builder.Services.AddScoped<IUserPostService, UserPostService>();
+builder.Services.AddScoped<ITechnicalTaskService, TechnicalTaskService>();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthProvider>();
 
 var app = builder.Build();

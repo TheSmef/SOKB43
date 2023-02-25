@@ -13,7 +13,7 @@
           "BCrypt.Net-Next": "4.0.3",
           "Blazored.LocalStorage": "4.3.0",
           "Models": "1.0.0",
-          "Radzen.Blazor": "4.6.6",
+          "Radzen.Blazor": "4.7.2",
           "System.IdentityModel.Tokens.Jwt": "6.26.1",
           "System.Linq.Dynamic.Core": "1.2.24"
         },
@@ -157,7 +157,7 @@
       "Microsoft.JSInterop/7.0.0": {},
       "Microsoft.NETCore.Platforms/1.1.0": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
-      "Radzen.Blazor/4.6.6": {
+      "Radzen.Blazor/4.7.2": {
         "dependencies": {
           "LibSassBuilder": "2.0.1",
           "Microsoft.AspNetCore.Components": "7.0.0",
@@ -167,8 +167,8 @@
         },
         "runtime": {
           "lib/net7.0/Radzen.Blazor.dll": {
-            "assemblyVersion": "4.6.6.0",
-            "fileVersion": "4.6.6.0"
+            "assemblyVersion": "4.7.2.0",
+            "fileVersion": "4.7.2.0"
           }
         }
       },
@@ -394,12 +394,12 @@
       "path": "microsoft.netcore.targets/1.1.0",
       "hashPath": "microsoft.netcore.targets.1.1.0.nupkg.sha512"
     },
-    "Radzen.Blazor/4.6.6": {
+    "Radzen.Blazor/4.7.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ZRJkn3/40ntrBGvCOLvEqr3zWpOgcxHvR4hmGuYKZu7WLuZcMxEMkmuTn681PCzmeuzrM//lLu8gkXuKJqVAOw==",
-      "path": "radzen.blazor/4.6.6",
-      "hashPath": "radzen.blazor.4.6.6.nupkg.sha512"
+      "sha512": "sha512-8MhoXjZCU7wyRnRcimSZYfbgdOTQQW9vYr3EeqbdHRewp6g+U6AB7mbTtLjZuL0e1I+pPgl3jtDtXylcQDiAMg==",
+      "path": "radzen.blazor/4.7.2",
+      "hashPath": "radzen.blazor.4.7.2.nupkg.sha512"
     },
     "System.IdentityModel.Tokens.Jwt/6.26.1": {
       "type": "package",

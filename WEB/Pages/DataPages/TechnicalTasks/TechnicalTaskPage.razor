@@ -1,0 +1,104 @@
+﻿@using AutoMapper;
+@using Blazored.LocalStorage;
+@using Models.Dto.GetModels;
+@using Models.Dto.PostPutModels;
+@using Models.Entity;
+@using Models.QuerySupporter;
+@using Models.Utility;
+@using WEB.Data.Services.Base;
+@using WEB.Data.UtilityServices.Base;
+@using WEB.Pages.DataPages.Users.UserPostsModal;
+@using WEB.Utility;
+
+@page "/techtasks"
+@attribute [Authorize]
+
+
+<PageTitle>Технические задания</PageTitle>
+
+
+
+
+
+
+<AuthorizeView Roles="Администратор, Технический писатель">
+    <Authorized>
+        <RadzenContent Container="main">
+            <ChildContent>
+                <RadzenHeading Size="H1" Text="Технические задания">
+                </RadzenHeading>
+                <div class="row">
+                    <div class="col-md-12">
+                        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Добавить" Click="@AddTask">
+                        </RadzenButton>
+                        <RadzenDataGrid @ref="grid" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" ExpandMode=DataGridExpandMode.Single AllowSorting="true" TItem="TechnicalTask" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
+                                        EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
+                                        StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
+                                        GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
+                                        PagerAlwaysVisible="true" Count="@(tasks!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@LoadData" Data="@(tasks.Collection)"
+                                        ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ContextMenu" AllowColumnResize="true">
+                            <Template Context="data">
+
+                                <RadzenTemplateForm Data="@data" TItem="TechnicalTask" Submit="@(() => SaveTaskContent(data))">
+                                    <ChildContent Context="model">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <DataAnnotationsValidator />
+                                                    <RadzenHeading Size="H1" Text="Содержание технического задания" />
+                                                    <ValidationMessage For="@(() => data.Content)" />
+                                                    <RadzenTextArea @bind-Value=@(data.Content) style="height: 450px; margin-bottom: 1rem; width: 100%;" Cols="150" Rows="50">
+                                                    </RadzenTextArea>
+                                                </div>
+                                                <div>
+                                                    <RadzenButton style="margin-top: 10px; margin-bottom: 10px" Text="Сохранить" ButtonType="ButtonType.Submit">
+                                                    </RadzenButton>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </ChildContent>
+                                </RadzenTemplateForm>
+
+                            </Template>
+                            <Columns>
+                                <RadzenDataGridColumn TItem="TechnicalTask" Property="NameEquipment" Width="40%" MinWidth="300px" Title="Название оборудования">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="TechnicalTask" Property="Date" Width="25%" MinWidth="250px" Title="Дата создания технического задания">
+                                    <Template Context="data">
+                                        @(data.Date!.ToShortDateString())
+                                    </Template>
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="TechnicalTask" Property="TypeEquipment.Name" Width="30%" MinWidth="320px" SortProperty="TypeEquipment.Name" FilterProperty="TypeEquipment.Name" Title="Тип оборудования">
+                                    <Template Context="data">
+                                        @(data.TypeEquipment!.Name)
+                                    </Template>
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="TechnicalTask" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
+                                    <Template Context="_context">
+                                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(() => EditTask(_context))">
+                                        </RadzenButton>
+                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeleteTask(_context))">
+                                        </RadzenButton>
+                                    </Template>
+                                </RadzenDataGridColumn>
+                            </Columns>
+                        </RadzenDataGrid>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </Authorized>
+    <NotAuthorized>
+        <RadzenLabel Style="text-align:center" Text="@ConstantValues.ERROR_CLAIMS" />
+    </NotAuthorized>
+</AuthorizeView>
+
+@code{
+    private void ContextMenu(DataGridCellMouseEventArgs<TechnicalTask> args) => ContextMenuService!.Open(args, ds =>
+    @<RadzenMenu Click="@((value) => ContextMenuSelector(args, value))">
+        <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
+        <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
+    </RadzenMenu>
+    );
+}

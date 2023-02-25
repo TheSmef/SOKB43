@@ -13,6 +13,6 @@
     <SourceRoot Include="C:\Users\User\.nuget\packages\" />
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)radzen.blazor\4.6.6\buildTransitive\Radzen.Blazor.props" Condition="Exists('$(NuGetPackageRoot)radzen.blazor\4.6.6\buildTransitive\Radzen.Blazor.props')" />
+    <Import Project="$(NuGetPackageRoot)radzen.blazor\4.7.2\buildTransitive\Radzen.Blazor.props" Condition="Exists('$(NuGetPackageRoot)radzen.blazor\4.7.2\buildTransitive\Radzen.Blazor.props')" />
   </ImportGroup>
 </Project>

@@ -19,6 +19,7 @@ using Blazored.LocalStorage;
 using Models.Dto.PostPutModels.AccountModels;
 using WEB.Data.Services.Base;
 using WEB.Utility;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WEB.Pages.Login
 {
@@ -54,7 +55,14 @@ namespace WEB.Pages.Login
             {
                 if (authenticationState.User.Identity != null)
                 {
-                    NavigationManager!.NavigateTo("profile");
+                    if (returnUrl.IsNullOrEmpty())
+                    {
+                        NavigationManager!.NavigateTo("profile");
+                    }
+                    else
+                    {
+                        NavigationManager?.NavigateTo($"/{returnUrl}");
+                    }
                 }
             }
         }

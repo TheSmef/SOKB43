@@ -22,6 +22,10 @@ using Models.QuerySupporter;
 using System.Security.Claims;
 using WEB.Data.Services.Base;
 using WEB.Utility;
+using WEB.Data.UtilityServices.Base;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Reflection;
+using WEB.Data.Services;
 
 namespace WEB.Pages.DataPages.Posts
 {
@@ -30,7 +34,7 @@ namespace WEB.Pages.DataPages.Posts
 
         private RadzenDataGrid<Post>? grid;
         private PostsGetDtoModel? posts = new PostsGetDtoModel()
-        {CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0};
+        { CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0 };
         private QuerySupporter query = new QuerySupporter();
         [Inject]
         private IPostService? PostService { get; set; }
@@ -42,13 +46,10 @@ namespace WEB.Pages.DataPages.Posts
         private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
 
         [Inject]
-        private ILocalStorageService? StorageService { get; set; }
-
-        [Inject]
-        private AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
-
-        [Inject]
         private DialogService? DialogService { get; set; }
+
+        [Inject]
+        private IAuthInterceptor? AuthInterceptor { get; set; }
 
         [Inject]
         private ContextMenuService? ContextMenuService { get; set; }
@@ -60,16 +61,16 @@ namespace WEB.Pages.DataPages.Posts
             switch (value.Value)
             {
                 case 1:
-                {
-                    await EditPost(args.Data);
-                    break;
-                }
+                    {
+                        await EditPost(args.Data);
+                        break;
+                    }
 
                 case 2:
-                {
-                    await DeletePost(args.Data);
-                    break;
-                }
+                    {
+                        await DeletePost(args.Data);
+                        break;
+                    }
             }
         }
 
@@ -77,26 +78,18 @@ namespace WEB.Pages.DataPages.Posts
         {
             try
             {
-                query = new QuerySupporter{Filter = args.Filter, OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
+                query = new QuerySupporter { Filter = args.Filter, OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value };
                 posts = await PostService!.GetPosts(query);
             }
             catch (UnAuthException)
             {
-                if ((await AuthenticationStateTask!).User?.Identity != null)
+                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>() { "Администратор", "Отдел кадров" }))
                 {
-                    await StorageService!.RemoveItemAsync("jwttoken");
-                    await AuthenticationStateProvider!.GetAuthenticationStateAsync();
-                    if (!(await AuthenticationStateTask!).User!.Claims.Where(x => (x.Value == "Администратор") || (x.Value == "Отдел кадров")).Any())
-                    {
-                        NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступа к данной функции", 4000);
-                        return;
-                    }
-
                     await LoadData(args);
                 }
                 else
                 {
-                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, повторно авторизируйтесь", 4000);
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
                 }
             }
             catch (AppException e)
@@ -112,16 +105,40 @@ namespace WEB.Pages.DataPages.Posts
         private async Task AddPost()
         {
             await DialogService!.OpenAsync<PostAddPage>(ConstantValues.POSTADD_TITLE, null, new DialogOptions()
-            {CloseDialogOnOverlayClick = true});
+            { CloseDialogOnOverlayClick = true });
             await grid!.Reload();
         }
 
         private async Task EditPost(Post data)
         {
-            await DialogService!.OpenAsync<PostEditPage>(ConstantValues.POSTEDIT_TITLE, new Dictionary<string, object>()
-            {{ConstantValues.RECORD, data}}, new DialogOptions()
-            {CloseDialogOnOverlayClick = true});
-            await grid!.Reload();
+            try
+            {
+                Post post = await PostService!.GetPostById(data.Id);
+                await DialogService!.OpenAsync<PostEditPage>(ConstantValues.POSTEDIT_TITLE, new Dictionary<string, object>()
+                        {{ConstantValues.RECORD, post}}, new DialogOptions()
+                        { CloseDialogOnOverlayClick = true });
+                await grid!.Reload();
+            }
+
+            catch (UnAuthException)
+            {
+                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>() { "Администратор", "Отдел кадров" }))
+                {
+                    await EditPost(data);
+                }
+                else
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
+                }
+            }
+            catch (AppException e)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+            }
+            catch
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла неизвестная ошибка при запросе, попробуйте повторить запрос позже", 4000);
+            }
         }
 
         private async Task DeletePost(Post data)
@@ -129,7 +146,7 @@ namespace WEB.Pages.DataPages.Posts
             try
             {
                 if (await DialogService!.Confirm(ConstantValues.DELETE_RECORD, ConstantValues.DELETE_RECORD_TITLE, new ConfirmOptions()
-                {CloseDialogOnOverlayClick = true, CancelButtonText = ConstantValues.CANCEL, OkButtonText = ConstantValues.OK_DELETE}) == true)
+                { CloseDialogOnOverlayClick = true, CancelButtonText = ConstantValues.CANCEL, OkButtonText = ConstantValues.OK_DELETE }) == true)
                 {
                     await PostService!.DeletePost(data.Id);
                     NotificationService!.Notify(NotificationSeverity.Success, "Успешное удаление!", "Должность успешно удалена", 4000);
@@ -138,21 +155,13 @@ namespace WEB.Pages.DataPages.Posts
             }
             catch (UnAuthException)
             {
-                if ((await AuthenticationStateTask!).User?.Identity != null)
+                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>() { "Администратор", "Отдел кадров" }))
                 {
-                    await StorageService!.RemoveItemAsync("jwttoken");
-                    await AuthenticationStateProvider!.GetAuthenticationStateAsync();
-                    if (!(await AuthenticationStateTask!).User!.Claims.Where(x => (x.Value == "Администратор") || (x.Value == "Отдел кадров")).Any())
-                    {
-                        NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступа к данной функции", 4000);
-                        return;
-                    }
-
                     await DeletePost(data);
                 }
                 else
                 {
-                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, повторно авторизируйтесь", 4000);
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
                 }
             }
             catch (AppException e)

@@ -1,0 +1,125 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
+using System.Net.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.Web.Virtualization;
+using Microsoft.JSInterop;
+using WEB;
+using WEB.Shared;
+using Radzen;
+using Radzen.Blazor;
+using Models.Dto.GetModels;
+using Models.Dto.PostPutModels;
+using Models.Entity;
+using Models.QuerySupporter;
+using WEB.Data.Services.Base;
+using WEB.Data.UtilityServices.Base;
+using WEB.Utility;
+
+namespace WEB.Pages.DataPages.TechnicalTasks
+{
+    public partial class TechnicalTaskEditPage
+    {
+        private EquipmentTypesGetDtoModel? types = new EquipmentTypesGetDtoModel()
+        {CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0};
+        private QuerySupporter query = new QuerySupporter();
+        [Inject]
+        private IEquipmentTypeService? TypeService { get; set; }
+
+        [Inject]
+        private ITechnicalTaskService? TaskService { get; set; }
+
+        [CascadingParameter]
+        private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+
+        [Inject]
+        private NotificationService? NotificationService { get; set; }
+
+        [Inject]
+        private DialogService? DialogService { get; set; }
+
+        [Inject]
+        private IAuthInterceptor? AuthInterceptor { get; set; }
+
+        [Parameter]
+        public TechnicalTask? task { get; set; }
+
+       
+
+        private async Task LoadData(LoadDataArgs args)
+        {
+            try
+            {
+                query = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? args.Filter : "(np(Name).Contains(" + "\"" + args.Filter + "\"))", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
+                types = await TypeService!.GetTypes(query);
+            }
+            catch (UnAuthException)
+            {
+                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                {"Администратор", "Технический писатель"}))
+                {
+                    await LoadData(args);
+                }
+                else
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
+                }
+            }
+            catch (AppException e)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+            }
+            catch
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла неизвестная ошибка при запросе, попробуйте повторить запрос позже", 4000);
+            }
+        }
+
+        private async Task HandleAdd()
+        {
+            try
+            {
+                TechnicalTaskDto dto = new TechnicalTaskDto();
+                dto.Content = task!.Content;
+                dto.Date = task.Date;
+                dto.NameEquipment = task.NameEquipment;
+                dto.TypeEquipmentId = task.TypeEquipment!.Id;
+                await TaskService!.UpdateTechnicalTask(dto, task.Id);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешное добавление!", "Техническое задание успешно добавлено", 4000);
+                Close();
+            }
+            catch (AppException e)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+            }
+            catch (UnAuthException)
+            {
+                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                {"Администратор", "Технический писатель"}))
+                {
+                    await HandleAdd();
+                }
+                else
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
+                }
+            }
+            catch
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла неизвестная ошибка при запросе, попробуйте повторить запрос позже", 4000);
+            }
+        }
+
+        protected void Close()
+        {
+            DialogService!.Close(null);
+        }
+    }
+}

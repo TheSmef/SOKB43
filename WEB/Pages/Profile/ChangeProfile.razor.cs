@@ -21,6 +21,8 @@ using Models.Dto.PostPutModels.AccountModels;
 using Models.Entity;
 using WEB.Data.Services.Base;
 using WEB.Utility;
+using WEB.Data.UtilityServices;
+using WEB.Data.UtilityServices.Base;
 
 namespace WEB.Pages.Profile
 {
@@ -35,14 +37,11 @@ namespace WEB.Pages.Profile
         [Inject]
         private DialogService? DialogService { get; set; }
 
-        [Inject]
-        private AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
-
         [CascadingParameter]
         private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
 
         [Inject]
-        private ILocalStorageService? StorageService { get; set; }
+        private IAuthInterceptor? AuthInterceptor { get; set; }
 
         [Parameter]
         public User? profile { get; set; }
@@ -72,15 +71,13 @@ namespace WEB.Pages.Profile
             }
             catch (UnAuthException)
             {
-                if ((await AuthenticationStateTask!).User?.Identity != null)
+                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()))
                 {
-                    await StorageService!.RemoveItemAsync("jwttoken");
-                    await AuthenticationStateProvider!.GetAuthenticationStateAsync();
                     await HandleEdit();
                 }
                 else
                 {
-                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, повторно авторизируйтесь", 4000);
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
                 }
             }
             catch

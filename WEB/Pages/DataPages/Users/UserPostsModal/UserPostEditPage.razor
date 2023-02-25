@@ -25,9 +25,9 @@
                             <RadzenDropDownDataGrid SearchText="Поиск по названию" AllowFiltering=true PageSize="5" AllowColumnResize="true" TValue="Post" Data="@(posts!.Collection)" Count="@(posts!.ElementsCount)" Multiple="false" SelectedItemsText="Выбранных элементов" TextProperty="Name" @bind-Value="@(userpost!.Post)" style="width: 100%"
                                                     LoadData="@LoadData" ShowPagingSummary="true" PagerAlwaysVisible="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" EmptyText="@ConstantValues.COLLECTION_EMPTY">
                                 <Columns>
-                                    <RadzenDropDownDataGridColumn Property="Name" Title="Название должности">
+                                    <RadzenDropDownDataGridColumn Property="Name" Width="60%" MinWidth="150px" Title="Название должности">
                                     </RadzenDropDownDataGridColumn>
-                                    <RadzenDropDownDataGridColumn Property="Salary" Title="Зарплата">
+                                    <RadzenDropDownDataGridColumn Property="Salary" Width="40%" MinWidth="120px" Title="Зарплата">
                                     </RadzenDropDownDataGridColumn>
                                 </Columns>
                             </RadzenDropDownDataGrid>

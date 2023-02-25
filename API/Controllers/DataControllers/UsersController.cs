@@ -149,7 +149,11 @@ namespace API.Controllers.DataControllers
                 _context.Tokens.RemoveRange(_context.Tokens.Where(x => x.Account!.UserId == id));
                 await _context.SaveChangesAsync();
             }
-
+            if (userDto.Login != user.Account!.Login || userDto.Email != user.Account!.Email || !string.IsNullOrEmpty(userDto.Password))
+            {
+                _context.Tokens.RemoveRange(_context.Tokens.Where(x => x.Account!.UserId == id));
+                await _context.SaveChangesAsync();
+            }
 
             if (userDto.Password != string.Empty && userDto.Password != null)
             {

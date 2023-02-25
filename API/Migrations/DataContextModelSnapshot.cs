@@ -61,7 +61,7 @@ namespace API.Migrations
                             UserId = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
                             Email = "admin@admin.com",
                             Login = "admin",
-                            Password = "$2a$11$A6sKFxVA0VSMW9IxSmZdO.zrFM6/u5GqLBM4qodSrttj8UoN4i.IC"
+                            Password = "$2a$11$Xl566QPyA24ArowgwYq0WuxEhDZmkAlK3R7rNvfRq/77.Rde8JJYe"
                         });
                 });
 
@@ -223,7 +223,7 @@ namespace API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("fbc88c23-9d08-46f7-a4e5-bae41dfb39ef"),
+                            Id = new Guid("6bb6ec7e-3928-4b95-8ade-b75c67890bc8"),
                             AccountUserId = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
                             Name = "Администратор"
                         });
@@ -281,8 +281,8 @@ namespace API.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(6000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -456,7 +456,7 @@ namespace API.Migrations
                         new
                         {
                             Id = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
-                            BirthDate = new DateTime(1993, 2, 20, 18, 52, 14, 33, DateTimeKind.Local).AddTicks(8688),
+                            BirthDate = new DateTime(1993, 2, 23, 20, 49, 25, 816, DateTimeKind.Local).AddTicks(9509),
                             Firstname = "Админ",
                             Lastname = "Админ",
                             PassportNumber = "000000",

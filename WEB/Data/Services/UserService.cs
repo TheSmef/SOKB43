@@ -32,7 +32,7 @@ namespace WEB.Data.Services
                     }
                     return user;
                 }
-                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
                 {
                     throw new UnAuthException();
                 }
@@ -77,7 +77,7 @@ namespace WEB.Data.Services
                 {
                     return;
                 }
-                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
                 {
                     throw new UnAuthException();
                 }
@@ -127,7 +127,7 @@ namespace WEB.Data.Services
                     }
                     return user;
                 }
-                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
                 {
                     throw new UnAuthException();
                 }
@@ -175,7 +175,7 @@ namespace WEB.Data.Services
                     }
                     return users;
                 }
-                else if (response.StatusCode == HttpStatusCode.Unauthorized)
+                else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
                 {
                     throw new UnAuthException();
                 }
@@ -219,7 +219,7 @@ namespace WEB.Data.Services
                     }
                     return user;
                 }
-                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
                 {
                     throw new UnAuthException();
                 }

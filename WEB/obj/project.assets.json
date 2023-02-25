@@ -345,7 +345,7 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "Radzen.Blazor/4.6.6": {
+      "Radzen.Blazor/4.7.2": {
         "type": "package",
         "dependencies": {
           "LibSassBuilder": "2.0.1",
@@ -1087,10 +1087,10 @@
         "runtime.json"
       ]
     },
-    "Radzen.Blazor/4.6.6": {
-      "sha512": "ZRJkn3/40ntrBGvCOLvEqr3zWpOgcxHvR4hmGuYKZu7WLuZcMxEMkmuTn681PCzmeuzrM//lLu8gkXuKJqVAOw==",
+    "Radzen.Blazor/4.7.2": {
+      "sha512": "8MhoXjZCU7wyRnRcimSZYfbgdOTQQW9vYr3EeqbdHRewp6g+U6AB7mbTtLjZuL0e1I+pPgl3jtDtXylcQDiAMg==",
       "type": "package",
-      "path": "radzen.blazor/4.6.6",
+      "path": "radzen.blazor/4.7.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1109,7 +1109,7 @@
         "lib/net7.0/Radzen.Blazor.xml",
         "lib/netstandard2.1/Radzen.Blazor.dll",
         "lib/netstandard2.1/Radzen.Blazor.xml",
-        "radzen.blazor.4.6.6.nupkg.sha512",
+        "radzen.blazor.4.7.2.nupkg.sha512",
         "radzen.blazor.nuspec",
         "staticwebassets/Radzen.Blazor.js",
         "staticwebassets/css/dark-base.css",
@@ -1531,7 +1531,7 @@
       "BCrypt.Net-Next >= 4.0.3",
       "Blazored.LocalStorage >= 4.3.0",
       "Models >= 1.0.0",
-      "Radzen.Blazor >= 4.6.6",
+      "Radzen.Blazor >= 4.7.2",
       "System.IdentityModel.Tokens.Jwt >= 6.26.1",
       "System.Linq.Dynamic.Core >= 1.2.24"
     ]
@@ -1597,7 +1597,7 @@
           },
           "Radzen.Blazor": {
             "target": "Package",
-            "version": "[4.6.6, )"
+            "version": "[4.7.2, )"
           },
           "System.IdentityModel.Tokens.Jwt": {
             "target": "Package",

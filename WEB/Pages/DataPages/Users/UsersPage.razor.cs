@@ -25,6 +25,7 @@ using Models.Utility;
 using WEB.Data.Services.Base;
 using WEB.Pages.DataPages.Users.UserPostsModal;
 using WEB.Utility;
+using WEB.Data.UtilityServices.Base;
 
 namespace WEB.Pages.DataPages.Users
 {
@@ -44,10 +45,7 @@ namespace WEB.Pages.DataPages.Users
         private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
 
         [Inject]
-        private ILocalStorageService? StorageService { get; set; }
-
-        [Inject]
-        private AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
+        private IAuthInterceptor? AuthInterceptor { get; set; }
 
         [Inject]
         private DialogService? DialogService { get; set; }
@@ -104,21 +102,13 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if ((await AuthenticationStateTask!).User?.Identity != null)
+                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>() { "Администратор", "Отдел кадров" }))
                 {
-                    await StorageService!.RemoveItemAsync("jwttoken");
-                    await AuthenticationStateProvider!.GetAuthenticationStateAsync();
-                    if (!(await AuthenticationStateTask!).User!.Claims.Where(x => (x.Value == "Администратор") || (x.Value == "Отдел кадров")).Any())
-                    {
-                        NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступа к данной функции", 4000);
-                        return;
-                    }
-
                     await ChangeRoles(model);
                 }
                 else
                 {
-                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, повторно авторизируйтесь", 4000);
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
                 }
             }
             catch (AppException e)
@@ -176,21 +166,13 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if ((await AuthenticationStateTask!).User?.Identity != null)
+                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>() { "Администратор", "Отдел кадров" }))
                 {
-                    await StorageService!.RemoveItemAsync("jwttoken");
-                    await AuthenticationStateProvider!.GetAuthenticationStateAsync();
-                    if (!(await AuthenticationStateTask!).User!.Claims.Where(x => (x.Value == "Администратор") || (x.Value == "Отдел кадров")).Any())
-                    {
-                        NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступа к данной функции", 4000);
-                        return;
-                    }
-
                     await LoadChildData(args, data);
                 }
                 else
                 {
-                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, повторно авторизируйтесь", 4000);
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
                 }
             }
             catch (AppException e)
@@ -225,27 +207,19 @@ namespace WEB.Pages.DataPages.Users
                     userPostDto.PostId = userPost.Post!.Id;
                     userPostDto.Deleted = true;
                     await UserPostService!.UpdateUserPost(userPostDto, userPost.Id);
-                    NotificationService!.Notify(NotificationSeverity.Success, "Запись успешно удалена!", "Должность пользователя помещена в корзину", 4000);
+                    NotificationService!.Notify(NotificationSeverity.Success, "Запись успешно удалена!", "Должность сотрудника помещена в корзину", 4000);
                     await childgrid!.Reload();
                 }
             }
             catch (UnAuthException)
             {
-                if ((await AuthenticationStateTask!).User?.Identity != null)
+                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>() { "Администратор", "Отдел кадров" }))
                 {
-                    await StorageService!.RemoveItemAsync("jwttoken");
-                    await AuthenticationStateProvider!.GetAuthenticationStateAsync();
-                    if (!(await AuthenticationStateTask!).User!.Claims.Where(x => (x.Value == "Администратор") || (x.Value == "Отдел кадров")).Any())
-                    {
-                        NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступа к данной функции", 4000);
-                        return;
-                    }
-
                     await DeleteUserPost(model);
                 }
                 else
                 {
-                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, повторно авторизируйтесь", 4000);
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
                 }
             }
             catch (AppException e)
@@ -270,21 +244,13 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if ((await AuthenticationStateTask!).User?.Identity != null)
+                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>() { "Администратор", "Отдел кадров" }))
                 {
-                    await StorageService!.RemoveItemAsync("jwttoken");
-                    await AuthenticationStateProvider!.GetAuthenticationStateAsync();
-                    if (!(await AuthenticationStateTask!).User!.Claims.Where(x => (x.Value == "Администратор") || (x.Value == "Отдел кадров")).Any())
-                    {
-                        NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступа к данной функции", 4000);
-                        return;
-                    }
-
                     await EditUserPost(model);
                 }
                 else
                 {
-                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, повторно авторизируйтесь", 4000);
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
                 }
             }
             catch (AppException e)
@@ -306,21 +272,13 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if ((await AuthenticationStateTask!).User?.Identity != null)
+                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>() { "Администратор", "Отдел кадров" }))
                 {
-                    await StorageService!.RemoveItemAsync("jwttoken");
-                    await AuthenticationStateProvider!.GetAuthenticationStateAsync();
-                    if (!(await AuthenticationStateTask!).User!.Claims.Where(x => (x.Value == "Администратор") || (x.Value == "Отдел кадров")).Any())
-                    {
-                        NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступа к данной функции", 4000);
-                        return;
-                    }
-
                     await LoadData(args);
                 }
                 else
                 {
-                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, повторно авторизируйтесь", 4000);
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
                 }
             }
             catch (AppException e)
@@ -360,21 +318,13 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if ((await AuthenticationStateTask!).User?.Identity != null)
+                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>() { "Администратор", "Отдел кадров" }))
                 {
-                    await StorageService!.RemoveItemAsync("jwttoken");
-                    await AuthenticationStateProvider!.GetAuthenticationStateAsync();
-                    if (!(await AuthenticationStateTask!).User!.Claims.Where(x => (x.Value == "Администратор") || (x.Value == "Отдел кадров")).Any())
-                    {
-                        NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступа к данной функции", 4000);
-                        return;
-                    }
-
                     await EditUser(data);
                 }
                 else
                 {
-                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, повторно авторизируйтесь", 4000);
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
                 }
             }
             catch (AppException e)
@@ -401,21 +351,13 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if ((await AuthenticationStateTask!).User?.Identity != null)
+                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>() { "Администратор", "Отдел кадров" }))
                 {
-                    await StorageService!.RemoveItemAsync("jwttoken");
-                    await AuthenticationStateProvider!.GetAuthenticationStateAsync();
-                    if (!(await AuthenticationStateTask!).User!.Claims.Where(x => (x.Value == "Администратор") || (x.Value == "Отдел кадров")).Any())
-                    {
-                        NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступа к данной функции", 4000);
-                        return;
-                    }
-
                     await DeleteUser(data);
                 }
                 else
                 {
-                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, повторно авторизируйтесь", 4000);
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
                 }
             }
             catch (AppException e)

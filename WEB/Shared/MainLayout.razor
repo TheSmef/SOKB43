@@ -10,7 +10,7 @@
 <RadzenContextMenu />
 <RadzenTooltip />
 
-<PageTitle>WEB</PageTitle>
+<PageTitle>СОКБ-43</PageTitle>
 
 
 <RadzenLayout>
@@ -60,6 +60,26 @@
                                 </RadzenPanelMenuItem>
                             </Authorized>
                         </AuthorizeView>
+                        <AuthorizeView Roles="Администратор, Технический писатель">
+                            <Authorized>
+                                <RadzenPanelMenuItem Text="Технические задания" Icon="assignment">
+                                    <RadzenPanelMenuItem Text="Типы оборудования" Path="equipmenttypes">
+                                    </RadzenPanelMenuItem>
+                                    <RadzenPanelMenuItem Text="Технические задания" Path="techtasks">
+                                    </RadzenPanelMenuItem>
+                                </RadzenPanelMenuItem>
+                            </Authorized>
+                        </AuthorizeView>
+                        <AuthorizeView Roles="Администратор, Менеджер по работе с клиентами">
+                            <Authorized>
+                                <RadzenPanelMenuItem Text="Клиенты" Icon="add_shopping_cart">
+                                    <RadzenPanelMenuItem Text="Контрагенты" Path="contractors">
+                                    </RadzenPanelMenuItem>
+                                    <RadzenPanelMenuItem Text="Обслуживание" Path="client_services">
+                                    </RadzenPanelMenuItem>
+                                </RadzenPanelMenuItem>
+                            </Authorized>
+                        </AuthorizeView>
                     </ChildContent>
                 </RadzenPanelMenu>
             </ChildContent>
@@ -73,55 +93,4 @@
 </RadzenLayout>
 
 
-@code {
-    private RadzenSidebar? sidebar;
-    [Inject]
-    private IProfileService? ProfileService { get; set; }
-    [Inject]
-    private NotificationService? NotificationService { get; set; }
-    [CascadingParameter]
-    private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
-    [Inject]
-    private ILocalStorageService? StorageService { get; set; }
-    [Inject]
-    private AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
 
-    protected async Task ProfileMenuClick(dynamic args)
-    {
-        if (args.Value == "Logout")
-        {
-            try
-            {
-                await ProfileService!.LogOut();
-            }
-            catch (AppException e)
-            {
-                NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
-            }
-            catch(UnAuthException)
-            {
-                if ((await AuthenticationStateTask!).User?.Identity != null)
-                {
-                    await StorageService!.RemoveItemAsync("jwttoken");
-                    await AuthenticationStateProvider!.GetAuthenticationStateAsync();
-                    await ProfileMenuClick(args);
-                }
-                else
-                {
-                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!"
-                        , "Произошла ошибка доступа к серверу, повторно авторизируйтесь", 4000);
-                }
-            }
-            catch
-            {
-                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!"
-                    , "Произошла неизвестная ошибка при запросе к серверу, попробуйте повторить запрос позже", 4000);
-            }
-        }
-    }
-
-    protected async Task SidebarToggle()
-    {
-        await InvokeAsync(() => { sidebar!.Toggle(); });
-    }
-}

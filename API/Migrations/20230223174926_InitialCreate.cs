@@ -98,7 +98,7 @@ namespace API.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TypeEquipmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", maxLength: 6000, nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NameEquipment = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
@@ -291,17 +291,17 @@ namespace API.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "BirthDate", "First_name", "Last_name", "Otch", "PassportNumber", "PassportSeries", "PhoneNumber" },
-                values: new object[] { new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), new DateTime(1993, 2, 20, 18, 52, 14, 33, DateTimeKind.Local).AddTicks(8688), "Админ", "Админ", null, "000000", "0000", "88888888888" });
+                values: new object[] { new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), new DateTime(1993, 2, 23, 20, 49, 25, 816, DateTimeKind.Local).AddTicks(9509), "Админ", "Админ", null, "000000", "0000", "88888888888" });
 
             migrationBuilder.InsertData(
                 table: "Accounts",
                 columns: new[] { "UserId", "Email", "Login", "Password" },
-                values: new object[] { new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), "admin@admin.com", "admin", "$2a$11$A6sKFxVA0VSMW9IxSmZdO.zrFM6/u5GqLBM4qodSrttj8UoN4i.IC" });
+                values: new object[] { new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), "admin@admin.com", "admin", "$2a$11$Xl566QPyA24ArowgwYq0WuxEhDZmkAlK3R7rNvfRq/77.Rde8JJYe" });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "AccountUserId", "Name" },
-                values: new object[] { new Guid("fbc88c23-9d08-46f7-a4e5-bae41dfb39ef"), new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), "Администратор" });
+                values: new object[] { new Guid("6bb6ec7e-3928-4b95-8ade-b75c67890bc8"), new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), "Администратор" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_Email",

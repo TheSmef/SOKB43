@@ -19,6 +19,9 @@ using Blazored.LocalStorage;
 using Models.Entity;
 using WEB.Data.Services.Base;
 using WEB.Utility;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using WEB.Data.UtilityServices;
+using WEB.Data.UtilityServices.Base;
 
 namespace WEB.Pages.DataPages.Posts
 {
@@ -34,10 +37,7 @@ namespace WEB.Pages.DataPages.Posts
         private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
 
         [Inject]
-        private ILocalStorageService? StorageService { get; set; }
-
-        [Inject]
-        private AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
+        private IAuthInterceptor? AuthInterceptor { get; set; }
 
         [Inject]
         private DialogService? DialogService { get; set; }
@@ -48,26 +48,18 @@ namespace WEB.Pages.DataPages.Posts
             try
             {
                 await PostService!.AddPost(post);
-                NotificationService!.Notify(NotificationSeverity.Success, "Успешное добавление!", "Должность успешно удалена", 4000);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешное добавление!", "Должность успешно добавлена", 4000);
                 Close();
             }
             catch (UnAuthException)
             {
-                if ((await AuthenticationStateTask!).User?.Identity != null)
+                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>() { "Администратор", "Отдел кадров" }))
                 {
-                    await StorageService!.RemoveItemAsync("jwttoken");
-                    await AuthenticationStateProvider!.GetAuthenticationStateAsync();
-                    if (!(await AuthenticationStateTask!).User!.Claims.Where(x => (x.Value == "Администратор") || (x.Value == "Отдел кадров")).Any())
-                    {
-                        NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступа к данной функции", 4000);
-                        return;
-                    }
-
                     await HandleAdd();
                 }
                 else
                 {
-                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, повторно авторизируйтесь", 4000);
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
                 }
             }
             catch (AppException e)

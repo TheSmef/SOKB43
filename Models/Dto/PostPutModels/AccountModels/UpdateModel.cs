@@ -68,8 +68,6 @@ namespace Models.Dto.PostPutModels.AccountModels
         [RegularExpression(pattern: "^([8])[0-9]{10}",
             ErrorMessage = "Неправильный формат номера телефона! (Пример: 88888888888)")]
         public string PhoneNumber { get; set; } = string.Empty;
-        [RegularExpression(pattern: "^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,30}$",
-            ErrorMessage = "Старый пароль соответствует шаблону: 8-30 символов, как минимум одна буква, как минимум 1 цифра и как минимум 1 символ (!@#$%^&*)")]
         public string OldPassword { get; set; } = string.Empty;
     }
 }

@@ -58,7 +58,7 @@ namespace WEB.Data.Services
                 {
                     throw new AppException("Ошибка запроса", await response.Content.ReadAsStringAsync());
                 }
-                else if (response.StatusCode == HttpStatusCode.Unauthorized)
+                else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
                 {
                     throw new UnAuthException();
                 }
@@ -98,7 +98,7 @@ namespace WEB.Data.Services
                     }
                     return user;
                 }
-                else if (response.StatusCode == HttpStatusCode.Unauthorized)
+                else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
                 {
                     throw new UnAuthException();
                 }
@@ -142,7 +142,7 @@ namespace WEB.Data.Services
                     }
                     return tokens;
                 }
-                else if (response.StatusCode == HttpStatusCode.Unauthorized)
+                else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
                 {
                     throw new UnAuthException();
                 }
@@ -187,7 +187,7 @@ namespace WEB.Data.Services
                         await storage.RemoveItemAsync("jwttoken");
                         await authenticationStateProvider.GetAuthenticationStateAsync();
                     }
-                    else if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
                     {
                         throw new UnAuthException();
                     }
@@ -234,7 +234,7 @@ namespace WEB.Data.Services
                         await storage.SetItemAsStringAsync("token", user.RefreshToken);
                     return user.User!;
                 }
-                else if (response.StatusCode == HttpStatusCode.Unauthorized)
+                else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
                 {
                     throw new UnAuthException();
                 }
