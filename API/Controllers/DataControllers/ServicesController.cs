@@ -38,7 +38,7 @@ namespace API.Controllers.DataControllers
             [FromQuery] QuerySupporter query)
         {
             var items = _context.Services.Include(x => x.Equipment)
-                .ThenInclude(x => x!.Order).ThenInclude(x => x!.Conctractor)
+                .ThenInclude(x => x!.Order).ThenInclude(x => x!.Contractor)
                 .Include(x => x.Equipment).ThenInclude(x => x!.TechnicalTask)
                 .ThenInclude(x => x!.TypeEquipment).AsQueryable();
             if (query == null)
@@ -81,7 +81,7 @@ namespace API.Controllers.DataControllers
             if (_context.Services.Where(x => x.Id == id).Any())
             {
                 return Ok(await _context.Services.Where(x => x.Id == id).Include(x => x.Equipment)
-                .ThenInclude(x => x!.Order).ThenInclude(x => x!.Conctractor)
+                .ThenInclude(x => x!.Order).ThenInclude(x => x!.Contractor)
                 .Include(x => x.Equipment).ThenInclude(x => x!.TechnicalTask)
                 .ThenInclude(x => x!.TypeEquipment).FirstAsync());
             }

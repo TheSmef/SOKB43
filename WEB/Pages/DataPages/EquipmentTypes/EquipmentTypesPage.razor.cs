@@ -100,7 +100,7 @@ namespace WEB.Pages.DataPages.EquipmentTypes
 
         private async Task AddRecord()
         {
-            await DialogService!.OpenAsync<EquipmentTypesAddPage>(ConstantValues.POSTADD_TITLE, null, new DialogOptions()
+            await DialogService!.OpenAsync<EquipmentTypesAddPage>(ConstantValues.TYPEADD_TITLE, null, new DialogOptions()
             {CloseDialogOnOverlayClick = true});
             await grid!.Reload();
         }
@@ -110,7 +110,13 @@ namespace WEB.Pages.DataPages.EquipmentTypes
             try
             {
                 TypeEquipment record = await TypeService!.GetTypeById(data.Id);
-                await DialogService!.OpenAsync<EquipmentTypesEditPage>(ConstantValues.POSTEDIT_TITLE, new Dictionary<string, object>()
+                if (record == null)
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка при запросе, данные отсутствуют", 4000);
+                    await grid!.Reload();
+                    return;
+                }
+                await DialogService!.OpenAsync<EquipmentTypesEditPage>(ConstantValues.TYPEEDIT_TITLE, new Dictionary<string, object>()
                 {{ConstantValues.TYPE, record}}, new DialogOptions()
                 {CloseDialogOnOverlayClick = true});
                 await grid!.Reload();
@@ -130,6 +136,7 @@ namespace WEB.Pages.DataPages.EquipmentTypes
             catch (AppException e)
             {
                 NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+                await grid!.Reload();
             }
             catch
             {
@@ -164,6 +171,7 @@ namespace WEB.Pages.DataPages.EquipmentTypes
             catch (AppException e)
             {
                 NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+                await grid!.Reload();
             }
             catch
             {

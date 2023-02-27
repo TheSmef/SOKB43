@@ -1,0 +1,95 @@
+﻿@using AutoMapper;
+@using Models.Dto.GetModels;
+@using Models.Dto.PostPutModels;
+@using Models.Entity;
+@using Models.QuerySupporter;
+@using Models.Utility;
+@using WEB.Data.Services.Base;
+@using WEB.Data.UtilityServices.Base;
+@using WEB.Utility;
+@layout MainLayout
+
+@attribute [Authorize(Roles = "Администратор, Менеджер по работе с клиентами")]
+
+<RadzenContent Container="main">
+    <ChildContent>
+
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenTemplateForm Data="@equipment" TItem="Equipment" Submit="@HandleAdd">
+                    <ChildContent>
+                        <DataAnnotationsValidator />
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Техническое задание" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenDropDownDataGrid SearchText="Поиск по названию" AllowFiltering=true PageSize="5" AllowColumnResize="true" TValue="TechnicalTask" Data="@(tasks!.Collection)" Count="@(tasks.ElementsCount)" Multiple="false" TextProperty="NameEquipment" SelectedItemsText="Выбранных элементов" @bind-Value="@(equipment.TechnicalTask)" Val style="width: 100%"
+                                                        LoadData="@LoadData" ShowPagingSummary="true" PagerAlwaysVisible="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" EmptyText="@ConstantValues.COLLECTION_EMPTY">
+                                    <Columns>
+                                        <RadzenDropDownDataGridColumn Property="NameEquipment" Width="40%" MinWidth="300px" Title="Название оборудования">
+                                        </RadzenDropDownDataGridColumn>
+                                        <RadzenDropDownDataGridColumn Property="TypeEquipment.Name" Width="30%" MinWidth="320px" SortProperty="TypeEquipment.Name" FilterProperty="TypeEquipment.Name" Title="Тип оборудования">
+                                            <Template Context="data">
+                                                @(data.TypeEquipment!.Name)
+                                            </Template>
+                                        </RadzenDropDownDataGridColumn>
+                                        <RadzenDropDownDataGridColumn Property="Date" Width="25%" MinWidth="250px" Title="Дата создания технического задания">
+                                            <Template Context="data">
+                                                @(data.Date!.ToShortDateString())
+                                            </Template>
+                                        </RadzenDropDownDataGridColumn>
+                                    </Columns>
+                                </RadzenDropDownDataGrid>
+                                <ValidationMessage For="@(() => equipment.TechnicalTask)" />
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Код оборудования" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="40" style="display: block; width: 100%" @bind-Value="@(equipment.EquipmentCode)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => equipment.EquipmentCode)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Статус оборудования" Component="Status" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenDropDown AllowFiltering="true" TValue="string" Data="@statuses" Multiple="false" SelectedItemsText="Выбранных элементов" @bind-Value="@(equipment.Status)" style="width: 100%" Name="Status">
+                                </RadzenDropDown>
+                                <ValidationMessage For="@(() => equipment.Status)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Дата создания" Component="Date" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenDatePicker @bind-Value=@equipment.Date DateFormat="d" Class="w-100" />
+                                <ValidationMessage For="@(() => equipment.Date)" />
+                            </div>
+                        </div>
+                        <div class="row footer">
+                            <div>
+                                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Сохранить" ButtonStyle="ButtonStyle.Primary">
+                                </RadzenButton>
+                                <RadzenButton ButtonType="ButtonType.Button" Text="Закрыть" ButtonStyle="ButtonStyle.Danger" Click="@Close">
+                                </RadzenButton>
+                            </div>
+                        </div>
+                    </ChildContent>
+                </RadzenTemplateForm>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>
+

@@ -32,7 +32,8 @@ namespace API.Controllers.DataControllers
         public async Task<ActionResult<OrderGetDtoModel>> getOrders(
             [FromQuery] QuerySupporter query)
         {
-            var items = _context.Orders.Include(x => x.Conctractor)
+
+            var items = _context.Orders.Include(x => x.Contractor)
                 .AsQueryable();
             if (query == null)
             {
@@ -73,7 +74,7 @@ namespace API.Controllers.DataControllers
         {
             if (_context.Orders.Where(x => x.Id == id).Any())
             {
-                return Ok(await _context.Orders.Include(x => x.Conctractor).FirstAsync());
+                return Ok(await _context.Orders.Include(x => x.Contractor).FirstAsync());
             }
             else
             {
@@ -86,7 +87,7 @@ namespace API.Controllers.DataControllers
         {
             Order orderPost = new Order();
             orderPost.Date = order.Date;
-            orderPost.Conctractor = _context.Conctractors.Where(x => x.Id == order.ConctractorId).First();
+            orderPost.Contractor = _context.Conctractors.Where(x => x.Id == order.ContractorId).First();
             orderPost.Sum = order.Sum;
             await _context.Orders.AddAsync(orderPost);
             await _context.SaveChangesAsync();
@@ -96,13 +97,13 @@ namespace API.Controllers.DataControllers
         [HttpPut]
         public async Task<ActionResult<Order>> putOrder([FromQuery] Guid id, OrderDto orderDto)
         {
-            Order? orderCheck = await _context.Orders.Where(x => x.Id == id).Include(x => x.Conctractor).FirstOrDefaultAsync();
+            Order? orderCheck = await _context.Orders.Where(x => x.Id == id).Include(x => x.Contractor).FirstOrDefaultAsync();
             if (orderCheck == null)
             {
                 return BadRequest("Такого заказа не существует");
             }
             orderCheck.Date = orderDto.Date;
-            orderCheck.Conctractor = _context.Conctractors.Where(x => x.Id == orderDto.ConctractorId).First();
+            orderCheck.Contractor = _context.Conctractors.Where(x => x.Id == orderDto.ContractorId).First();
             orderCheck.Sum = orderDto.Sum;
             await _context.SaveChangesAsync();
             return Ok(orderCheck);

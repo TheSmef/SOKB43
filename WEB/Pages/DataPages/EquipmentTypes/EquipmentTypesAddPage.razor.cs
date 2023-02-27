@@ -46,7 +46,7 @@ namespace WEB.Pages.DataPages.EquipmentTypes
             try
             {
                 await TypeService!.AddType(type);
-                NotificationService!.Notify(NotificationSeverity.Success, "Успешное добавление!", "Тип оборудования успешно удалена", 4000);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешное добавление!", "Тип оборудования успешно добавлен", 4000);
                 Close();
             }
             catch (UnAuthException)

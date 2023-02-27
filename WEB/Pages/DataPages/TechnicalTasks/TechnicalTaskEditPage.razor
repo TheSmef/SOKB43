@@ -16,20 +16,23 @@
                 <RadzenTemplateForm Data="@task" TItem="TechnicalTask" Submit="@HandleAdd">
                     <ChildContent>
                         <DataAnnotationsValidator />
-                        <div>
-                            <RadzenLabel Text="Тип оборудования" Component="Post" style="width: 100%">
-                            </RadzenLabel>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Тип оборудования" Component="Post" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenDropDownDataGrid SearchText="Поиск по названию" AllowFiltering=true PageSize="5" AllowColumnResize="true" TValue="TypeEquipment" Data="@(types!.Collection)" Count="@(types.ElementsCount)" Multiple="false" SelectedItemsText="Выбранных элементов" TextProperty="Name" @bind-Value="@(task.TypeEquipment)" style="width: 100%"
+                                                        LoadData="@LoadData" ShowPagingSummary="true" PagerAlwaysVisible="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" EmptyText="@ConstantValues.COLLECTION_EMPTY">
+                                    <Columns>
+                                        <RadzenDropDownDataGridColumn Property="Name" Width="100%" MinWidth="150px" Title="Название типа оборудования">
+                                        </RadzenDropDownDataGridColumn>
+                                    </Columns>
+                                </RadzenDropDownDataGrid>
+                                <ValidationMessage For="@(() => task.TypeEquipment)" />
+                            </div>
                         </div>
-                        <div>
-                            <RadzenDropDownDataGrid SearchText="Поиск по названию" AllowFiltering=true PageSize="5" AllowColumnResize="true" TValue="TypeEquipment" Data="@(types!.Collection)" Count="@(types.ElementsCount)" Multiple="false" SelectedItemsText="Выбранных элементов" TextProperty="Name" @bind-Value="@(task.TypeEquipment)" style="width: 100%"
-                                                    LoadData="@LoadData" ShowPagingSummary="true" PagerAlwaysVisible="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" EmptyText="@ConstantValues.COLLECTION_EMPTY">
-                                <Columns>
-                                    <RadzenDropDownDataGridColumn Property="Name" Width="100%" MinWidth="150px" Title="Название типа оборудования">
-                                    </RadzenDropDownDataGridColumn>
-                                </Columns>
-                            </RadzenDropDownDataGrid>
-                            <ValidationMessage For="@(() => task.TypeEquipment)" />
-                        </div>
+
                         <div style="margin-bottom: 1rem" class="flex-column">
                             <div>
                                 <RadzenLabel Text="Название оборудования" Component="Name" style="width: 100%">
@@ -56,4 +59,4 @@
     </ChildContent>
 </RadzenContent>
 
- 
+

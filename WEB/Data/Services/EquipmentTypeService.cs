@@ -27,7 +27,7 @@ namespace WEB.Data.Services
                     TypeEquipment? record = await response.Content.ReadFromJsonAsync<TypeEquipment>();
                     if (record == null)
                     {
-                        throw new AppException("Ошибка запроса", "Ошибка при добавлении должности, попробуйте позже");
+                        throw new AppException("Ошибка запроса", "Ошибка при добавлении типа оборудования, попробуйте позже");
                     }
                     return record;
                 }
@@ -166,7 +166,7 @@ namespace WEB.Data.Services
                     TypeEquipment? record = await response.Content.ReadFromJsonAsync<TypeEquipment>();
                     if (record == null)
                     {
-                        throw new AppException("Ошибка запроса", "Ошибка при получении информации о должности, попробуйте позже");
+                        throw new AppException("Ошибка запроса", "Ошибка при получении информации о типе оборудования, попробуйте позже");
                     }
                     return record;
                 }
@@ -180,7 +180,7 @@ namespace WEB.Data.Services
                 }
                 else
                 {
-                    throw new AppException("Ошибка запроса", "Ошибка при получении информации о должности, попробуйте позже");
+                    throw new AppException("Ошибка запроса", "Ошибка при получении информации о типе оборудования, попробуйте позже");
                 }
 
             }
@@ -194,7 +194,7 @@ namespace WEB.Data.Services
             }
             catch
             {
-                throw new AppException("Ошибка запроса", "Ошибка при запросе должности, попробуйте позже");
+                throw new AppException("Ошибка запроса", "Ошибка при запросе типа оборудования, попробуйте позже");
             }
         }
 
@@ -214,7 +214,7 @@ namespace WEB.Data.Services
                     TypeEquipment? record = await response.Content.ReadFromJsonAsync<TypeEquipment>();
                     if (record == null)
                     {
-                        throw new AppException("Ошибка запроса", "Ошибка при изменении должности, попробуйте позже");
+                        throw new AppException("Ошибка запроса", "Ошибка при изменении типа оборудования, попробуйте позже");
                     }
                     return record;
                 }

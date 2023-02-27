@@ -27,7 +27,7 @@ namespace Models.Dto.PostPutModels
             ErrorMessage = "Код оборудования должен содержать в себе только буквы латиницы и цифры!")]
         public string EquipmentCode { get; set; } = string.Empty;
         [Required(ErrorMessage = "Дата сборки обязательна для ввода!")]
-        [Date(30, 15, ErrorMessage = "Дата сборки должна быть между {1} и {2}")]
+        [Date(30, -15, ErrorMessage = "Дата сборки должна быть между {1} и {2}")]
         public DateTime Date { get; set; }
         [Required(ErrorMessage = "Статус удаления обязателен для ввода!")]
         public bool Deleted { get; set; } = false;

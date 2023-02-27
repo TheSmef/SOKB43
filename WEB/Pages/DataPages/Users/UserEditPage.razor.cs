@@ -55,22 +55,31 @@ namespace WEB.Pages.DataPages.Users
         private List<Role> roles = new List<Role>();
         protected override void OnInitialized()
         {
-            user = Mapper!.Map<User, UserUpdateDto>(userEdit!);
-            user.Email = userEdit!.Account!.Email;
-            user.Login = userEdit!.Account!.Login;
-            user.Roles = userEdit!.Account!.Roles == null ? new List<Role>() : (List<Role>)userEdit!.Account!.Roles;
-            foreach (string value in EnumUtility.GetStringsValues(typeof(Role.NameRole)))
+            try
             {
-                if (user.Roles!.Where(x => x.Name == value).Any())
+                user = Mapper!.Map<User, UserUpdateDto>(userEdit!);
+                user.Email = userEdit!.Account!.Email;
+                user.Login = userEdit!.Account!.Login;
+                user.Roles = userEdit!.Account!.Roles == null ? new List<Role>() : (List<Role>)userEdit!.Account!.Roles;
+                foreach (string value in EnumUtility.GetStringsValues(typeof(Role.NameRole)))
                 {
-                    roles.Add(user.Roles!.Find(x => x.Name == value)!);
-                }
-                else
-                {
-                    roles.Add(new Role()
-                    {Name = value});
+                    if (user.Roles!.Where(x => x.Name == value).Any())
+                    {
+                        roles.Add(user.Roles!.Find(x => x.Name == value)!);
+                    }
+                    else
+                    {
+                        roles.Add(new Role()
+                        { Name = value });
+                    }
                 }
             }
+            catch
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Ошибка при получении данных о сотруднике", 4000);
+                Close();
+            }
+
         }
 
         private async Task HandleEdit()

@@ -23,10 +23,10 @@ namespace API.Data
 
             modelBuilder.Entity<TypeEquipment>().HasIndex(e => e.Name).IsUnique(true);
 
-            modelBuilder.Entity<Conctractor>().HasIndex(e => e.Email).IsUnique(true);
-            modelBuilder.Entity<Conctractor>().HasIndex(e => e.Name).IsUnique(true);
-            modelBuilder.Entity<Conctractor>().HasIndex(e => e.PhoneNumber).IsUnique(true);
-            modelBuilder.Entity<Order>().HasOne(e => e.Conctractor).WithMany(e => e.Orders).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Contractor>().HasIndex(e => e.Email).IsUnique(true);
+            modelBuilder.Entity<Contractor>().HasIndex(e => e.Name).IsUnique(true);
+            modelBuilder.Entity<Contractor>().HasIndex(e => e.PhoneNumber).IsUnique(true);
+            modelBuilder.Entity<Order>().HasOne(e => e.Contractor).WithMany(e => e.Orders).OnDelete(DeleteBehavior.Cascade);
 
 
             modelBuilder.Entity<Equipment>().HasIndex(e => e.EquipmentCode).IsUnique(true);
@@ -65,7 +65,7 @@ namespace API.Data
             modelBuilder.Entity<Account>().HasIndex(u => u.Email).IsUnique();
             modelBuilder.Entity<Account>().HasIndex(u => u.Login).IsUnique();
             modelBuilder.Entity<Account>().ToTable(e => e.HasCheckConstraint("CH_Email_Account", "Email like '%@%.%'"));
-            modelBuilder.Entity<Conctractor>().ToTable(e => e.HasCheckConstraint("CH_Email_Contractor", "Email like '%@%.%'"));
+            modelBuilder.Entity<Contractor>().ToTable(e => e.HasCheckConstraint("CH_Email_Contractor", "Email like '%@%.%'"));
 
 
             modelBuilder.Entity<Post>().ToTable(e => e.HasCheckConstraint("CH_Salary_Post", "Salary > 0"));
@@ -116,7 +116,7 @@ namespace API.Data
         public DbSet<Token> Tokens { get; set; }
         public DbSet<TechnicalTest> TechnicalTests { get; set; }
         public DbSet<TechnicalTask> TechnicalTasks { get; set; }
-        public DbSet<Conctractor> Conctractors { get; set; }
+        public DbSet<Contractor> Conctractors { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<TypeEquipment> TypesEquipment { get; set; }
     }

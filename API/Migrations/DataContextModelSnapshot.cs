@@ -61,11 +61,11 @@ namespace API.Migrations
                             UserId = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
                             Email = "admin@admin.com",
                             Login = "admin",
-                            Password = "$2a$11$Xl566QPyA24ArowgwYq0WuxEhDZmkAlK3R7rNvfRq/77.Rde8JJYe"
+                            Password = "$2a$11$h63pckLLqAIvRV4soHvo8e02WmHj.8BC6tiRZiE..cVmaGFODRxXq"
                         });
                 });
 
-            modelBuilder.Entity("Models.Entity.Conctractor", b =>
+            modelBuilder.Entity("Models.Entity.Contractor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -154,7 +154,7 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ConctractorId")
+                    b.Property<Guid>("ContractorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Date")
@@ -166,7 +166,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConctractorId");
+                    b.HasIndex("ContractorId");
 
                     b.ToTable("Orders", t =>
                         {
@@ -223,7 +223,7 @@ namespace API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6bb6ec7e-3928-4b95-8ade-b75c67890bc8"),
+                            Id = new Guid("dcc3e668-3b7c-4285-bfd1-072c1805aadd"),
                             AccountUserId = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
                             Name = "Администратор"
                         });
@@ -456,7 +456,7 @@ namespace API.Migrations
                         new
                         {
                             Id = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
-                            BirthDate = new DateTime(1993, 2, 23, 20, 49, 25, 816, DateTimeKind.Local).AddTicks(9509),
+                            BirthDate = new DateTime(1993, 2, 27, 4, 51, 1, 743, DateTimeKind.Local).AddTicks(246),
                             Firstname = "Админ",
                             Lastname = "Админ",
                             PassportNumber = "000000",
@@ -528,13 +528,13 @@ namespace API.Migrations
 
             modelBuilder.Entity("Models.Entity.Order", b =>
                 {
-                    b.HasOne("Models.Entity.Conctractor", "Conctractor")
+                    b.HasOne("Models.Entity.Contractor", "Contractor")
                         .WithMany("Orders")
-                        .HasForeignKey("ConctractorId")
+                        .HasForeignKey("ContractorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Conctractor");
+                    b.Navigation("Contractor");
                 });
 
             modelBuilder.Entity("Models.Entity.Role", b =>
@@ -624,7 +624,7 @@ namespace API.Migrations
                     b.Navigation("Roles");
                 });
 
-            modelBuilder.Entity("Models.Entity.Conctractor", b =>
+            modelBuilder.Entity("Models.Entity.Contractor", b =>
                 {
                     b.Navigation("Orders");
                 });

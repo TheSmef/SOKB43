@@ -74,6 +74,7 @@ namespace Models.Mapper
         {
             equipment.Status = dto.Status;
             equipment.EquipmentCode = dto.EquipmentCode;
+            equipment.Date = dto.Date;
             equipment.Deleted = dto.Deleted;
         }
 

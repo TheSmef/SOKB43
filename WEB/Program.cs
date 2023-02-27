@@ -37,6 +37,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthInterceptor, AuthInterceptor>();
 builder.Services.AddScoped<IEquipmentTypeService, EquipmentTypeService>();
 builder.Services.AddScoped<IUserPostService, UserPostService>();
+builder.Services.AddScoped<IContractorService, ContractorService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 builder.Services.AddScoped<ITechnicalTaskService, TechnicalTaskService>();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthProvider>();
 

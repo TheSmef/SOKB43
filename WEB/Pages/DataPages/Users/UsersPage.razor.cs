@@ -91,6 +91,12 @@ namespace WEB.Pages.DataPages.Users
             try
             {
                 User userEdit = await UserService!.GetUserById(model.Id);
+                if (userEdit == null)
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка при запросе, данные о пользователе отсутствуют", 4000);
+                    await grid!.Reload();
+                    return;
+                }
                 UserUpdateDto user = new UserUpdateDto();
                 user = Mapper!.Map<User, UserUpdateDto>(userEdit!);
                 user.Email = userEdit!.Account!.Email;
@@ -114,6 +120,7 @@ namespace WEB.Pages.DataPages.Users
             catch (AppException e)
             {
                 NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+                await grid!.Reload();
             }
             catch
             {
@@ -161,7 +168,8 @@ namespace WEB.Pages.DataPages.Users
         {
             try
             {
-                query = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? "((np(User.Id)) ==  " + "\"" + data.Id.ToString() + "\") and ((np(Deleted)) == false)" : args.Filter + " and ((np(User.Id)) == " + "\"" + data.Id.ToString() + "\") and ((np(Deleted)) == false)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
+                query = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? "((np(User.Id)) ==  " + "\"" + data.Id.ToString() + "\") and ((np(Deleted)) == false)"
+                    : args.Filter + " and ((np(User.Id)) == " + "\"" + data.Id.ToString() + "\") and ((np(Deleted)) == false)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
                 userPosts = await UserPostService!.GetUserPosts(query);
             }
             catch (UnAuthException)
@@ -225,6 +233,7 @@ namespace WEB.Pages.DataPages.Users
             catch (AppException e)
             {
                 NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+                await childgrid!.Reload();
             }
             catch
             {
@@ -237,6 +246,12 @@ namespace WEB.Pages.DataPages.Users
             try
             {
                 UserPost userPost = await UserPostService!.GetUserPostById(model.Id);
+                if (userPost == null)
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка при запросе, данные отсутствуют", 4000);
+                    await childgrid!.Reload();
+                    return;
+                }
                 await DialogService!.OpenAsync<UserPostEditPage>(ConstantValues.USEREDIT_TITLE, new Dictionary<string, object>()
                 {{ConstantValues.USERPOST, userPost}}, new DialogOptions()
                 {CloseDialogOnOverlayClick = true});
@@ -256,6 +271,7 @@ namespace WEB.Pages.DataPages.Users
             catch (AppException e)
             {
                 NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+                await childgrid!.Reload();
             }
             catch
             {
@@ -311,6 +327,12 @@ namespace WEB.Pages.DataPages.Users
             try
             {
                 User user = await UserService!.GetUserById(data.Id);
+                if (user == null)
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка при запросе, данные отсутствуют", 4000);
+                    await grid!.Reload();
+                    return;
+                }
                 await DialogService!.OpenAsync<UserEditPage>(ConstantValues.USEREDIT_TITLE, new Dictionary<string, object>()
                 {{ConstantValues.USEREDIT, user}}, new DialogOptions()
                 {CloseDialogOnOverlayClick = true});
@@ -330,6 +352,7 @@ namespace WEB.Pages.DataPages.Users
             catch (AppException e)
             {
                 NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+                await grid!.Reload();
             }
             catch
             {
@@ -363,6 +386,7 @@ namespace WEB.Pages.DataPages.Users
             catch (AppException e)
             {
                 NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+                await grid!.Reload();
             }
             catch
             {

@@ -114,6 +114,12 @@ namespace WEB.Pages.DataPages.Posts
             try
             {
                 Post post = await PostService!.GetPostById(data.Id);
+                if (post == null)
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка при запросе, данные отсутствуют", 4000);
+                    await grid!.Reload();
+                    return;
+                }
                 await DialogService!.OpenAsync<PostEditPage>(ConstantValues.POSTEDIT_TITLE, new Dictionary<string, object>()
                         {{ConstantValues.RECORD, post}}, new DialogOptions()
                         { CloseDialogOnOverlayClick = true });
@@ -134,6 +140,7 @@ namespace WEB.Pages.DataPages.Posts
             catch (AppException e)
             {
                 NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+                await grid!.Reload();
             }
             catch
             {
@@ -167,6 +174,7 @@ namespace WEB.Pages.DataPages.Posts
             catch (AppException e)
             {
                 NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+                await grid!.Reload();
             }
             catch
             {

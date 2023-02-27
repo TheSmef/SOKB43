@@ -1,0 +1,53 @@
+﻿@using Models.Dto.PostPutModels;
+@using Models.Entity;
+@using WEB.Data.Services.Base;
+@using WEB.Data.UtilityServices.Base;
+@using WEB.Utility;
+@layout MainLayout
+
+@attribute [Authorize(Roles = "Администратор, Менеджер по работе с клиентами")]
+
+<RadzenContent Container="main">
+    <ChildContent>
+
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenTemplateForm Data="@order" TItem="OrderDto" Submit="@HandleAdd">
+                    <ChildContent>
+                        <DataAnnotationsValidator/>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Дата заказа" Component="Date" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenDatePicker @bind-Value=@order.Date DateFormat="d" Class="w-100"/>
+                                <ValidationMessage For="@(() => order.Date)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Сумма заказа" Component="Sum" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenNumeric style="display: block; width: 100%" @bind-Value="@(order.Sum)" Name="Sum" Min="(decimal)0.01" Max="(decimal)999999999999.99">
+                                </RadzenNumeric>
+                                <ValidationMessage For="@(() => order.Sum)" />
+                            </div>
+                        </div>
+                        <div class="row footer">
+                            <div>
+                                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Сохранить" ButtonStyle="ButtonStyle.Primary">
+                                </RadzenButton>
+                                <RadzenButton ButtonType="ButtonType.Button" Text="Закрыть" ButtonStyle="ButtonStyle.Danger" Click="@Close">
+                                </RadzenButton>
+                            </div>
+                        </div>
+                    </ChildContent>
+                </RadzenTemplateForm>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>
+

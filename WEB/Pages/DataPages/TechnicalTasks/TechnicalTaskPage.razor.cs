@@ -115,6 +115,12 @@ namespace WEB.Pages.DataPages.TechnicalTasks
             try
             {
                 TechnicalTask task = await TaskService!.GetTechnicalTaskById(model.Id);
+                if (task == null)
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка при запросе, данные отсутствуют", 4000);
+                    await grid!.Reload();
+                    return;
+                }
                 await DialogService!.OpenAsync<TechnicalTaskEditPage>(ConstantValues.TASKEDIT_TITLE, new Dictionary<string, object>()
                 {{ConstantValues.TASK, task}}, new DialogOptions()
                 {CloseDialogOnOverlayClick = true});
@@ -135,6 +141,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
             catch (AppException e)
             {
                 NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+                await grid!.Reload();
             }
             catch
             {
@@ -169,6 +176,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
             catch (AppException e)
             {
                 NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+                await grid!.Reload();
             }
             catch
             {
@@ -205,6 +213,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
             catch (AppException e)
             {
                 NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+                await grid!.Reload();
             }
             catch
             {

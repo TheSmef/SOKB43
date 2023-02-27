@@ -75,6 +75,12 @@
                                 <RadzenPanelMenuItem Text="Клиенты" Icon="add_shopping_cart">
                                     <RadzenPanelMenuItem Text="Контрагенты" Path="contractors">
                                     </RadzenPanelMenuItem>
+                                </RadzenPanelMenuItem>
+                            </Authorized>
+                        </AuthorizeView>
+                        <AuthorizeView Roles="Администратор, Менеджер по работе с клиентами, Отдел обслуживания">
+                            <Authorized>
+                                <RadzenPanelMenuItem Text="Обслуживание" Icon="build">
                                     <RadzenPanelMenuItem Text="Обслуживание" Path="client_services">
                                     </RadzenPanelMenuItem>
                                 </RadzenPanelMenuItem>

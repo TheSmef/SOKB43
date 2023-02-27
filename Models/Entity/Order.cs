@@ -12,7 +12,7 @@ namespace Models.Entity
     public class Order : BaseModel
     {
         [Required]
-        public virtual Conctractor? Conctractor { get; set; }
+        public virtual Contractor? Contractor { get; set; }
         [Required]
         public DateTime Date { get; set; }
         [Required]

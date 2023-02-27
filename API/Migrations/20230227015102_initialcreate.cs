@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialcreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -76,7 +76,7 @@ namespace API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ConctractorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ContractorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Sum = table.Column<decimal>(type: "decimal(15,2)", precision: 15, scale: 2, nullable: false)
                 },
@@ -85,8 +85,8 @@ namespace API.Migrations
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.CheckConstraint("CH_Sum_Order", "Sum > 0");
                     table.ForeignKey(
-                        name: "FK_Orders_Conctractors_ConctractorId",
-                        column: x => x.ConctractorId,
+                        name: "FK_Orders_Conctractors_ContractorId",
+                        column: x => x.ContractorId,
                         principalTable: "Conctractors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -291,17 +291,17 @@ namespace API.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "BirthDate", "First_name", "Last_name", "Otch", "PassportNumber", "PassportSeries", "PhoneNumber" },
-                values: new object[] { new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), new DateTime(1993, 2, 23, 20, 49, 25, 816, DateTimeKind.Local).AddTicks(9509), "Админ", "Админ", null, "000000", "0000", "88888888888" });
+                values: new object[] { new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), new DateTime(1993, 2, 27, 4, 51, 1, 743, DateTimeKind.Local).AddTicks(246), "Админ", "Админ", null, "000000", "0000", "88888888888" });
 
             migrationBuilder.InsertData(
                 table: "Accounts",
                 columns: new[] { "UserId", "Email", "Login", "Password" },
-                values: new object[] { new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), "admin@admin.com", "admin", "$2a$11$Xl566QPyA24ArowgwYq0WuxEhDZmkAlK3R7rNvfRq/77.Rde8JJYe" });
+                values: new object[] { new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), "admin@admin.com", "admin", "$2a$11$h63pckLLqAIvRV4soHvo8e02WmHj.8BC6tiRZiE..cVmaGFODRxXq" });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "AccountUserId", "Name" },
-                values: new object[] { new Guid("6bb6ec7e-3928-4b95-8ade-b75c67890bc8"), new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), "Администратор" });
+                values: new object[] { new Guid("dcc3e668-3b7c-4285-bfd1-072c1805aadd"), new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), "Администратор" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_Email",
@@ -350,9 +350,9 @@ namespace API.Migrations
                 column: "TechnicalTaskId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_ConctractorId",
+                name: "IX_Orders_ContractorId",
                 table: "Orders",
-                column: "ConctractorId");
+                column: "ContractorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_Name",

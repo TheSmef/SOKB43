@@ -10,6 +10,6 @@ namespace Models.Dto.GetModels
 {
     public class ContractorsGetDtoModel : BaseDtoGetModel
     {
-        public ICollection<Conctractor>? Collection { get; set; }
+        public ICollection<Contractor>? Collection { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace API.Controllers.DataControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Администратор, Менеджер по работе с клиентами, Отдел тестирования")]
+    [Authorize(Roles = "Администратор, Отдел тестирования")]
     public class TechnicalTestsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -44,7 +44,7 @@ namespace API.Controllers.DataControllers
                 .Include(x => x.Equipment).ThenInclude(x => x!.TechnicalTask)
                 .ThenInclude(x => x!.TypeEquipment)
                 .Include(x => x.Equipment)
-                .ThenInclude(x => x!.Order).ThenInclude(x => x!.Conctractor)
+                .ThenInclude(x => x!.Order).ThenInclude(x => x!.Contractor)
                 .AsQueryable();
             if (query == null)
             {
@@ -90,7 +90,7 @@ namespace API.Controllers.DataControllers
                 .Include(x => x.Equipment).ThenInclude(x => x!.TechnicalTask)
                 .ThenInclude(x => x!.TypeEquipment)
                 .Include(x => x.Equipment)
-                .ThenInclude(x => x!.Order).ThenInclude(x => x!.Conctractor).FirstAsync());
+                .ThenInclude(x => x!.Order).ThenInclude(x => x!.Contractor).FirstAsync());
             }
             else
             {
@@ -118,7 +118,7 @@ namespace API.Controllers.DataControllers
                 .Include(x => x.Equipment).ThenInclude(x => x!.TechnicalTask)
                 .ThenInclude(x => x!.TypeEquipment)
                 .Include(x => x.Equipment)
-                .ThenInclude(x => x!.Order).ThenInclude(x => x!.Conctractor).FirstOrDefaultAsync();
+                .ThenInclude(x => x!.Order).ThenInclude(x => x!.Contractor).FirstOrDefaultAsync();
             if (test == null)
             {
                 return BadRequest("Записи о данном тестировании не существует");

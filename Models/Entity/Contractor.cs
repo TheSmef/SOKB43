@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace Models.Entity
 {
-    public class Conctractor : BaseModel
+    public class Contractor : BaseModel
     {
         [Required(ErrorMessage = "Название контрагента обязательно для ввода!")]
         [StringLength(50)]
         [MinLength(3, ErrorMessage = "Название контрагента не может быть меньше 3 символов!")]
         [MaxLength(50, ErrorMessage = "Название контрагента не может быть более 50 символов!")]
-        [RegularExpression(pattern: "^[а-яёЁА-Я0-9]+$",
+        [RegularExpression(pattern: "^[а-яёЁА-Я0-9\"«»' ]+$",
             ErrorMessage = "Название контрагента должно содержать в себе только буквы кириллицы и цифры!")]
         public string Name { get; set; } = string.Empty;
         [StringLength(150)]
         [Required(ErrorMessage = "Описание контрагента обязательно для ввода!")]
         [MinLength(3, ErrorMessage = "Описание контрагента не может быть меньше 3 символов!")]
         [MaxLength(150, ErrorMessage = "Описание контрагента не может быть более 150 символов!")]
-        [RegularExpression(pattern: "^[а-яёЁА-Я0-9a-zA-Z ]+$",
+        [RegularExpression(pattern: "^[а-яёЁА-Я0-9a-zA-Z,. ]+$",
             ErrorMessage = "Название контрагента должно содержать в себе только буквы кириллицы, латиницы и цифры!")]
         public string Description { get; set; } = string.Empty;
         [Required(ErrorMessage = "Электронная почта обязательна для ввода!")]

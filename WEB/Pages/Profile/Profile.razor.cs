@@ -78,7 +78,7 @@ namespace WEB.Pages.Profile
         protected async Task GetTokens()
         {
             await DialogService!.OpenAsync<Tokens>(ConstantValues.TOKENS_TITLE, null, new DialogOptions()
-            {CloseDialogOnOverlayClick = true});
+            {CloseDialogOnOverlayClick = true, Width="700px"});
             await OnInitializedAsync();
         }
     }

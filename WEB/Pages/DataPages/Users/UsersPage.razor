@@ -47,7 +47,7 @@
                                                 </div>
 
 
-                                            <RadzenDataGrid @ref=childgrid Data="@(userPosts!.Collection)" TItem="UserPost" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" ExpandMode=DataGridExpandMode.Single AllowSorting="true" TItem="User" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
+                                            <RadzenDataGrid @ref=childgrid Data="@(userPosts!.Collection)" AllowColumnResize="true" TItem="UserPost" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" ExpandMode=DataGridExpandMode.Single AllowSorting="true" TItem="User" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
                                                             EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
                                                             StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
                                                             GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"

@@ -20,8 +20,40 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/ContractorAddPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXENvbnRyYWN0b3JBZGRQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/ContractorEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXENvbnRyYWN0b3JFZGl0UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/ContractorsPage.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXENvbnRyYWN0b3JzUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/Orders/Equipments/EquipmentAddPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXE9yZGVyc1xFcXVpcG1lbnRzXEVxdWlwbWVudEFkZFBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/Orders/Equipments/EquipmentBin.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXE9yZGVyc1xFcXVpcG1lbnRzXEVxdWlwbWVudEJpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/Orders/Equipments/EquipmentChildPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXE9yZGVyc1xFcXVpcG1lbnRzXEVxdWlwbWVudENoaWxkUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/Orders/Equipments/EquipmentEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXE9yZGVyc1xFcXVpcG1lbnRzXEVxdWlwbWVudEVkaXRQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/Orders/OrdersAddPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXE9yZGVyc1xPcmRlcnNBZGRQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/Orders/OrdersEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXE9yZGVyc1xPcmRlcnNFZGl0UGFnZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/EquipmentTypes/EquipmentTypesAddPage.razor]

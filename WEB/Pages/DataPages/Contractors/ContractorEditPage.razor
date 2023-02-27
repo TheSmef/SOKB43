@@ -1,0 +1,77 @@
+﻿@using Blazored.LocalStorage;
+@using Models.Entity;
+@using WEB.Data.Services.Base;
+@using WEB.Data.UtilityServices.Base;
+@using WEB.Utility;
+
+@attribute [Authorize(Roles = "Администратор, Менеджер по работе с клиентами")]
+
+<RadzenContent Container="main">
+    <ChildContent>
+
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenTemplateForm Data="@contractor" TItem="Contractor" Submit="HandleEdit">
+                    <ChildContent>
+                        <DataAnnotationsValidator />
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Название контрагента" Component="Name" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(contractor!.Name)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => contractor.Name)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Описание контрагента" Component="Description" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="150" style="display: block; width: 100%" @bind-Value="@(contractor.Description)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => contractor.Description)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Электронная почта контрагента" Component="Email" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="254" style="display: block; width: 100%" @bind-Value="@(contractor.Email)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => contractor.Email)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Номер телефон" Component="PhoneNumber" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenMask MaxLength="11" Mask="***********" CharacterPattern="[0-9]" Placeholder="00000000000" style="display: block; width: 100%" @bind-Value="@(contractor.PhoneNumber)">
+                                </RadzenMask>
+                                <ValidationMessage For="@(() => contractor.PhoneNumber)" />
+                            </div>
+                        </div>
+
+                        <div class="row footer">
+                            <div>
+                                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Сохранить" ButtonStyle="ButtonStyle.Primary">
+                                </RadzenButton>
+                                <RadzenButton ButtonType="ButtonType.Button" Text="Закрыть" ButtonStyle="ButtonStyle.Danger" Click="@Close">
+                                </RadzenButton>
+                            </div>
+                        </div>
+                    </ChildContent>
+                </RadzenTemplateForm>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>
+
+

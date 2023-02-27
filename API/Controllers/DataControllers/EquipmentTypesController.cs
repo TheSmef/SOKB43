@@ -89,7 +89,7 @@ namespace API.Controllers.DataControllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Conctractor>> putType([FromQuery] Guid id, TypeEquipment type)
+        public async Task<ActionResult<Contractor>> putType([FromQuery] Guid id, TypeEquipment type)
         {
             TypeEquipment? typeCheck = await _context.TypesEquipment.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
             if (typeCheck == null)

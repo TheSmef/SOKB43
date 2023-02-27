@@ -121,6 +121,7 @@ namespace WEB.Pages.Profile
             catch (AppException e)
             {
                 NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+                await grid!.Reload();
             }
             catch
             {

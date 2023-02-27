@@ -64,7 +64,7 @@ namespace API.Controllers.DataControllers
         }
 
         [HttpGet("single")]
-        public async Task<ActionResult<Conctractor>> getContractorById(Guid id)
+        public async Task<ActionResult<Contractor>> getContractorById(Guid id)
         {
             if (_context.Conctractors.Where(x => x.Id == id).Any())
             {
@@ -77,7 +77,7 @@ namespace API.Controllers.DataControllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Conctractor>> postContractor(Conctractor conctractor)
+        public async Task<ActionResult<Contractor>> postContractor(Contractor conctractor)
         {
             if (_context.Conctractors.Where(x => x.Name == conctractor.Name).Any())
             {
@@ -97,9 +97,9 @@ namespace API.Controllers.DataControllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Conctractor>> putContractor([FromQuery] Guid id, Conctractor conctractor)
+        public async Task<ActionResult<Contractor>> putContractor([FromQuery] Guid id, Contractor conctractor)
         {
-            Conctractor? contractorCheck = await _context.Conctractors.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+            Contractor? contractorCheck = await _context.Conctractors.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
             if (contractorCheck == null)
             {
                 return BadRequest("Такого контрагента не существует");
@@ -127,7 +127,7 @@ namespace API.Controllers.DataControllers
         [HttpDelete]
         public async Task<ActionResult> deleteContractor([FromQuery] Guid id)
         {
-            Conctractor? delete = await _context.Conctractors.Where(x => x.Id == id).Include(x => x.Orders).FirstOrDefaultAsync();
+            Contractor? delete = await _context.Conctractors.Where(x => x.Id == id).Include(x => x.Orders).FirstOrDefaultAsync();
             if (delete == null)
             {
                 return BadRequest("Записи не существует!");

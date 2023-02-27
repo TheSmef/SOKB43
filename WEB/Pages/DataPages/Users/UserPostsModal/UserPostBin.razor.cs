@@ -28,6 +28,17 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
 {
     public partial class UserPostBin
     {
+
+        protected override void OnInitialized()
+        {
+            if (user == null)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Ошибка загрузки данных, сотрудник не был задан", 4000);
+                Close();
+            }
+        }
+
+
         private async Task ContextMenuSelector(DataGridCellMouseEventArgs<UserPost> args, MenuItemEventArgs value)
         {
             switch (value.Value)
@@ -169,6 +180,11 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
             {
                 NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла неизвестная ошибка при запросе, попробуйте повторить запрос позже", 4000);
             }
+        }
+
+        protected void Close()
+        {
+            DialogService!.Close(null);
         }
     }
 }

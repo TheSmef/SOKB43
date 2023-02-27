@@ -40,7 +40,7 @@ namespace API.Controllers.DataControllers
         public async Task<ActionResult<EquipmentDtoGetModel>> getEquipments(
             [FromQuery] QuerySupporter query)
         {
-            var items = _context.Equipments.Include(x => x.Order).ThenInclude(x => x!.Conctractor).Include(x => x.TechnicalTask).ThenInclude(x => x!.TypeEquipment).AsQueryable();
+            var items = _context.Equipments.Include(x => x.Order).ThenInclude(x => x!.Contractor).Include(x => x.TechnicalTask).ThenInclude(x => x!.TypeEquipment).AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
@@ -76,12 +76,12 @@ namespace API.Controllers.DataControllers
         }
 
         [HttpGet("single")]
-        public async Task<ActionResult<Equipment>> geEquipmentById(Guid id)
+        public async Task<ActionResult<Equipment>> getEquipmentById(Guid id)
         {
             if (_context.Equipments.Where(x => x.Id == id).Any())
             {
                 return Ok(await _context.Equipments.Where(x => x.Id == id)
-                    .Include(x => x.Order).ThenInclude(x => x!.Conctractor)
+                    .Include(x => x.Order).ThenInclude(x => x!.Contractor)
                     .Include(x => x.TechnicalTask).ThenInclude(x => x!.TypeEquipment)
                     .FirstAsync());
             }
@@ -92,12 +92,13 @@ namespace API.Controllers.DataControllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Администратор, Менеджер по работе с клиентами")]
         public async Task<ActionResult<Equipment>> postEquiment(EquipmentDto eqDto)
         {
             Equipment equipment = _mapper.Map<Equipment>(eqDto);
             if (_context.Equipments.Where(x => x.EquipmentCode == equipment.EquipmentCode).Any())
             {
-                return BadRequest("Данный код оборудоавания занят!");
+                return BadRequest("Данный код оборудования занят!");
             }
             equipment.TechnicalTask = _context.TechnicalTasks.Where(x => x.Id == eqDto.TechnicalTaskId).First();
             equipment.Order = _context.Orders.Where(x => x.Id == eqDto.OrderId).First();
@@ -107,17 +108,18 @@ namespace API.Controllers.DataControllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Администратор, Менеджер по работе с клиентами, Отдел тестирования")]
         public async Task<ActionResult<Equipment>> putEquipment([FromQuery] Guid id, EquipmentDto eqDto)
         {
             Equipment? equipment = await _context.Equipments.Where(x => x.Id == id).Include(x => x.Order)
-                .ThenInclude(x => x!.Conctractor).Include(x => x.TechnicalTask).ThenInclude(x => x!.TypeEquipment).FirstOrDefaultAsync();
+                .ThenInclude(x => x!.Contractor).Include(x => x.TechnicalTask).ThenInclude(x => x!.TypeEquipment).FirstOrDefaultAsync();
             if (equipment == null)
             {
                 return BadRequest("Данного оборудования не существует!");
             }
-            if (_context.Equipments.Where(x => x.EquipmentCode == equipment.EquipmentCode).Any() && eqDto.EquipmentCode != equipment.EquipmentCode)
+            if (_context.Equipments.Where(x => x.EquipmentCode == eqDto.EquipmentCode).Any() && eqDto.EquipmentCode != equipment.EquipmentCode)
             {
-                return BadRequest("Данный код оборудоавания занят!");
+                return BadRequest("Данный код оборудования занят!");
             }
             SafeMapper.MapEquipmentFromEquipmentDto(eqDto, equipment);
             equipment.TechnicalTask = _context.TechnicalTasks.Where(x => x.Id == eqDto.TechnicalTaskId).First();
@@ -128,6 +130,7 @@ namespace API.Controllers.DataControllers
 
 
         [HttpDelete]
+        [Authorize(Roles = "Администратор, Менеджер по работе с клиентами")]
         public async Task<ActionResult> deleteEquipment([FromQuery] Guid id)
         {
             Equipment? delete = await _context.Equipments.Where(x => x.Id == id).Include(x => x.Services).Include(x => x.TechicalTests).FirstOrDefaultAsync();

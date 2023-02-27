@@ -1,5 +1,117 @@
-﻿<h3>ContractorsPage</h3>
+﻿@page "/contractors"
 
-@code {
+@attribute [Authorize]
 
+@using Blazored.LocalStorage;
+@using Models.Dto.GetModels;
+@using Models.Entity;
+@using Models.QuerySupporter;
+@using System.Security.Claims;
+@using Models.Utility;
+@using WEB.Data.Services.Base;
+@using WEB.Data.UtilityServices.Base;
+@using WEB.Pages.DataPages.Contractors.Orders;
+@using WEB.Pages.DataPages.Contractors.Orders.Equipments;
+@using WEB.Utility;
+
+
+
+<PageTitle>Контрагенты</PageTitle>
+
+
+
+<AuthorizeView Roles="Администратор, Менеджер по работе с клиентами">
+    <Authorized>
+        <RadzenContent Container="main">
+            <ChildContent>
+                <RadzenHeading Size="H1" Text="Контрагенты">
+                </RadzenHeading>
+                <div class="row">
+                    <div class="col-md-12">
+                        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Добавить" Click="@AddRecord">
+                        </RadzenButton>
+                        <RadzenDataGrid @ref="grid" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" ExpandMode=DataGridExpandMode.Single AllowPaging="true" AllowSorting="true" TItem="Contractor" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
+                                        EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
+                                        StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
+                                        GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
+                                        PagerAlwaysVisible="true" Count="@(records!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@LoadData" Data="@(records.Collection)"
+                                        ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ContextMenu" AllowColumnResize="true" RowExpand="@RowExpended">
+                            <Template Context="data">
+                                <RadzenHeading Size="H1" Text="Заказы контрагента" />
+                                <RadzenButton Icon="add_circle_outline" style="margin-left: 10px; margin-right: 10px; margin-bottom: 10px" Text="Добавить" Click="@(() => AddOrder(data))" />
+                                <RadzenDataGrid @ref=childgrid Data="@(orders!.Collection)" TItem="Order" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" ExpandMode=DataGridExpandMode.Single AllowSorting="true" TItem="User" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
+                                                EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
+                                                StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
+                                                GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
+                                                PagerAlwaysVisible="true" Count="@(orders!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@((args) => LoadChildData(args, data))"
+                                                ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ChildContextMenu">
+                                    <Columns>
+                                        <RadzenDataGridColumn TItem="Order" Property="Date" Width="60%" MinWidth="200px" Title="Дата заказа">
+                                            <Template Context="childdata">
+                                                @(childdata.Date.ToShortDateString())
+                                            </Template>
+                                        </RadzenDataGridColumn>
+                                        <RadzenDataGridColumn TItem="Order" Property="Sum" Width="50%" MinWidth="140px" Title="Цена заказа">
+                                        </RadzenDataGridColumn>
+                                        <RadzenDataGridColumn TItem="Order" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
+                                            <Template Context="_context">
+                                                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(() => EditOrder(_context))">
+                                                </RadzenButton>
+                                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeleteOrder(_context))">
+                                                </RadzenButton>
+                                            </Template>
+                                        </RadzenDataGridColumn>
+                                    </Columns>
+                                </RadzenDataGrid>
+                            </Template>
+                            <Columns>
+                                <RadzenDataGridColumn TItem="Contractor" Property="Name" Width="30%" MinWidth="250px" Title="Название контрагента" Frozen="true">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="Contractor" Property="Email" Width="20%" MinWidth="180px" Title="Электронная почта">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="Contractor" Property="PhoneNumber" Width="20%" MinWidth="180px" Title="Контактный номер">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="Contractor" Property="Description" Width="80%" MinWidth="1300px" Title="Описание">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="Contractor" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
+                                    <Template Context="_context">
+                                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(() => EditRecord(_context))">
+                                        </RadzenButton>
+                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeleteRecord(_context))">
+                                        </RadzenButton>
+                                    </Template>
+                                </RadzenDataGridColumn>
+                            </Columns>
+                        </RadzenDataGrid>
+                    </div>
+                </div>
+
+            </ChildContent>
+        </RadzenContent>
+    </Authorized>
+    <NotAuthorized>
+        <RadzenLabel Style="text-align:center" Text="@ConstantValues.ERROR_CLAIMS" />
+    </NotAuthorized>
+</AuthorizeView>
+
+@code{
+    private void ContextMenu(DataGridCellMouseEventArgs<Contractor> args) => ContextMenuService!.Open(args, ds =>
+    @<RadzenMenu Click="@((value) => ContextMenuSelector(args, value))">
+        <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
+        <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
+
+    </RadzenMenu>
+    );
+
+    private void ChildContextMenu(DataGridCellMouseEventArgs<Order> args) => ContextMenuService!.Open(args, ds =>
+    @<RadzenMenu Click="@((value) => ChildContextMenuSelector(args, value))">
+        <RadzenMenuItem Icon="pageview" Text="Состав заказа" Value="3"></RadzenMenuItem>
+        <RadzenMenuItem Text="Работа с данными">
+            <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
+            <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
+        </RadzenMenuItem>
+    </RadzenMenu>
+    );
 }
+
+
