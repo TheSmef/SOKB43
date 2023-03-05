@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <RadzenTemplateForm Data="@task" TItem="TechnicalTask" Submit="@HandleAdd">
+                <RadzenTemplateForm Data="@task" TItem="TechnicalTaskDto" Submit="@HandleAdd">
                     <ChildContent>
                         <DataAnnotationsValidator />
                         <div style="margin-bottom: 1rem" class="flex-column">
@@ -22,14 +22,14 @@
                                 </RadzenLabel>
                             </div>
                             <div>
-                                <RadzenDropDownDataGrid SearchText="Поиск по названию" AllowFiltering=true PageSize="5" AllowColumnResize="true" TValue="TypeEquipment" Data="@(types!.Collection)" Count="@(types.ElementsCount)" Multiple="false" SelectedItemsText="Выбранных элементов" TextProperty="Name" @bind-Value="@(task.TypeEquipment)" Val style="width: 100%"
+                                <RadzenDropDownDataGrid SearchText="Поиск по названию" AllowFiltering=true PageSize="5" AllowColumnResize="true" TValue="Guid" Data="@(types!.Collection)" Count="@(types.ElementsCount)" Multiple="false" SelectedItemsText="Выбранных элементов" TextProperty="Name" @bind-Value="@(task.TypeEquipmentId)" ValueProperty="Id" style="width: 100%"
                                                         LoadData="@LoadData" ShowPagingSummary="true" PagerAlwaysVisible="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" EmptyText="@ConstantValues.COLLECTION_EMPTY">
                                     <Columns>
                                         <RadzenDropDownDataGridColumn Property="Name" Width="100%" MinWidth="150px" Title="Название типа оборудования">
                                         </RadzenDropDownDataGridColumn>
                                     </Columns>
                                 </RadzenDropDownDataGrid>
-                                <ValidationMessage For="@(() => task.TypeEquipment)" />
+                                <ValidationMessage For="@(() => task.TypeEquipmentId)" />
                             </div>
                         </div>
 

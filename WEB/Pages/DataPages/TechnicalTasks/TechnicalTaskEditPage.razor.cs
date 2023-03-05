@@ -50,8 +50,20 @@ namespace WEB.Pages.DataPages.TechnicalTasks
 
         [Parameter]
         public TechnicalTask? task { get; set; }
+        private TechnicalTaskDto taskDto = new TechnicalTaskDto();
 
-       
+        protected override void OnInitialized()
+        {
+            if (task == null)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Техническое задание не было задано", 4000);
+                Close();
+            }
+            taskDto.Content = task!.Content;
+            taskDto.Date = task.Date;
+            taskDto.NameEquipment = task.NameEquipment;
+            taskDto.TypeEquipmentId = task.TypeEquipment!.Id;
+        }
 
         private async Task LoadData(LoadDataArgs args)
         {
@@ -86,12 +98,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
         {
             try
             {
-                TechnicalTaskDto dto = new TechnicalTaskDto();
-                dto.Content = task!.Content;
-                dto.Date = task.Date;
-                dto.NameEquipment = task.NameEquipment;
-                dto.TypeEquipmentId = task.TypeEquipment!.Id;
-                await TaskService!.UpdateTechnicalTask(dto, task.Id);
+                await TaskService!.UpdateTechnicalTask(taskDto, task!.Id);
                 NotificationService!.Notify(NotificationSeverity.Success, "Успешное добавление!", "Техническое задание успешно добавлено", 4000);
                 Close();
             }

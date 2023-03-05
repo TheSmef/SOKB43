@@ -14,7 +14,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <RadzenTemplateForm Data="@userpost" TItem="UserPost" Submit="@HandleEdit">
+                <RadzenTemplateForm Data="@userpostDto" TItem="UserPostDto" Submit="@HandleEdit">
                     <ChildContent>
                         <DataAnnotationsValidator />
                         <div>
@@ -22,7 +22,7 @@
                             </RadzenLabel>
                         </div>
                         <div>
-                            <RadzenDropDownDataGrid SearchText="Поиск по названию" AllowFiltering=true PageSize="5" AllowColumnResize="true" TValue="Post" Data="@(posts!.Collection)" Count="@(posts!.ElementsCount)" Multiple="false" SelectedItemsText="Выбранных элементов" TextProperty="Name" @bind-Value="@(userpost!.Post)" style="width: 100%"
+                            <RadzenDropDownDataGrid SearchText="Поиск по названию" AllowFiltering=true PageSize="5" AllowColumnResize="true" TValue="Guid" ValueProperty="Id" Data="@(posts!.Collection)" Count="@(posts!.ElementsCount)" Multiple="false" SelectedItemsText="Выбранных элементов" TextProperty="Name" @bind-Value="@(userpostDto!.PostId)" style="width: 100%"
                                                     LoadData="@LoadData" ShowPagingSummary="true" PagerAlwaysVisible="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" EmptyText="@ConstantValues.COLLECTION_EMPTY">
                                 <Columns>
                                     <RadzenDropDownDataGridColumn Property="Name" Width="60%" MinWidth="150px" Title="Название должности">
@@ -31,7 +31,7 @@
                                     </RadzenDropDownDataGridColumn>
                                 </Columns>
                             </RadzenDropDownDataGrid>
-                            <ValidationMessage For="@(() => userpost.Post)" />
+                            <ValidationMessage For="@(() => userpostDto.PostId)" />
                         </div>
                         <div style="margin-bottom: 1rem" class="flex-column">
                             <div>
@@ -39,9 +39,9 @@
                                 </RadzenLabel>
                             </div>
                             <div>
-                                <RadzenNumeric MaxLength="3" style="display: block; width: 100%" @bind-Value="@(userpost.Share)" Min="(decimal)0.01" Max="(decimal)1">
+                                <RadzenNumeric MaxLength="3" style="display: block; width: 100%" @bind-Value="@(userpostDto.Share)" Min="(decimal)0.01" Max="(decimal)1">
                                 </RadzenNumeric>
-                                <ValidationMessage For="@(() => userpost.Share)" />
+                                <ValidationMessage For="@(() => userpostDto.Share)" />
                             </div>
                         </div>
                         <div class="row footer">

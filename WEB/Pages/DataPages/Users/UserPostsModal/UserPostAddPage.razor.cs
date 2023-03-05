@@ -52,10 +52,16 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
         [Parameter]
         public User? user { get; set; }
 
-        private UserPost userpost = new UserPost();
+        private UserPostDto userpost = new UserPostDto();
         protected override void OnInitialized()
         {
-            userpost.User = user;
+            if (user == null)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Сотрудник для должности не был выбран", 4000);
+                Close();
+            }    
+            userpost.UserId = user!.Id;
+            userpost.Deleted = false;
         }
 
         private async Task LoadData(LoadDataArgs args)
@@ -90,12 +96,7 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
         {
             try
             {
-                UserPostDto userPostDto = new UserPostDto();
-                userPostDto.Share = userpost.Share;
-                userPostDto.UserId = userpost.User!.Id;
-                userPostDto.PostId = userpost.Post!.Id;
-                userPostDto.Deleted = false;
-                await UserPostService!.AddUserPost(userPostDto);
+                await UserPostService!.AddUserPost(userpost);
                 NotificationService!.Notify(NotificationSeverity.Success, "Успешное добавление!", "Должность сотрудника успешно добавлена", 4000);
                 Close();
             }

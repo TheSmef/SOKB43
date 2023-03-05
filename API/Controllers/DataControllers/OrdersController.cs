@@ -74,7 +74,7 @@ namespace API.Controllers.DataControllers
         {
             if (_context.Orders.Where(x => x.Id == id).Any())
             {
-                return Ok(await _context.Orders.Include(x => x.Contractor).FirstAsync());
+                return Ok(await _context.Orders.Where(x => x.Id == id).Include(x => x.Contractor).FirstAsync());
             }
             else
             {

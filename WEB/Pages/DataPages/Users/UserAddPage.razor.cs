@@ -85,7 +85,7 @@ namespace WEB.Pages.DataPages.Users
             }
         }
 
-        protected void Close()
+        private void Close()
         {
             DialogService!.Close(null);
         }

@@ -90,7 +90,7 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
         {
             await DialogService!.OpenAsync<EquipmentBin>(ConstantValues.EQ_BIN_TITLE, new Dictionary<string, object>()
             {{ConstantValues.ORDER, order!}}, new DialogOptions()
-            {CloseDialogOnOverlayClick = true, Width = "800px"});
+            {CloseDialogOnOverlayClick = true, Width = "800px", Resizable = true });
             await grid!.Reload();
         }
 
@@ -100,6 +100,10 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
             {
                 query = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Order.Id)) ==  " + "\"" + order!.Id.ToString() + "\") and ((np(Deleted)) == false)" : args.Filter + " and ((np(Order.Id)) == " + "\"" + order!.Id.ToString() + "\") and ((np(Deleted)) == false)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
                 records = await EquipmentService!.GetEquipment(query);
+                if (records!.Collection!.Count == 0 && records!.CurrentPageIndex != 1)
+                {
+                    await grid!.GoToPage(records!.CurrentPageIndex - 2);
+                }
             }
             catch (UnAuthException)
             {

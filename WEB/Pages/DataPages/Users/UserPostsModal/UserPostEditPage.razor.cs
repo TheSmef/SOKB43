@@ -51,6 +51,19 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
 
         [Parameter]
         public UserPost? userpost { get; set; }
+        private UserPostDto userpostDto = new UserPostDto();
+        protected override void OnInitialized()
+        {
+            if (userpost == null)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Должность сотрудника не была задана", 4000);
+                Close();
+            }
+            userpostDto.Share = userpost!.Share;
+            userpostDto.UserId = userpost.User!.Id;
+            userpostDto.PostId = userpost.Post!.Id;
+            userpostDto.Deleted = false;
+        }
 
         private async Task LoadData(LoadDataArgs args)
         {
@@ -84,12 +97,7 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
         {
             try
             {
-                UserPostDto userPostDto = new UserPostDto();
-                userPostDto.Share = userpost!.Share;
-                userPostDto.UserId = userpost.User!.Id;
-                userPostDto.PostId = userpost.Post!.Id;
-                userPostDto.Deleted = false;
-                await UserPostService!.UpdateUserPost(userPostDto, userpost.Id);
+                await UserPostService!.UpdateUserPost(userpostDto, userpost!.Id);
                 NotificationService!.Notify(NotificationSeverity.Success, "Успешное изменение!", "Должность сотрудника успешно изменена", 4000);
                 Close();
             }

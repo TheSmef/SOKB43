@@ -16,7 +16,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <RadzenTemplateForm Data="@equipment" TItem="Equipment" Submit="@HandleEdit">
+                <RadzenTemplateForm Data="@equipmentDto" TItem="EquipmentDto" Submit="@HandleEdit">
                     <ChildContent>
                         <DataAnnotationsValidator />
                         <div style="margin-bottom: 1rem" class="flex-column">
@@ -25,7 +25,7 @@
                                 </RadzenLabel>
                             </div>
                             <div>
-                                <RadzenDropDownDataGrid SearchText="Поиск по названию" AllowFiltering=true PageSize="5" AllowColumnResize="true" TValue="TechnicalTask" Data="@(tasks!.Collection)" Count="@(tasks.ElementsCount)" Multiple="false" TextProperty="NameEquipment" SelectedItemsText="Выбранных элементов" @bind-Value="@(equipment.TechnicalTask)" Val style="width: 100%"
+                                <RadzenDropDownDataGrid SearchText="Поиск по названию" AllowFiltering=true PageSize="5" AllowColumnResize="true" TValue="Guid" Data="@(tasks!.Collection)" Count="@(tasks.ElementsCount)" Multiple="false" TextProperty="NameEquipment" SelectedItemsText="Выбранных элементов" @bind-Value="@(equipmentDto.TechnicalTaskId)" ValueProperty="Id" style="width: 100%"
                                                         LoadData="@LoadData" ShowPagingSummary="true" PagerAlwaysVisible="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" EmptyText="@ConstantValues.COLLECTION_EMPTY">
                                     <Columns>
                                         <RadzenDropDownDataGridColumn Property="NameEquipment" Width="40%" MinWidth="300px" Title="Название оборудования">
@@ -42,7 +42,7 @@
                                         </RadzenDropDownDataGridColumn>
                                     </Columns>
                                 </RadzenDropDownDataGrid>
-                                <ValidationMessage For="@(() => equipment.TechnicalTask)" />
+                                <ValidationMessage For="@(() => equipmentDto.TechnicalTaskId)" />
                             </div>
                         </div>
 
@@ -52,9 +52,9 @@
                                 </RadzenLabel>
                             </div>
                             <div>
-                                <RadzenTextBox MaxLength="40" style="display: block; width: 100%" @bind-Value="@(equipment.EquipmentCode)">
+                                <RadzenTextBox MaxLength="40" style="display: block; width: 100%" @bind-Value="@(equipmentDto.EquipmentCode)">
                                 </RadzenTextBox>
-                                <ValidationMessage For="@(() => equipment.EquipmentCode)" />
+                                <ValidationMessage For="@(() => equipmentDto.EquipmentCode)" />
                             </div>
                         </div>
                         <div style="margin-bottom: 1rem" class="flex-column">
@@ -63,9 +63,9 @@
                                 </RadzenLabel>
                             </div>
                             <div>
-                                <RadzenDropDown AllowFiltering="true" TValue="string" Data="@statuses" Multiple="false" SelectedItemsText="Выбранных элементов" @bind-Value="@(equipment.Status)" style="width: 100%" Name="Status">
+                                <RadzenDropDown AllowFiltering="true" TValue="string" Data="@statuses" Multiple="false" SelectedItemsText="Выбранных элементов" @bind-Value="@(equipmentDto.Status)" style="width: 100%" Name="Status">
                                 </RadzenDropDown>
-                                <ValidationMessage For="@(() => equipment.Status)" />
+                                <ValidationMessage For="@(() => equipmentDto.Status)" />
                             </div>
                         </div>
                         <div style="margin-bottom: 1rem" class="flex-column">
@@ -74,8 +74,8 @@
                                 </RadzenLabel>
                             </div>
                             <div>
-                                <RadzenDatePicker @bind-Value=@equipment.Date DateFormat="d" Class="w-100" />
-                                <ValidationMessage For="@(() => equipment.Date)" />
+                                <RadzenDatePicker @bind-Value=@equipmentDto.Date DateFormat="d" Class="w-100" />
+                                <ValidationMessage For="@(() => equipmentDto.Date)" />
                             </div>
                         </div>
                         <div class="row footer">

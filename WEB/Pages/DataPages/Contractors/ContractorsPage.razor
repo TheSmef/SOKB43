@@ -37,7 +37,7 @@
                                         PagerAlwaysVisible="true" Count="@(records!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@LoadData" Data="@(records.Collection)"
                                         ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ContextMenu" AllowColumnResize="true" RowExpand="@RowExpended">
                             <Template Context="data">
-                                <RadzenHeading Size="H1" Text="Заказы контрагента" />
+                                <RadzenHeading Size="H2" Text="Заказы контрагента" />
                                 <RadzenButton Icon="add_circle_outline" style="margin-left: 10px; margin-right: 10px; margin-bottom: 10px" Text="Добавить" Click="@(() => AddOrder(data))" />
                                 <RadzenDataGrid @ref=childgrid Data="@(orders!.Collection)" TItem="Order" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" ExpandMode=DataGridExpandMode.Single AllowSorting="true" TItem="User" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
                                                 EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
@@ -51,7 +51,7 @@
                                                 @(childdata.Date.ToShortDateString())
                                             </Template>
                                         </RadzenDataGridColumn>
-                                        <RadzenDataGridColumn TItem="Order" Property="Sum" Width="50%" MinWidth="140px" Title="Цена заказа">
+                                        <RadzenDataGridColumn TItem="Order" Property="Sum" Width="50%" MinWidth="140px" Title="Сумма заказа">
                                         </RadzenDataGridColumn>
                                         <RadzenDataGridColumn TItem="Order" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
                                             <Template Context="_context">
@@ -67,11 +67,14 @@
                             <Columns>
                                 <RadzenDataGridColumn TItem="Contractor" Property="Name" Width="30%" MinWidth="250px" Title="Название контрагента" Frozen="true">
                                 </RadzenDataGridColumn>
-                                <RadzenDataGridColumn TItem="Contractor" Property="Email" Width="20%" MinWidth="180px" Title="Электронная почта">
+                                <RadzenDataGridColumn TItem="Contractor" Property="Email" Width="25%" MinWidth="200px" Title="Электронная почта">
                                 </RadzenDataGridColumn>
-                                <RadzenDataGridColumn TItem="Contractor" Property="PhoneNumber" Width="20%" MinWidth="180px" Title="Контактный номер">
+                                <RadzenDataGridColumn TItem="Contractor" Property="PhoneNumber" Width="25%" MinWidth="200px" Title="Контактный номер">
                                 </RadzenDataGridColumn>
-                                <RadzenDataGridColumn TItem="Contractor" Property="Description" Width="80%" MinWidth="1300px" Title="Описание">
+                                <RadzenDataGridColumn TItem="Contractor" Property="Description" Width="60%" MinWidth="180px"  Title="Описание">
+                                    <Template Context="data">
+                                        <div style="white-space: pre-wrap">@data.Description</div>
+                                    </Template>
                                 </RadzenDataGridColumn>
                                 <RadzenDataGridColumn TItem="Contractor" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
                                     <Template Context="_context">

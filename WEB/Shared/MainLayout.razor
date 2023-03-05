@@ -81,7 +81,15 @@
                         <AuthorizeView Roles="Администратор, Менеджер по работе с клиентами, Отдел обслуживания">
                             <Authorized>
                                 <RadzenPanelMenuItem Text="Обслуживание" Icon="build">
-                                    <RadzenPanelMenuItem Text="Обслуживание" Path="client_services">
+                                    <RadzenPanelMenuItem Text="Обслуживание" Path="service">
+                                    </RadzenPanelMenuItem>
+                                </RadzenPanelMenuItem>
+                            </Authorized>
+                        </AuthorizeView>
+                        <AuthorizeView Roles="Администратор, Отдел тестирования">
+                            <Authorized>
+                                <RadzenPanelMenuItem Text="Тестирование" Icon="bug_report">
+                                    <RadzenPanelMenuItem Text="Тестирование оборудования" Path="tests">
                                     </RadzenPanelMenuItem>
                                 </RadzenPanelMenuItem>
                             </Authorized>

@@ -1,0 +1,88 @@
+﻿@using AutoMapper;
+@using Blazored.LocalStorage;
+@using Models.Dto.PostPutModels.AccountModels;
+@using Models.Dto.PostPutModels;
+@using Models.Entity;
+@using Models.Utility;
+@using WEB.Data.Services.Base;
+@using WEB.Data.UtilityServices.Base;
+@using WEB.Utility;
+@attribute [Authorize(Roles = "Администратор, Менеджер по работе с клиентами, Отдел обслуживания")]
+
+<RadzenContent Container="main">
+    <ChildContent>
+
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenTemplateForm Data="@service" TItem="ServiceDto" Submit="@HandleAdd">
+                    <ChildContent>
+                        <DataAnnotationsValidator />
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Тип работ" Component="Types" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenDropDown AllowFiltering="true" TValue="string" Data="@EnumUtility.GetStringsValues(typeof(Service.ServiceTypeEnum))" Multiple="false" SelectedItemsText="Выбранных элементов" @bind-Value="@(service.ServiceType)" style="width: 100%" Name="Type">
+                                </RadzenDropDown>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Статус работ" Component="Status" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenDropDown AllowFiltering="true" TValue="string" Data="@EnumUtility.GetStringsValues(typeof(Service.ServiceStatusEnum))" Multiple="false" SelectedItemsText="Выбранных элементов" @bind-Value="@(service.Status)" style="width: 100%" Name="status">
+                                </RadzenDropDown>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Содержание работ" Component="Content" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="150" style="display: block; width: 100%" @bind-Value="@(service.WorkContent)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => service.WorkContent)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Дата проведения" Component="Date" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenDatePicker @bind-Value=@service.Date DateFormat="d" Class="w-100" />
+                                <ValidationMessage For="@(() => service.Date)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Сумма работ" Component="Sum" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenNumeric style="display: block; width: 100%" @bind-Value="@(service.Sum)" Name="Sum" Min="(decimal)0.01" Max="(decimal)999999999999.99">
+                                </RadzenNumeric>
+                                <ValidationMessage For="@(() => service.Sum)" />
+                            </div>
+                        </div>
+                        <div class="row footer">
+                            <div>
+                                <RadzenButton ButtonType="ButtonType.Submit" Text="Сохранить" ButtonStyle="ButtonStyle.Primary">
+                                </RadzenButton>
+                                <RadzenButton ButtonType="ButtonType.Button" Text="Закрыть" ButtonStyle="ButtonStyle.Danger" Click="@Close">
+                                </RadzenButton>
+                            </div>
+                        </div>
+                    </ChildContent>
+                </RadzenTemplateForm>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>
+
+
+

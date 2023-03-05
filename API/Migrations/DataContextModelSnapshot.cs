@@ -61,7 +61,7 @@ namespace API.Migrations
                             UserId = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
                             Email = "admin@admin.com",
                             Login = "admin",
-                            Password = "$2a$11$h63pckLLqAIvRV4soHvo8e02WmHj.8BC6tiRZiE..cVmaGFODRxXq"
+                            Password = "$2a$11$HPNQ.apvke1VQ11yqw05tu4TtQo5j9Up9lLLGJhE.zfWeVk1Kowie"
                         });
                 });
 
@@ -223,7 +223,7 @@ namespace API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("dcc3e668-3b7c-4285-bfd1-072c1805aadd"),
+                            Id = new Guid("ca7e03bb-5158-450e-8281-c70045d94dce"),
                             AccountUserId = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
                             Name = "Администратор"
                         });
@@ -246,13 +246,13 @@ namespace API.Migrations
 
                     b.Property<string>("ServiceType")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<decimal>("Sum")
                         .HasPrecision(15, 2)
@@ -338,6 +338,9 @@ namespace API.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("Passed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("TestData")
                         .IsRequired()
@@ -456,7 +459,7 @@ namespace API.Migrations
                         new
                         {
                             Id = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
-                            BirthDate = new DateTime(1993, 2, 27, 4, 51, 1, 743, DateTimeKind.Local).AddTicks(246),
+                            BirthDate = new DateTime(1993, 3, 4, 17, 54, 59, 338, DateTimeKind.Local).AddTicks(388),
                             Firstname = "Админ",
                             Lastname = "Админ",
                             PassportNumber = "000000",

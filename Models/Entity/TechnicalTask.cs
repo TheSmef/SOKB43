@@ -14,12 +14,9 @@ namespace Models.Entity
     {
         [Required]
         public virtual TypeEquipment? TypeEquipment { get; set; }
-        [Required(ErrorMessage = "Описание технического задания обязательно для ввода!")]
-        [MinLength(3, ErrorMessage = "Описание технического задания не может быть меньше 3 символов!")]
-        [StringLength(6000, ErrorMessage = "Описание технического задания слишком большое, сократите количество символов!")]
+        [StringLength(6000)]
         public string Content { get; set; } = string.Empty;
-        [Required(ErrorMessage = "Дата создания обязательна для ввода!")]
-        [Date(30, 0, ErrorMessage = "Дата создания должна быть между {1} и {2}")]
+        [Required]
         public DateTime Date { get; set; }
         [Required]
         [StringLength(50)]

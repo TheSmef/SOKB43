@@ -16,7 +16,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <RadzenTemplateForm Data="@equipment" TItem="Equipment" Submit="@HandleAdd">
+                <RadzenTemplateForm Data="@equipment" TItem="EquipmentDto" Submit="@HandleAdd">
                     <ChildContent>
                         <DataAnnotationsValidator />
                         <div style="margin-bottom: 1rem" class="flex-column">
@@ -25,7 +25,7 @@
                                 </RadzenLabel>
                             </div>
                             <div>
-                                <RadzenDropDownDataGrid SearchText="Поиск по названию" AllowFiltering=true PageSize="5" AllowColumnResize="true" TValue="TechnicalTask" Data="@(tasks!.Collection)" Count="@(tasks.ElementsCount)" Multiple="false" TextProperty="NameEquipment" SelectedItemsText="Выбранных элементов" @bind-Value="@(equipment.TechnicalTask)" Val style="width: 100%"
+                                <RadzenDropDownDataGrid SearchText="Поиск по названию" AllowFiltering=true PageSize="5" AllowColumnResize="true" TValue="Guid" Data="@(tasks!.Collection)" Count="@(tasks.ElementsCount)" Multiple="false" TextProperty="NameEquipment" SelectedItemsText="Выбранных элементов" @bind-Value="@(equipment.TechnicalTaskId)" ValueProperty="Id" style="width: 100%"
                                                         LoadData="@LoadData" ShowPagingSummary="true" PagerAlwaysVisible="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" EmptyText="@ConstantValues.COLLECTION_EMPTY">
                                     <Columns>
                                         <RadzenDropDownDataGridColumn Property="NameEquipment" Width="40%" MinWidth="300px" Title="Название оборудования">
@@ -42,7 +42,7 @@
                                         </RadzenDropDownDataGridColumn>
                                     </Columns>
                                 </RadzenDropDownDataGrid>
-                                <ValidationMessage For="@(() => equipment.TechnicalTask)" />
+                                <ValidationMessage For="@(() => equipment.TechnicalTaskId)" />
                             </div>
                         </div>
 
@@ -63,7 +63,7 @@
                                 </RadzenLabel>
                             </div>
                             <div>
-                                <RadzenDropDown AllowFiltering="true" TValue="string" Data="@statuses" Multiple="false" SelectedItemsText="Выбранных элементов" @bind-Value="@(equipment.Status)" style="width: 100%" Name="Status">
+                                <RadzenDropDown AllowFiltering="true" TValue="string" Data="@EnumUtility.GetStringsValues(typeof(Equipment.EquipmentStatusEnum))" Multiple="false" SelectedItemsText="Выбранных элементов" @bind-Value="@(equipment.Status)" style="width: 100%" Name="Status">
                                 </RadzenDropDown>
                                 <ValidationMessage For="@(() => equipment.Status)" />
                             </div>

@@ -6,7 +6,7 @@
 @using WEB.Data.Services.Base;
 @using WEB.Utility;
 
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Администратор, Отдел кадров")]
 
 
 <RadzenContent Container="main">

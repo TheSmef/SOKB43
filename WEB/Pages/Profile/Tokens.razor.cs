@@ -62,6 +62,10 @@ namespace WEB.Pages.Profile
             {
                 query = new QuerySupporter { Filter = args.Filter, OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value };
                 tokens = await ProfileService!.GetTokens(query);
+                if (tokens!.Collection!.Count == 0 && tokens!.CurrentPageIndex != 1)
+                {
+                    await grid!.GoToPage(tokens!.CurrentPageIndex - 2);
+                }
             }
             catch (UnAuthException)
             {

@@ -12,7 +12,8 @@ namespace Models.Dto.PostPutModels
     public class TechnicalTaskDto
     {
         [Required(ErrorMessage = "Тип оборудования обязателен для ввода!")]
-        public virtual Guid? TypeEquipmentId { get; set; }
+        [GuidNotNull(ErrorMessage = "Тип оборудования обязателен для ввода!")]
+        public virtual Guid TypeEquipmentId { get; set; }
         [Required(ErrorMessage = "Описаение технического задания обязательно для ввода!")]
         [MinLength(3, ErrorMessage = "Описание технического задания не может быть меньше 3 символов!")]
         [StringLength(6000, ErrorMessage = "Описание технического задания слишком большое, сократите количество символов!")]

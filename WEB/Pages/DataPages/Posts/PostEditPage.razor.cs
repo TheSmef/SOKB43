@@ -73,7 +73,7 @@ namespace WEB.Pages.DataPages.Posts
             }
         }
 
-        protected void Close()
+        private void Close()
         {
             DialogService!.Close(null);
         }

@@ -118,8 +118,14 @@ namespace API.Controllers.DataControllers
                 return BadRequest("Такой должности у данного сотрудника не существует");
             }
             if (_context.UserPosts.Where(x => x.User!.Id == userPostDto.UserId
-                && x.Post!.Id == userPostDto.PostId).Any() && userPostCheck.User!.Id != userPostDto.UserId
+                && x.Post!.Id == userPostDto.PostId).Any() && userPostCheck.User!.Id == userPostDto.UserId
                 && userPostCheck.Post!.Id != userPostDto.PostId)
+            {
+                return BadRequest("Данная должность уже существует у этого сотрудника!");
+            }
+            if (_context.UserPosts.Where(x => x.User!.Id == userPostDto.UserId
+                && x.Post!.Id == userPostDto.PostId).Any() && userPostCheck.User!.Id != userPostDto.UserId
+                && userPostCheck.Post!.Id == userPostDto.PostId)
             {
                 return BadRequest("Данная должность уже существует у этого сотрудника!");
             }

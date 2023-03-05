@@ -1,0 +1,125 @@
+﻿@using AutoMapper;
+@using Blazored.LocalStorage;
+@using Models.Dto.PostPutModels.AccountModels;
+@using Models.Dto.PostPutModels;
+@using Models.Entity;
+@using Models.Utility;
+@using System.Security.Claims;
+@using WEB.Data.Services.Base;
+@using WEB.Data.UtilityServices.Base;
+@using WEB.Utility;
+@attribute [Authorize(Roles = "Администратор, Отдел тестирования")]
+
+<RadzenContent Container="main">
+    <ChildContent>
+
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenTemplateForm Data="@test" TItem="TechnicalTestDto" Submit="@HandleEdit">
+                    <ChildContent>
+                        <DataAnnotationsValidator />
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Приоритет тестирования" Component="Types" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenDropDown AllowFiltering="true" TValue="string" Data="@EnumUtility.GetStringsValues(typeof(TechnicalTest.TestPriorityEnum))" Multiple="false" SelectedItemsText="Выбранных элементов" @bind-Value="@(test.TestPriority)" style="width: 100%" Name="Type">
+                                </RadzenDropDown>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Ожидаемый результат" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(test.ExpectedConclusion)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => test.ExpectedConclusion)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Фактический результат" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(test.FactCoclusion)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => test.FactCoclusion)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Данные тестирования" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="150" style="display: block; width: 100%" @bind-Value="@(test.TestData)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => test.TestData)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Описание тестирования" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="200" style="display: block; width: 100%" @bind-Value="@(test.Description)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => test.Description)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Комментарий" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenTextBox MaxLength="200" style="display: block; width: 100%" @bind-Value="@(test.Comment)">
+                                </RadzenTextBox>
+                                <ValidationMessage For="@(() => test.Comment)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Статус прохождения" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenCheckBox TriState="false" @bind-Value=@test.Passed />
+                                <ValidationMessage For="@(() => test.Passed)" />
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="flex-column">
+                            <div>
+                                <RadzenLabel Text="Дата проведения" Component="Date" style="width: 100%">
+                                </RadzenLabel>
+                            </div>
+                            <div>
+                                <RadzenDatePicker @bind-Value=@test.Date DateFormat="d" Class="w-100" />
+                                <ValidationMessage For="@(() => test.Date)" />
+                            </div>
+                        </div>
+                        <div class="row footer">
+                            <div>
+                                <RadzenButton ButtonType="ButtonType.Submit" Text="Сохранить" ButtonStyle="ButtonStyle.Primary">
+                                </RadzenButton>
+                                <RadzenButton ButtonType="ButtonType.Button" Text="Закрыть" ButtonStyle="ButtonStyle.Danger" Click="@Close">
+                                </RadzenButton>
+                            </div>
+                        </div>
+                    </ChildContent>
+                </RadzenTemplateForm>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>
+
+
+
+
+

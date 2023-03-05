@@ -1,0 +1,168 @@
+﻿@page "/tests"
+
+@attribute [Authorize]
+
+@using AutoMapper;
+@using Blazored.LocalStorage;
+@using Models.Dto.GetModels;
+@using Models.Dto.PostPutModels;
+@using Models.Entity;
+@using Models.QuerySupporter;
+@using System.Security.Claims;
+@using Models.Utility;
+@using WEB.Data.Services.Base;
+@using WEB.Data.UtilityServices.Base;
+@using WEB.Utility;
+
+
+
+<PageTitle>Обслуживание</PageTitle>
+
+
+
+<AuthorizeView Roles="Администратор, Отдел тестирования">
+    <Authorized>
+        <RadzenContent Container="main">
+            <ChildContent>
+                <RadzenHeading Size="H1" Text="Тестирование оборудования">
+                </RadzenHeading>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <RadzenDataGrid @ref="grid" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" ExpandMode="DataGridExpandMode.Single" AllowSorting="true" TItem="Equipment" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
+                                        EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
+                                        StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
+                                        GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
+                                        PagerAlwaysVisible="true" Count="@(records!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@LoadData" Data="@(records.Collection)"
+                                        ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" AllowColumnResize="true" RowExpand="@RowExpanded">
+                            <Template Context="data">
+                                <RadzenTabs>
+                                    <Tabs>
+                                        <RadzenTabsItem Text="Тестирование оборудования">
+
+                                            <div style="display: inline-block; white-space: nowrap">
+                                                <RadzenButton Icon="add_circle_outline" style="margin-left: 10px; margin-right: 10px; margin-bottom: 10px" Text="Добавить" Click="@(() => AddTest(data))"/>
+                                                <RadzenButton Icon="delete_forever" ButtonStyle="ButtonStyle.Warning" style="margin-left: 10px; margin-right: 10px; margin-bottom: 10px" Text="Просмотр корзины" Click="@(() => CheckBin(data))" />
+                                            </div>
+
+
+                                            <RadzenDataGrid @ref=childgrid Data="@(tests!.Collection)" AllowColumnResize="true" TItem="TechnicalTest" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" ExpandMode=DataGridExpandMode.Single AllowSorting="true" TItem="User" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
+                                                            EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
+                                                            StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
+                                                            GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
+                                                            PagerAlwaysVisible="true" Count="@(tests!.ElementsCount)" AllowMultiColumnSorting="false"
+                                                            ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ContextMenu" LoadData="@((args) => LoadChildData(args, data))">
+                                                <Columns>
+                                                    <RadzenDataGridColumn TItem="TechnicalTest" Property="Premium" Width="10%" MinWidth="130px" Title="Статус">
+                                                        <Template Context="childdata">
+                                                            <RadzenCheckBox Value="@childdata.Passed" Disabled="true" />
+                                                        </Template>
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="TechnicalTest" Property="TestPriority" Width="20%" MinWidth="200px" Title="Приоритет">
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="TechnicalTest" Property="Date" Width="30%" MinWidth="300px" Title="Дата тестирования">
+                                                        <Template Context="childdata">
+                                                            @(childdata.Date.ToShortDateString())
+                                                        </Template>
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="TechnicalTest" Property="ExpectedConclusion" Width="30%" MinWidth="300px" Title="Ожидаемый результат">
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="TechnicalTest" Property="FactCoclusion" Width="30%" MinWidth="300px" Title="Фактический результат">
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="TechnicalTest" Property="TestData" Width="30%" MinWidth="300px" Title="Данные тестирования">
+                                                        <Template Context="childdata">
+                                                            <div style="white-space: pre-wrap">@childdata.TestData</div>
+                                                        </Template>
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="TechnicalTest" Property="Description" Width="30%" MinWidth="230px" Title="Описание тестирования">
+                                                        <Template Context="childdata">
+                                                            <div style="white-space: pre-wrap">@childdata.Description</div>
+                                                        </Template>
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="TechnicalTest" Property="Comment" Width="30%" MinWidth="250px" Title="Примечание тестировщика">
+                                                        <Template Context="childdata">
+                                                            <div style="white-space: pre-wrap">@childdata.Comment</div>
+                                                        </Template>
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="TechnicalTest" Property="User.Last_name" Width="20%" MinWidth="255px" Title="Фамилия тестировщика">
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="TechnicalTest" Property="User.First_name" Width="20%" MinWidth="255px" Title="Имя тестировщика">
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="TechnicalTest" Property="User.Otch" Width="20%" MinWidth="255px" Title="Отчество тестировщика">
+                                                    </RadzenDataGridColumn>
+                                                    <RadzenDataGridColumn TItem="TechnicalTest" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
+                                                        <Template Context="_context">
+                                                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(() => EditTest(_context))">
+                                                            </RadzenButton>
+                                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeleteTest(_context))">
+                                                            </RadzenButton>
+                                                        </Template>
+                                                    </RadzenDataGridColumn>
+                                                </Columns>
+                                            </RadzenDataGrid>
+                                        </RadzenTabsItem>
+                                        <RadzenTabsItem Text="Статус оборудования">
+                                            <RadzenContent Container="second">
+                                                <ChildContent>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div>
+                                                                <RadzenListBox AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value=@(data.Status) Multiple="false" Data=@(EnumUtility.GetStringsValues(typeof(Equipment.EquipmentStatusEnum))) TValue="string"
+                                                                               Style="height:280px" class="w-100" />
+                                                            </div>
+                                                            <div>
+                                                                <RadzenButton style="margin-top: 10px; margin-bottom: 10px" Text="Сохранить" Click="@(() => ChangeStatus(data))">
+                                                                </RadzenButton>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ChildContent>
+                                            </RadzenContent>
+                                        </RadzenTabsItem>
+                                    </Tabs>
+                                </RadzenTabs>
+
+
+                            </Template>
+                            <Columns>
+                                <RadzenDataGridColumn TItem="Equipment" Property="TechnicalTask.NameEquipment" Width="20%" MinWidth="280px" Title="Название оборудования">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="Equipment" Property="TechnicalTask.TypeEquipment.Name" Width="20%" MinWidth="220px" Title="Тип оборудования">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="Equipment" Property="EquipmentCode" Width="20%" MinWidth="220px" Title="Код оборудования">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="Equipment" Property="Status" Width="20%" MinWidth="210px" Title="Статус оборудования">
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="Equipment" Property="Date" Width="20%" MinWidth="170px" Title="Дата создания">
+                                    <Template Context="data">
+                                        @(data.Date.ToShortDateString())
+                                    </Template>
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="Equipment" Property="Order.Date" Width="20%" MinWidth="170px" Title="Дата заказа">
+                                    <Template Context="data">
+                                        @(data.Order!.Date.ToShortDateString())
+                                    </Template>
+                                </RadzenDataGridColumn>
+                            </Columns>
+                        </RadzenDataGrid>
+                    </div>
+                </div>
+
+            </ChildContent>
+        </RadzenContent>
+    </Authorized>
+    <NotAuthorized>
+        <RadzenLabel Style="text-align:center" Text="@ConstantValues.ERROR_CLAIMS" />
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code{
+    private void ContextMenu(DataGridCellMouseEventArgs<TechnicalTest> args) => ContextMenuService!.Open(args, ds =>
+    @<RadzenMenu Click="@((value) => ContextMenuSelector(args, value))">
+        <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
+        <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
+
+    </RadzenMenu>
+    );
+}

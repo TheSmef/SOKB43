@@ -1,4 +1,4 @@
-﻿@attribute [Authorize]
+﻿
 
 @using AutoMapper;
 @using Blazored.LocalStorage;
@@ -14,7 +14,7 @@
 
 
 
-
+@attribute [Authorize(Roles = "Администратор, Менеджер по работе с клиентами")]
 
 
 <AuthorizeView Roles="Администратор, Менеджер по работе с клиентами">

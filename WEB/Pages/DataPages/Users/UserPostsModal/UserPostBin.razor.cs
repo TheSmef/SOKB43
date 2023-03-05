@@ -88,6 +88,10 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
             {
                 query = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? "((np(User.Id)) ==  " + "\"" + user!.Id.ToString() + "\") and ((np(Deleted)) == true)" : args.Filter + " and ((np(User.Id)) == " + "\"" + user!.Id.ToString() + "\") and ((np(Deleted)) == true)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
                 bin = await UserPostService!.GetUserPosts(query);
+                if (bin!.Collection!.Count == 0 && bin!.CurrentPageIndex != 1)
+                {
+                    await grid!.GoToPage(bin!.CurrentPageIndex - 2);
+                }
             }
             catch (UnAuthException)
             {

@@ -157,6 +157,10 @@ namespace WEB.Pages.DataPages.Contractors
             {
                 query = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Contractor.Id)) ==  " + "\"" + contractor.Id.ToString() + "\")" : args.Filter + " and ((np(Contractor.Id)) == " + "\"" + contractor.Id.ToString() + "\")", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
                 orders = await OrderService!.GetOrders(query);
+                if (orders!.Collection!.Count == 0 && orders!.CurrentPageIndex != 1)
+                {
+                    await childgrid!.GoToPage(orders!.CurrentPageIndex - 2);
+                }
             }
             catch (UnAuthException)
             {
@@ -210,7 +214,7 @@ namespace WEB.Pages.DataPages.Contractors
             {
                 await DialogService!.OpenAsync<EquipmentChildPage>(ConstantValues.EQ_TITLE, new Dictionary<string, object>()
                 {{ConstantValues.ORDER, model}}, new DialogOptions()
-                {CloseDialogOnOverlayClick = true, Width = "800px"});
+                {CloseDialogOnOverlayClick = true, Width = "800px", Resizable = true });
             }
             catch (UnAuthException)
             {
@@ -259,6 +263,10 @@ namespace WEB.Pages.DataPages.Contractors
             {
                 query = new QuerySupporter{Filter = args.Filter, OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
                 records = await ContractorService!.GetContractors(query);
+                if (records!.Collection!.Count == 0 && records!.CurrentPageIndex != 1)
+                {
+                    await grid!.GoToPage(records!.CurrentPageIndex - 2);
+                }
             }
             catch (UnAuthException)
             {

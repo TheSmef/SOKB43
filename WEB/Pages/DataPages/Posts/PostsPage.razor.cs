@@ -80,6 +80,10 @@ namespace WEB.Pages.DataPages.Posts
             {
                 query = new QuerySupporter { Filter = args.Filter, OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value };
                 posts = await PostService!.GetPosts(query);
+                if (posts!.Collection!.Count == 0 && posts!.CurrentPageIndex != 1)
+                {
+                    await grid!.GoToPage(posts!.CurrentPageIndex - 2);
+                }
             }
             catch (UnAuthException)
             {

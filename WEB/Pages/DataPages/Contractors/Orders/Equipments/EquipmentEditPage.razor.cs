@@ -56,6 +56,7 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
         private List<string> statuses = new List<string>();
         [Parameter]
         public Equipment? equipment { get; set; }
+        private EquipmentDto equipmentDto = new EquipmentDto();
 
         protected override void OnInitialized()
         {
@@ -69,6 +70,10 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
             {
                 statuses.Add(value);
             }
+            equipmentDto = Mapper!.Map<EquipmentDto>(equipment);
+            equipmentDto.OrderId = equipment!.Order!.Id;
+            equipmentDto.TechnicalTaskId = equipment.TechnicalTask!.Id;
+            equipmentDto.Deleted = false;
         }
 
         private async Task LoadData(LoadDataArgs args)
@@ -104,11 +109,8 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
         {
             try
             {
-                EquipmentDto dto = Mapper!.Map<EquipmentDto>(equipment);
-                dto.OrderId = equipment!.Order!.Id;
-                dto.TechnicalTaskId = equipment.TechnicalTask!.Id;
-                dto.Deleted = false;
-                await EquipmentService!.UpdateEquipment(dto, equipment!.Id);
+
+                await EquipmentService!.UpdateEquipment(equipmentDto, equipment!.Id);
                 NotificationService!.Notify(NotificationSeverity.Success, "Успешное изменение!", "Оборудование успешно изменено", 4000);
                 Close();
             }

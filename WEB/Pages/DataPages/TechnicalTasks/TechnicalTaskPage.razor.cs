@@ -80,6 +80,10 @@ namespace WEB.Pages.DataPages.TechnicalTasks
             {
                 query = new QuerySupporter{Filter = args.Filter, OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
                 tasks = await TaskService!.GetTechnicalTasks(query);
+                if (tasks!.Collection!.Count == 0 && tasks!.CurrentPageIndex != 1)
+                {
+                    await grid!.GoToPage(tasks!.CurrentPageIndex - 2);
+                }
             }
             catch (UnAuthException)
             {

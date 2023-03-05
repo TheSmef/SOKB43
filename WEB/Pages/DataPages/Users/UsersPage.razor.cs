@@ -171,6 +171,10 @@ namespace WEB.Pages.DataPages.Users
                 query = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? "((np(User.Id)) ==  " + "\"" + data.Id.ToString() + "\") and ((np(Deleted)) == false)"
                     : args.Filter + " and ((np(User.Id)) == " + "\"" + data.Id.ToString() + "\") and ((np(Deleted)) == false)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
                 userPosts = await UserPostService!.GetUserPosts(query);
+                if (userPosts!.Collection!.Count == 0 && userPosts!.CurrentPageIndex != 1)
+                {
+                    await childgrid!.GoToPage(userPosts!.CurrentPageIndex - 2);
+                }
             }
             catch (UnAuthException)
             {
@@ -285,6 +289,10 @@ namespace WEB.Pages.DataPages.Users
             {
                 query = new QuerySupporter{Filter = args.Filter, OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
                 users = await UserService!.GetUsers(query);
+                if (users!.Collection!.Count == 0 && users!.CurrentPageIndex != 1)
+                {
+                    await grid!.GoToPage(users!.CurrentPageIndex - 2);
+                }
             }
             catch (UnAuthException)
             {
@@ -318,7 +326,7 @@ namespace WEB.Pages.DataPages.Users
         {
             await DialogService!.OpenAsync<UserPostBin>(ConstantValues.USERPOST_BIN_TITLE, new Dictionary<string, object>()
             {{ConstantValues.USER, data}}, new DialogOptions()
-            {CloseDialogOnOverlayClick = true});
+            {CloseDialogOnOverlayClick = true, Width = "800px", Resizable = true });
             await childgrid!.Reload();
         }
 

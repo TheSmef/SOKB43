@@ -7,12 +7,11 @@ namespace Models.Entity
 {
     public class UserPost : BaseModel
     {
-        [Required(ErrorMessage = "Должность обязательна для заполенения!")]
+        [Required]
         public virtual Post? Post { get; set; }
-        [Required(ErrorMessage = "Сотрудник обязателен для заполенения!")]
+        [Required]
         public virtual User? User { get; set; }
-        [Required(ErrorMessage = "Ставка обязательна для заполенения!")]
-        [Range(0.01, 1.00, ErrorMessage = "Ставка является значением от 0 (не включительно) до 1")]
+        [Required]
         public decimal Share { get; set; }
         public bool Deleted { get; set; } = false;
     }

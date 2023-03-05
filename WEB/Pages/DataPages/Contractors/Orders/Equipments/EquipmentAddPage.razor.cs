@@ -32,6 +32,7 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
         [Inject]
         private IEquipmentService? EquipmentService { get; set; }
 
+
         [Inject]
         private ITechnicalTaskService? TaskService { get; set; }
 
@@ -57,12 +58,12 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
         {CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0};
         private QuerySupporter query = new QuerySupporter();
         private List<string> statuses = new List<string>();
-        private Equipment equipment = new Equipment();
+        private EquipmentDto equipment = new EquipmentDto();
         protected override void OnInitialized()
         {
             if (order != null)
             {
-                equipment.Order = order;
+                equipment.OrderId = order.Id;
                 equipment.Deleted = false;
             }
             else
@@ -71,10 +72,6 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
                 Close();
             }
 
-            foreach (string value in EnumUtility.GetStringsValues(typeof(Equipment.EquipmentStatusEnum)))
-            {
-                statuses.Add(value);
-            }
         }
 
         private async Task LoadData(LoadDataArgs args)
@@ -110,11 +107,7 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
         {
             try
             {
-                EquipmentDto dto = Mapper!.Map<EquipmentDto>(equipment);
-                dto.OrderId = equipment.Order!.Id;
-                dto.TechnicalTaskId = equipment.TechnicalTask!.Id;
-                dto.Deleted = false;
-                await EquipmentService!.AddEquipment(dto);
+                await EquipmentService!.AddEquipment(equipment);
                 NotificationService!.Notify(NotificationSeverity.Success, "Успешное добавление!", "Оборудование успешно добавлено", 4000);
                 Close();
             }

@@ -92,6 +92,10 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
             {
                 query = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Order.Id)) ==  " + "\"" + order!.Id.ToString() + "\") and ((np(Deleted)) == true)" : args.Filter + " and ((np(Order.Id)) == " + "\"" + order!.Id.ToString() + "\") and ((np(Deleted)) == true)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
                 records = await EquipmentService!.GetEquipment(query);
+                if (records!.Collection!.Count == 0 && records!.CurrentPageIndex != 1)
+                {
+                    await grid!.GoToPage(records!.CurrentPageIndex - 2);
+                }
             }
             catch (UnAuthException)
             {
@@ -120,8 +124,8 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
             {
                 try
                 {
-                    if (await DialogService!.Confirm(ConstantValues.DELETE_RECORD, ConstantValues.DELETE_RECORD_TITLE, new ConfirmOptions()
-                    {CloseDialogOnOverlayClick = true, CancelButtonText = ConstantValues.CANCEL, OkButtonText = ConstantValues.OK_DELETE}) == true)
+                    if (await DialogService!.Confirm(ConstantValues.RESTORE_RECORD, ConstantValues.RESTORE_RECORD_TITLE, new ConfirmOptions()
+                    { CloseDialogOnOverlayClick = true, CancelButtonText = ConstantValues.CANCEL, OkButtonText = ConstantValues.OK_DELETE }) == true)
                     {
                         Equipment equipment = await EquipmentService!.GetEquipmentById(model.Id);
                         EquipmentDto dto = Mapper!.Map<EquipmentDto>(equipment);

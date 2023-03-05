@@ -1,0 +1,65 @@
+﻿@using AutoMapper;
+@using Blazored.LocalStorage;
+@using Models.Dto.GetModels;
+@using Models.Dto.PostPutModels;
+@using Models.Entity;
+@using Models.QuerySupporter;
+@using WEB.Data.Services.Base;
+@using WEB.Data.UtilityServices.Base;
+@using WEB.Utility;
+
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+    <ChildContent>
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenDataGrid @ref="grid" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" AllowSorting="true" TItem="Service" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
+                                EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
+                                StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
+                                GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
+                                PagerAlwaysVisible="true" Count="@(bin!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@((args) => LoadData(args))" Data="@(bin.Collection)"
+                                ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" AllowColumnResize="true" CellContextMenu="@ContextMenu">
+                    <Columns>
+                        <RadzenDataGridColumn TItem="Service" Property="ServiceType" Width="20%" MinWidth="230px" Title="Тип обслуживания">
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="Service" Property="Sum" Width="20%" MinWidth="230px" Title="Цена обслуживания">
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="Service" Property="Date" Width="20%" MinWidth="230px" Title="Дата обслуживания">
+                            <Template Context="childcontext">
+                                @(childcontext.Date.ToShortDateString())
+                            </Template>
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="Service" Property="Status" Width="25%" MinWidth="240px" Title="Статус обслуживания">
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="Service" Property="WorkContent" Width="40%" MinWidth="280px" Title="Содержание работ">
+                            <Template Context="childdata">
+                                <div style="white-space: pre-wrap">@childdata.WorkContent</div>
+                            </Template>
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="Service" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
+                            <Template Context="_context">
+                                <RadzenButton Icon="assignment_return" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="(() => RestoreRecord(_context))">
+                                </RadzenButton>
+                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="(() => DeleteRecord(_context))">
+                                </RadzenButton>
+                            </Template>
+                        </RadzenDataGridColumn>
+                    </Columns>
+                </RadzenDataGrid>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>
+
+
+@code {
+    private void ContextMenu(DataGridCellMouseEventArgs<Service> args) => ContextMenuService!.Open(args, ds =>
+    @<RadzenMenu Click="@((value) => ContextMenuSelector(args, value))">
+        <RadzenMenuItem Icon="assignment_return" Text="Восстановить запись" Value="1"></RadzenMenuItem>
+        <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
+
+    </RadzenMenu>
+    );
+}

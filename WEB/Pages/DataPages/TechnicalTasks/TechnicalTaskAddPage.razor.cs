@@ -48,7 +48,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
         [Inject]
         private IAuthInterceptor? AuthInterceptor { get; set; }
 
-        private TechnicalTask task = new TechnicalTask();
+        private TechnicalTaskDto task = new TechnicalTaskDto();
         protected override void OnInitialized()
         {
             task.Content = "Содержание технического задания";
@@ -88,12 +88,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
         {
             try
             {
-                TechnicalTaskDto dto = new TechnicalTaskDto();
-                dto.Content = task.Content;
-                dto.Date = task.Date;
-                dto.NameEquipment = task.NameEquipment;
-                dto.TypeEquipmentId = task.TypeEquipment!.Id;
-                await TaskService!.AddTechnicalTaskt(dto);
+                await TaskService!.AddTechnicalTaskt(task);
                 NotificationService!.Notify(NotificationSeverity.Success, "Успешное добавление!", "Техническое задание успешно добавлено", 4000);
                 Close();
             }

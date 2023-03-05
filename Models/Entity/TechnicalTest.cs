@@ -37,6 +37,8 @@ namespace Models.Entity
         [Required]
         public DateTime Date { get; set; }
         [Required]
+        public bool Passed { get; set; } = true;
+        [Required]
         public bool Deleted { get; set; } = false;
 
 

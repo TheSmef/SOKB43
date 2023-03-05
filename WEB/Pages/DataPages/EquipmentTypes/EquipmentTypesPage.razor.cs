@@ -75,6 +75,10 @@ namespace WEB.Pages.DataPages.EquipmentTypes
             {
                 query = new QuerySupporter{Filter = args.Filter, OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
                 records = await TypeService!.GetTypes(query);
+                if (records!.Collection!.Count == 0 && records!.CurrentPageIndex != 1)
+                {
+                    await grid!.GoToPage(records!.CurrentPageIndex - 2);
+                }
             }
             catch (UnAuthException)
             {

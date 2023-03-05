@@ -16,7 +16,7 @@ namespace Models.Entity
         [Required]
         public virtual Equipment? Equipment { get; set; }
         [Required]
-        [StringLength(20)]
+        [StringLength(25)]
         public virtual string ServiceType { get; set; } = EnumUtility.GetStringsValues(typeof(ServiceTypeEnum)).ElementAt(0);
         [Required]
         [StringLength(150)]
@@ -26,7 +26,7 @@ namespace Models.Entity
         [Required]
         public DateTime Date { get; set; }
         [Required]
-        [StringLength(20)]
+        [StringLength(25)]
         public string Status { get; set; } = EnumUtility.GetStringsValues(typeof(ServiceStatusEnum)).ElementAt(0);
         [Required]
         public bool Deleted { get; set; } = false;

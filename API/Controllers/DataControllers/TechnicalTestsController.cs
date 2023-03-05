@@ -17,6 +17,7 @@ using Models.Dto.PostPutModels;
 using Models.Dto.GetModels;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using System.Security.Claims;
 
 namespace API.Controllers.DataControllers
 {
@@ -102,8 +103,9 @@ namespace API.Controllers.DataControllers
         [Authorize(Roles = "Администратор, Отдел тестирования")]
         public async Task<ActionResult<TechnicalTest>> postTechnicalTest(TechnicalTestDto testDto)
         {
+            Guid id = Guid.Parse(User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).First().Value);
             TechnicalTest test = _mapper.Map<TechnicalTest>(testDto);
-            test.User = _context.Users.Where(x => x.Id == testDto.UserId).First();
+            test.User = _context.Users.Where(x => x.Id == id).First();
             test.Equipment = _context.Equipments.Where(x => x.Id == testDto.EquipmentId).First();
             await _context.TechnicalTests.AddAsync(test);
             await _context.SaveChangesAsync();
@@ -124,8 +126,7 @@ namespace API.Controllers.DataControllers
                 return BadRequest("Записи о данном тестировании не существует");
             }
             SafeMapper.MapTechnicalTestFromDto(testDto, test);
-            test.Equipment = _context.Equipments.Where(x => x.Id != testDto.UserId).First();
-            test.User = _context.Users.Where(x => x.Id != testDto.UserId).First();
+            test.Equipment = _context.Equipments.Where(x => x.Id == testDto.EquipmentId).First();
             await _context.SaveChangesAsync();
             return Ok(test);
         }
