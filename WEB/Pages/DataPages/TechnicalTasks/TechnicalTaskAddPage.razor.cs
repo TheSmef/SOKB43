@@ -52,7 +52,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
         protected override void OnInitialized()
         {
             task.Content = "Содержание технического задания";
-            task.Date = DateTime.Now.Date;
+            task.Date = DateTime.Today.Date;
         }
 
         private async Task LoadData(LoadDataArgs args)
@@ -88,7 +88,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
         {
             try
             {
-                await TaskService!.AddTechnicalTaskt(task);
+                await TaskService!.AddTechnicalTask(task);
                 NotificationService!.Notify(NotificationSeverity.Success, "Успешное добавление!", "Техническое задание успешно добавлено", 4000);
                 Close();
             }

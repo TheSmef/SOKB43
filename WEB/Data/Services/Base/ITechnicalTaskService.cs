@@ -10,7 +10,7 @@ namespace WEB.Data.Services.Base
         public Task<TechnicalTasksGetDtoModel> GetTechnicalTasks(QuerySupporter query);
         public Task<TechnicalTask> GetTechnicalTaskById(Guid id);
         public Task<TechnicalTask> UpdateTechnicalTask(TechnicalTaskDto model, Guid id);
-        public Task<TechnicalTask> AddTechnicalTaskt(TechnicalTaskDto model);
+        public Task<TechnicalTask> AddTechnicalTask(TechnicalTaskDto model);
         public Task DeleteTechnicalTask(Guid id);
     }
 }

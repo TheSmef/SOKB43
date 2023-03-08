@@ -18,7 +18,7 @@ namespace WEB.Data.Services
             this.client = client;
         }
 
-        public async Task<TechnicalTask> AddTechnicalTaskt(TechnicalTaskDto model)
+        public async Task<TechnicalTask> AddTechnicalTask(TechnicalTaskDto model)
         {
             try
             {

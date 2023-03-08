@@ -81,7 +81,7 @@ namespace API.Data
                     Id = Guid.Parse("F0E290A9-9054-4AE7-AF3B-08DAD84FEB5B"),
                     First_name = "Админ",
                     Last_name = "Админ",
-                    BirthDate = DateTime.Now.AddYears(-30),
+                    BirthDate = DateTime.Today.AddYears(-30),
                     PassportSeries = "0000",
                     PassportNumber = "000000",
                     PhoneNumber = "88888888888",
