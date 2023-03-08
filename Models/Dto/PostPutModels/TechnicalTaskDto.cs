@@ -20,7 +20,7 @@ namespace Models.Dto.PostPutModels
         public string Content { get; set; } = string.Empty;
         [Required(ErrorMessage = "Дата создания обязательна для ввода!")]
         [Date(30, 0, ErrorMessage = "Дата создания должна быть между {1} и {2}")]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Today;
         [Required(ErrorMessage = "Название оборудования обязательно для ввода!")]
         [MinLength(3, ErrorMessage = "Название оборудования не может быть меньше 3 символов!")]
         [MaxLength(50, ErrorMessage = "Название оборудования не может быть более 50 символов!")]

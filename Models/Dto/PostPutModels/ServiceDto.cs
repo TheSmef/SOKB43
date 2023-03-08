@@ -29,7 +29,7 @@ namespace Models.Dto.PostPutModels
         public decimal Sum { get; set; }
         [Required(ErrorMessage = "Дата проведения обязательна для ввода!")]
         [Date(30, -5, ErrorMessage = "Дата проведения должна быть между {1} и {2}")]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Today;
         [Required(ErrorMessage = "Статус работ обязателен для ввода!")]
         [RegularExpression(pattern: "В очереди на исполнение|В процессе|Проведено", ErrorMessage = "Неверный статус работ!")]
         public string Status { get; set; } = EnumUtility.GetStringsValues(typeof(ServiceStatusEnum)).ElementAt(0);

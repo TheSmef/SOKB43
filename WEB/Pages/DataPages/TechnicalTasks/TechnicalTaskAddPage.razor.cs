@@ -52,7 +52,6 @@ namespace WEB.Pages.DataPages.TechnicalTasks
         protected override void OnInitialized()
         {
             task.Content = "Содержание технического задания";
-            task.Date = DateTime.Today.Date;
         }
 
         private async Task LoadData(LoadDataArgs args)

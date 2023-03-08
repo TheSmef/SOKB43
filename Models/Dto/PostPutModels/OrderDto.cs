@@ -16,7 +16,7 @@ namespace Models.Dto.PostPutModels
         public virtual Guid? ContractorId { get; set; }
         [Required(ErrorMessage = "Дата заказа обязательна для ввода!")]
         [Date(10, 0, ErrorMessage = "Дата заказа должна быть между {1} и {2}")]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Today;
         [Required(ErrorMessage = "Сумма заказа обязательна для ввода!")]
         [Range(0.01, 999999999999.99, ErrorMessage = "Значение суммы заказа должно быть больше 0 и меньше 15 символов до запятой и 2 символов после запятой")]
         public decimal Sum { get; set; }

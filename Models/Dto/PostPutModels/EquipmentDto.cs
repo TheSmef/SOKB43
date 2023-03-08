@@ -28,7 +28,7 @@ namespace Models.Dto.PostPutModels
         public string EquipmentCode { get; set; } = string.Empty;
         [Required(ErrorMessage = "Дата сборки обязательна для ввода!")]
         [Date(30, -15, ErrorMessage = "Дата сборки должна быть между {1} и {2}")]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Today;
         [Required(ErrorMessage = "Статус удаления обязателен для ввода!")]
         public bool Deleted { get; set; } = false;
 

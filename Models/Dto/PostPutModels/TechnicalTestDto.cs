@@ -41,7 +41,7 @@ namespace Models.Dto.PostPutModels
         public string TestPriority { get; set; } = EnumUtility.GetStringsValues(typeof(TestPriorityEnum)).ElementAt(0);
         [Required(ErrorMessage = "Дата тестирования обязательна для ввода!")]
         [Date(10, 0, ErrorMessage = "Дата тестирования должна быть между {1} и {2}")]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Today;
         [Required(ErrorMessage = "Статус тестирования обязателен для ввода!")]
         public bool Passed { get; set; } = false;
         [Required(ErrorMessage = "Статус удаления обязателен для ввода!")]

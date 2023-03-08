@@ -16,6 +16,6 @@ namespace Models.Entity
         [StringLength(250)]
         public string TokenStr { get; set; } = string.Empty;
         [Required]
-        public DateTime Date { get; set; } = DateTime.Today;
+        public DateTime Date { get; set; } = DateTime.Now;
     }
 }
