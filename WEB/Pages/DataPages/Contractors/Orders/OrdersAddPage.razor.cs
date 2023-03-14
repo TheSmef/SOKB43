@@ -46,13 +46,13 @@ namespace WEB.Pages.DataPages.Contractors.Orders
         private OrderDto order = new OrderDto();
         protected override void OnInitialized()
         {
-            try
+            if (contractor != null)
             {
                 order.ContractorId = contractor!.Id;
             }
-            catch
+            else
             {
-                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Не был задан контрегент для заказа", 4000);
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Не был задан контрагент для заказа", 4000);
                 Close();
             }
 

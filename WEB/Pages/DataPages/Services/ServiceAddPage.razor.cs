@@ -65,7 +65,7 @@ namespace WEB.Pages.DataPages.Services
             try
             {
                 await ServicesService!.AddService(service);
-                NotificationService!.Notify(NotificationSeverity.Success, "Успешное добавление!", "Обслужитвание успешно добавлено", 4000);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешное добавление!", "Обслуживание успешно добавлено", 4000);
                 Close();
             }
             catch (UnAuthException)

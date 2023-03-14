@@ -1,0 +1,193 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = WEB
+build_property.RootNamespace = WEB
+build_property.ProjectDir = C:\Users\User\Documents\GitHub\SOKB43\WEB\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\User\Documents\GitHub\SOKB43\WEB
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/ContractorAddPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXENvbnRyYWN0b3JBZGRQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/ContractorEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXENvbnRyYWN0b3JFZGl0UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/ContractorsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXENvbnRyYWN0b3JzUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/Orders/Equipments/EquipmentAddPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXE9yZGVyc1xFcXVpcG1lbnRzXEVxdWlwbWVudEFkZFBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/Orders/Equipments/EquipmentBin.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXE9yZGVyc1xFcXVpcG1lbnRzXEVxdWlwbWVudEJpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/Orders/Equipments/EquipmentChildPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXE9yZGVyc1xFcXVpcG1lbnRzXEVxdWlwbWVudENoaWxkUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/Orders/Equipments/EquipmentEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXE9yZGVyc1xFcXVpcG1lbnRzXEVxdWlwbWVudEVkaXRQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/Orders/OrdersAddPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXE9yZGVyc1xPcmRlcnNBZGRQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Contractors/Orders/OrdersEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXENvbnRyYWN0b3JzXE9yZGVyc1xPcmRlcnNFZGl0UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/EquipmentTypes/EquipmentTypesAddPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXEVxdWlwbWVudFR5cGVzXEVxdWlwbWVudFR5cGVzQWRkUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/EquipmentTypes/EquipmentTypesEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXEVxdWlwbWVudFR5cGVzXEVxdWlwbWVudFR5cGVzRWRpdFBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/EquipmentTypes/EquipmentTypesPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXEVxdWlwbWVudFR5cGVzXEVxdWlwbWVudFR5cGVzUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Posts/PostAddPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFBvc3RzXFBvc3RBZGRQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Posts/PostEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFBvc3RzXFBvc3RFZGl0UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Posts/PostsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFBvc3RzXFBvc3RzUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Services/EquipmentServicePage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFNlcnZpY2VzXEVxdWlwbWVudFNlcnZpY2VQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Services/ServiceAddPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFNlcnZpY2VzXFNlcnZpY2VBZGRQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Services/ServiceBin.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFNlcnZpY2VzXFNlcnZpY2VCaW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Services/ServiceEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFNlcnZpY2VzXFNlcnZpY2VFZGl0UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/TechnicalTasks/TechnicalTaskAddPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFRlY2huaWNhbFRhc2tzXFRlY2huaWNhbFRhc2tBZGRQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/TechnicalTasks/TechnicalTaskEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFRlY2huaWNhbFRhc2tzXFRlY2huaWNhbFRhc2tFZGl0UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/TechnicalTasks/TechnicalTaskPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFRlY2huaWNhbFRhc2tzXFRlY2huaWNhbFRhc2tQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Tests/EquipmentTestsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFRlc3RzXEVxdWlwbWVudFRlc3RzUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Tests/TestAddPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFRlc3RzXFRlc3RBZGRQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Tests/TestBinPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFRlc3RzXFRlc3RCaW5QYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Tests/TestEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFRlc3RzXFRlc3RFZGl0UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Users/UserAddPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFVzZXJzXFVzZXJBZGRQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Users/UserEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFVzZXJzXFVzZXJFZGl0UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Users/UserPostsModal/UserPostAddPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFVzZXJzXFVzZXJQb3N0c01vZGFsXFVzZXJQb3N0QWRkUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Users/UserPostsModal/UserPostBin.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFVzZXJzXFVzZXJQb3N0c01vZGFsXFVzZXJQb3N0QmluLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Users/UserPostsModal/UserPostEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFVzZXJzXFVzZXJQb3N0c01vZGFsXFVzZXJQb3N0RWRpdFBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/DataPages/Users/UsersPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVBhZ2VzXFVzZXJzXFVzZXJzUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/Login/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW5cTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/Login/Registration.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW5cUmVnaXN0cmF0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/Profile/ChangeProfile.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZmlsZVxDaGFuZ2VQcm9maWxlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/Profile/Profile.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZmlsZVxQcm9maWxlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/Profile/Tokens.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZmlsZVxUb2tlbnMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Shared/LoginLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXExvZ2luTGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Shared/RedirectToLogin.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFJlZGlyZWN0VG9Mb2dpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-o2uwfrh5mx
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Documents/GitHub/SOKB43/WEB/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 

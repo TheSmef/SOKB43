@@ -106,7 +106,7 @@ namespace API.Controllers.DataControllers
             Post? postCheck = await _context.Posts.Where(x => x.Id == id).Include(x => x.UserPosts).AsNoTracking().FirstOrDefaultAsync();
             if (postCheck == null)
             {
-                return BadRequest("Такой должности не существует");
+                return BadRequest("Запись не существует!");
             }
             if (_context.Posts.Where(x => x.Name == post.Name).Any() && post.Name != postCheck.Name)
             {
@@ -126,7 +126,7 @@ namespace API.Controllers.DataControllers
             Post? delete = await _context.Posts.Where(x => x.Id == id).Include(x => x.UserPosts).FirstOrDefaultAsync();
             if (delete == null)
             {
-                return BadRequest("Записи не существует!");
+                return BadRequest("Запись не существует!");
             }
             if (delete.UserPosts!.Any())
             {

@@ -64,6 +64,7 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
             {
                 NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Запись пустая", 4000);
                 Close();
+                return;
             }
 
             foreach (string value in EnumUtility.GetStringsValues(typeof(Equipment.EquipmentStatusEnum)))

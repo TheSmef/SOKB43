@@ -128,7 +128,7 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
                     userPostDto.PostId = userPost.Post!.Id;
                     userPostDto.Deleted = false;
                     await UserPostService!.UpdateUserPost(userPostDto, userPost.Id);
-                    NotificationService!.Notify(NotificationSeverity.Success, "Запись успешно востановлена!", "Должность пользователя восстановленна", 4000);
+                    NotificationService!.Notify(NotificationSeverity.Success, "Запись успешно востановлена!", "Должность пользователя восстановлена", 4000);
                     await grid!.Reload();
                 }
             }

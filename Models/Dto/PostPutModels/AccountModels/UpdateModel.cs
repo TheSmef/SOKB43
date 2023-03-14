@@ -13,8 +13,7 @@ namespace Models.Dto.PostPutModels.AccountModels
     {
         [Required(ErrorMessage = "Электронная почта обязательна для ввода!")]
         [EmailAddress(ErrorMessage = "Неправильный формат электронной почты!")]
-        [MinLength(5, ErrorMessage = "Неправильный формат электронной почты!")]
-        [MaxLength(254, ErrorMessage = "Электронная почта не может быть более 254 символов!")]
+        [MaxLength(255, ErrorMessage = "Электронная почта не может быть более 255 символов!")]
         public string Email { get; set; } = string.Empty;
         [AllowNull]
         [MaxLength(30, ErrorMessage = "Пароль не может быть более 30 символов!")]
@@ -63,9 +62,7 @@ namespace Models.Dto.PostPutModels.AccountModels
             ErrorMessage = "Номер паспорта должна содержать в себе только цифры!")]
         public string PassportNumber { get; set; } = string.Empty;
         [Required(ErrorMessage = "Номер телефона обязателен для ввода!")]
-        [MaxLength(12, ErrorMessage = "Неправильный формат номера телефона!")]
-        [MinLength(11, ErrorMessage = "Неправильный формат номера телефона!")]
-        [RegularExpression(pattern: "^([8])[0-9]{10}",
+        [RegularExpression(pattern: "^(8)[0-9]{10}",
             ErrorMessage = "Неправильный формат номера телефона! (Пример: 88888888888)")]
         public string PhoneNumber { get; set; } = string.Empty;
         public string OldPassword { get; set; } = string.Empty;

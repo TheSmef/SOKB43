@@ -109,7 +109,7 @@ namespace API.Controllers.DataControllers
             TechnicalTask? taskCheck = await _context.TechnicalTasks.Where(x => x.Id == id).FirstOrDefaultAsync();
             if (taskCheck == null)
             {
-                return BadRequest("Такого технического задания не существует");
+                return BadRequest("Запись не существует!");
             }
             if (_context.TechnicalTasks.Where(x => x.NameEquipment == taskDto.NameEquipment).Any() && taskCheck.NameEquipment != taskDto.NameEquipment)
             {
@@ -129,7 +129,7 @@ namespace API.Controllers.DataControllers
             TechnicalTask? delete = await _context.TechnicalTasks.Where(x => x.Id == id).Include(x => x.Equipments).FirstOrDefaultAsync();
             if (delete == null)
             {
-                return BadRequest("Записи не существует!");
+                return BadRequest("Запись не существует!");
             }
             if (delete.Equipments!.Any())
             {

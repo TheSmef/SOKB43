@@ -123,7 +123,7 @@ namespace API.Controllers.DataControllers
                 .ThenInclude(x => x!.Order).ThenInclude(x => x!.Contractor).FirstOrDefaultAsync();
             if (test == null)
             {
-                return BadRequest("Записи о данном тестировании не существует");
+                return BadRequest("Запись не существует!");
             }
             SafeMapper.MapTechnicalTestFromDto(testDto, test);
             test.Equipment = _context.Equipments.Where(x => x.Id == testDto.EquipmentId).First();
@@ -139,7 +139,7 @@ namespace API.Controllers.DataControllers
             TechnicalTest? delete = await _context.TechnicalTests.Where(x => x.Id == id).FirstOrDefaultAsync();
             if (delete == null)
             {
-                return BadRequest("Записи не существует!");
+                return BadRequest("Запись не существует!");
             }
             _context.TechnicalTests.Remove(delete);
             await _context.SaveChangesAsync();

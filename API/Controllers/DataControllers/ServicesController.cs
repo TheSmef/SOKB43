@@ -107,7 +107,7 @@ namespace API.Controllers.DataControllers
             Service? serviceCheck = await _context.Services.Where(x => x.Id == id).FirstOrDefaultAsync();
             if (serviceCheck == null)
             {
-                return BadRequest("Такой записи об обслуживании не существует");
+                return BadRequest("Запись не существует!");
             }
             SafeMapper.MapServiceFromServiceDto(serviceDto, serviceCheck);
             serviceCheck.Equipment = _context.Equipments.Where(x => x.Id == serviceDto.EquipmentId).First();
@@ -122,7 +122,7 @@ namespace API.Controllers.DataControllers
             Service? delete = await _context.Services.Where(x => x.Id == id).FirstOrDefaultAsync();
             if (delete == null)
             {
-                return BadRequest("Записи не существует!");
+                return BadRequest("Запись не существует!");
             }
             _context.Services.Remove(delete);
             await _context.SaveChangesAsync();

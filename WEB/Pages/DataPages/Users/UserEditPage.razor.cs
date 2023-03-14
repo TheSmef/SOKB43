@@ -55,12 +55,12 @@ namespace WEB.Pages.DataPages.Users
         private List<Role> roles = new List<Role>();
         protected override void OnInitialized()
         {
-            try
+            if (userEdit != null) 
             {
                 user = Mapper!.Map<User, UserUpdateDto>(userEdit!);
-                user.Email = userEdit!.Account!.Email;
-                user.Login = userEdit!.Account!.Login;
-                user.Roles = userEdit!.Account!.Roles == null ? new List<Role>() : (List<Role>)userEdit!.Account!.Roles;
+                user.Email = userEdit.Account!.Email;
+                user.Login = userEdit.Account!.Login;
+                user.Roles = userEdit.Account!.Roles == null ? new List<Role>() : userEdit.Account!.Roles;
                 foreach (string value in EnumUtility.GetStringsValues(typeof(Role.NameRole)))
                 {
                     if (user.Roles!.Where(x => x.Name == value).Any())
@@ -74,7 +74,7 @@ namespace WEB.Pages.DataPages.Users
                     }
                 }
             }
-            catch
+            else
             {
                 NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Ошибка при получении данных о сотруднике", 4000);
                 Close();
@@ -87,7 +87,7 @@ namespace WEB.Pages.DataPages.Users
             try
             {
                 await UserService!.UpdateUser(user, userEdit!.Id);
-                NotificationService!.Notify(NotificationSeverity.Success, "Успешное обновление!", "Пользователь успешно обновлён", 4000);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешное изменение!", "Пользователь успешно изменён", 4000);
                 Close();
             }
             catch (AppException e)

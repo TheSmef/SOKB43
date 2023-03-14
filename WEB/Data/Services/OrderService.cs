@@ -226,7 +226,7 @@ namespace WEB.Data.Services
                 }
                 else if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    throw new AppException("Ошибка изменении", await response.Content.ReadAsStringAsync());
+                    throw new AppException("Ошибка изменения", await response.Content.ReadAsStringAsync());
                 }
                 else
                 {

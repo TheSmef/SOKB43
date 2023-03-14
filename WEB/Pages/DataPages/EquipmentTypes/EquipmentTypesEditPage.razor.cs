@@ -20,6 +20,7 @@ using Models.Entity;
 using WEB.Data.Services.Base;
 using WEB.Data.UtilityServices.Base;
 using WEB.Utility;
+using System.Diagnostics.Contracts;
 
 namespace WEB.Pages.DataPages.EquipmentTypes
 {
@@ -42,6 +43,16 @@ namespace WEB.Pages.DataPages.EquipmentTypes
 
         [Parameter]
         public TypeEquipment? type { get; set; }
+
+        protected override void OnInitialized()
+        {
+            if (type == null)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Ошибка загрузки данных, тип оборудования не был задан", 4000);
+                Close();
+                return;
+            }
+        }
 
         private async Task HandleEdit()
         {

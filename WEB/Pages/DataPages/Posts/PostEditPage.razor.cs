@@ -21,6 +21,7 @@ using WEB.Data.Services.Base;
 using WEB.Utility;
 using WEB.Data.UtilityServices.Base;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Diagnostics.Contracts;
 
 namespace WEB.Pages.DataPages.Posts
 {
@@ -43,6 +44,16 @@ namespace WEB.Pages.DataPages.Posts
 
         [Parameter]
         public Post? record { get; set; }
+
+        protected override void OnInitialized()
+        {
+            if (record == null)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Ошибка загрузки данных, должность не была задана", 4000);
+                Close();
+                return;
+            }
+        }
 
         private async Task HandleEdit()
         {

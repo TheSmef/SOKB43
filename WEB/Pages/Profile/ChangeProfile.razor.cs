@@ -23,6 +23,7 @@ using WEB.Data.Services.Base;
 using WEB.Utility;
 using WEB.Data.UtilityServices;
 using WEB.Data.UtilityServices.Base;
+using System.Diagnostics.Contracts;
 
 namespace WEB.Pages.Profile
 {
@@ -52,6 +53,12 @@ namespace WEB.Pages.Profile
 
         protected override void OnInitialized()
         {
+            if (profile == null)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Ошибка загрузки данных, профиль был пустым", 4000);
+                Close();
+                return;
+            }
             user = Mapper!.Map<User, UpdateModel>(profile!);
             user.Email = profile!.Account!.Email;
             user.Login = profile!.Account!.Login;
@@ -62,7 +69,7 @@ namespace WEB.Pages.Profile
             try
             {
                 profile = await ProfileService!.UpdateProfile(user);
-                NotificationService!.Notify(NotificationSeverity.Success, "Успешное обновление!", "Профиль успешно обновлён", 4000);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешное изменение!", "Профиль успешно изменён", 4000);
                 Close();
             }
             catch (AppException e)

@@ -115,7 +115,7 @@ namespace API.Controllers.DataControllers
                 .Include(x => x.Post).FirstOrDefaultAsync();
             if (userPostCheck == null)
             {
-                return BadRequest("Такой должности у данного сотрудника не существует");
+                return BadRequest("Запись не существует!");
             }
             if (_context.UserPosts.Where(x => x.User!.Id == userPostDto.UserId
                 && x.Post!.Id == userPostDto.PostId).Any() && userPostCheck.User!.Id == userPostDto.UserId
@@ -152,7 +152,7 @@ namespace API.Controllers.DataControllers
             UserPost? delete = await _context.UserPosts.Where(x => x.Id == id).FirstOrDefaultAsync();
             if (delete == null)
             {
-                return BadRequest("Записи не существует!");
+                return BadRequest("Запись не существует!");
             }
             _context.UserPosts.Remove(delete);
             await _context.SaveChangesAsync();

@@ -61,7 +61,7 @@ namespace API.Migrations
                             UserId = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
                             Email = "admin@admin.com",
                             Login = "admin",
-                            Password = "$2a$11$t0sT4Nk7HfQZd3oTVrtVQ.Cxv8rV9Pcv9e7lqkdNl8SOleqweja22"
+                            Password = "$2a$11$vjrBjiSmnpGL5KZVQSm.JeoVipSDpV8h9yQcG6Y74CNlnvCBSC93y"
                         });
                 });
 
@@ -78,8 +78,8 @@ namespace API.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(254)
-                        .HasColumnType("nvarchar(254)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -88,8 +88,8 @@ namespace API.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.HasKey("Id");
 
@@ -223,7 +223,7 @@ namespace API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("78eb95b5-d2f7-4056-aa2c-548692d248db"),
+                            Id = new Guid("cf75871a-30a6-4cac-9b50-c3c9830d58a0"),
                             AccountUserId = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
                             Name = "Администратор"
                         });
@@ -459,7 +459,7 @@ namespace API.Migrations
                         new
                         {
                             Id = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
-                            BirthDate = new DateTime(1993, 3, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            BirthDate = new DateTime(1993, 3, 12, 0, 0, 0, 0, DateTimeKind.Local),
                             Firstname = "Админ",
                             Lastname = "Админ",
                             PassportNumber = "000000",

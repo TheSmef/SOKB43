@@ -100,7 +100,7 @@ namespace API.Controllers.DataControllers
             Order? orderCheck = await _context.Orders.Where(x => x.Id == id).Include(x => x.Contractor).FirstOrDefaultAsync();
             if (orderCheck == null)
             {
-                return BadRequest("Такого заказа не существует");
+                return BadRequest("Запись не существует!");
             }
             orderCheck.Date = orderDto.Date;
             orderCheck.Contractor = _context.Conctractors.Where(x => x.Id == orderDto.ContractorId).First();
@@ -116,7 +116,7 @@ namespace API.Controllers.DataControllers
             Order? delete = await _context.Orders.Where(x => x.Id == id).Include(x => x.Equipments).FirstOrDefaultAsync();
             if (delete == null)
             {
-                return BadRequest("Записи не существует!");
+                return BadRequest("Запись не существует!");
             }
             if (delete.Equipments!.Any())
             {

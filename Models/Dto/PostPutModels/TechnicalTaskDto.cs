@@ -16,7 +16,7 @@ namespace Models.Dto.PostPutModels
         public virtual Guid TypeEquipmentId { get; set; }
         [Required(ErrorMessage = "Описаение технического задания обязательно для ввода!")]
         [MinLength(3, ErrorMessage = "Описание технического задания не может быть меньше 3 символов!")]
-        [StringLength(6000, ErrorMessage = "Описание технического задания слишком большое, сократите количество символов!")]
+        [StringLength(6000, ErrorMessage = "Описание технического задания слишком большое, сократите количество символов! (6000 и менее)")]
         public string Content { get; set; } = string.Empty;
         [Required(ErrorMessage = "Дата создания обязательна для ввода!")]
         [Date(30, 0, ErrorMessage = "Дата создания должна быть между {1} и {2}")]

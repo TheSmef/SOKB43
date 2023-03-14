@@ -99,7 +99,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
             try
             {
                 await TaskService!.UpdateTechnicalTask(taskDto, task!.Id);
-                NotificationService!.Notify(NotificationSeverity.Success, "Успешное добавление!", "Техническое задание успешно добавлено", 4000);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешное изменение!", "Техническое задание успешно изменено", 4000);
                 Close();
             }
             catch (AppException e)

@@ -125,7 +125,7 @@ namespace API.Controllers.DataControllers
                 .ThenInclude(x => x!.Roles).FirstOrDefaultAsync();
             if (user == null)
             {
-                return BadRequest("Такого пользователя не существует");
+                return BadRequest("Запись не существует!");
             }
             if (_context.Accounts.Where(x => x.Email == userDto.Email).Any() && user.Account!.Email != userDto.Email)
             {
@@ -176,7 +176,7 @@ namespace API.Controllers.DataControllers
             User? delete = await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
             if (delete == null)
             {
-                return BadRequest("Записи не существует!");
+                return BadRequest("Запись не существует!");
             }
             if (_context.TechnicalTests.Where(x => x.User!.Id == delete.Id).Any())
             {

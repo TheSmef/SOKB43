@@ -150,7 +150,7 @@ namespace WEB.Data.Services
             }
             catch
             {
-                throw new AppException("Ошибка запроса", "Ошибка при запросе информации о сотруднике, попробуйте позже");
+                throw new AppException("Ошибка запроса", "Ошибка при получении информации о должности сотрудника, попробуйте позже");
             }
         }
 
@@ -224,7 +224,7 @@ namespace WEB.Data.Services
                 }
                 else if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    throw new AppException("Ошибка изменении", await response.Content.ReadAsStringAsync());
+                    throw new AppException("Ошибка изменения", await response.Content.ReadAsStringAsync());
                 }
                 else
                 {

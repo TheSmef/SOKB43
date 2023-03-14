@@ -115,7 +115,7 @@ namespace API.Controllers.DataControllers
                 .ThenInclude(x => x!.Contractor).Include(x => x.TechnicalTask).ThenInclude(x => x!.TypeEquipment).FirstOrDefaultAsync();
             if (equipment == null)
             {
-                return BadRequest("Данного оборудования не существует!");
+                return BadRequest("Запись не существует!");
             }
             if (_context.Equipments.Where(x => x.EquipmentCode == eqDto.EquipmentCode).Any() && eqDto.EquipmentCode != equipment.EquipmentCode)
             {
@@ -136,7 +136,7 @@ namespace API.Controllers.DataControllers
             Equipment? delete = await _context.Equipments.Where(x => x.Id == id).Include(x => x.Services).Include(x => x.TechicalTests).FirstOrDefaultAsync();
             if (delete == null)
             {
-                return BadRequest("Записи не существует!");
+                return BadRequest("Запись не существует!");
             }
             if (delete.Services!.Any() || delete.TechicalTests!.Any())
             {

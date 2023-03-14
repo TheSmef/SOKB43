@@ -129,7 +129,7 @@ namespace WEB.Pages.DataPages.Tests
                     dto.EquipmentId = test.Equipment!.Id;
                     dto.Deleted = false;
                     await TechnicalTestsService!.UpdateTest(dto, test.Id);
-                    NotificationService!.Notify(NotificationSeverity.Success, "Запись успешно востановлена!", "Тестирование восстановленно", 4000);
+                    NotificationService!.Notify(NotificationSeverity.Success, "Запись успешно востановлена!", "Тестирование восстановлено", 4000);
                     await grid!.Reload();
                 }
             }

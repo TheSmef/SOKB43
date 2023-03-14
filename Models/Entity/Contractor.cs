@@ -25,15 +25,12 @@ namespace Models.Entity
         public string Description { get; set; } = string.Empty;
         [Required(ErrorMessage = "Электронная почта обязательна для ввода!")]
         [EmailAddress(ErrorMessage = "Неправильный формат электронной почты!")]
-        [MinLength(5, ErrorMessage = "Неправильный формат электронной почты!")]
-        [MaxLength(254, ErrorMessage = "Электронная почта не может быть более 254 символов!")]
-        [StringLength(254)]
+        [MaxLength(255, ErrorMessage = "Электронная почта не может быть более 255 символов!")]
+        [StringLength(255)]
         public string Email { get; set; } = string.Empty;
-        [StringLength(12)]
+        [StringLength(11)]
         [Required(ErrorMessage = "Номер телефона обязателен для ввода!")]
-        [MaxLength(12, ErrorMessage = "Неправильный формат номера телефона!")]
-        [MinLength(11, ErrorMessage = "Неправильный формат номера телефона!")]
-        [RegularExpression(pattern: "^([8])[0-9]{10}",
+        [RegularExpression(pattern: "^(8)[0-9]{10}",
             ErrorMessage = "Неправильный формат номера телефона! (Пример: 88888888888)")]
         public string PhoneNumber { get; set; } = string.Empty;
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]

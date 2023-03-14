@@ -42,7 +42,7 @@
                                 </RadzenLabel>
                             </div>
                             <div>
-                                <RadzenTextBox MaxLength="254" style="display: block; width: 100%" @bind-Value="@(contractor.Email)">
+                                <RadzenTextBox MaxLength="255" style="display: block; width: 100%" @bind-Value="@(contractor.Email)">
                                 </RadzenTextBox>
                                 <ValidationMessage For="@(() => contractor.Email)" />
                             </div>

@@ -94,7 +94,7 @@ namespace API.Controllers.DataControllers
             TypeEquipment? typeCheck = await _context.TypesEquipment.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
             if (typeCheck == null)
             {
-                return BadRequest("Такого типа оборудования не существует");
+                return BadRequest("Запись не существует!");
             }
             if (_context.TypesEquipment.Where(x => x.Name == type.Name).Any() && type.Name != typeCheck.Name)
             {
@@ -114,7 +114,7 @@ namespace API.Controllers.DataControllers
             TypeEquipment? delete = await _context.TypesEquipment.Where(x => x.Id == id).Include(x => x.TechnicalTasks).FirstOrDefaultAsync();
             if (delete == null)
             {
-                return BadRequest("Записи не существует!");
+                return BadRequest("Запись не существует!");
             }
             if (delete.TechnicalTasks!.Any())
             {

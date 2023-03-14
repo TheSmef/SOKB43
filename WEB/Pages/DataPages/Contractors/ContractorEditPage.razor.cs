@@ -43,6 +43,16 @@ namespace WEB.Pages.DataPages.Contractors
         [Parameter]
         public Contractor? contractor { get; set; }
 
+        protected override void OnInitialized()
+        {
+            if (contractor == null)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Ошибка загрузки данных, контрагент не был задан", 4000);
+                Close();
+                return;
+            }
+        }
+
         private async Task HandleEdit()
         {
             try

@@ -65,6 +65,7 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
             {
                 NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Ошибка загрузки данных, заказ не был задан", 4000);
                 Close();
+                return;
             }
         }
 

@@ -102,7 +102,7 @@ namespace API.Controllers.DataControllers
             Contractor? contractorCheck = await _context.Conctractors.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
             if (contractorCheck == null)
             {
-                return BadRequest("Такого контрагента не существует");
+                return BadRequest("Запись не существует!");
             }
             if (_context.Conctractors.Where(x => x.Name == conctractor.Name).Any() && conctractor.Name != contractorCheck.Name)
             {
@@ -130,7 +130,7 @@ namespace API.Controllers.DataControllers
             Contractor? delete = await _context.Conctractors.Where(x => x.Id == id).Include(x => x.Orders).FirstOrDefaultAsync();
             if (delete == null)
             {
-                return BadRequest("Записи не существует!");
+                return BadRequest("Запись не существует!");
             }
             if (delete.Orders!.Any())
             {
