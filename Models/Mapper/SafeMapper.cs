@@ -104,7 +104,7 @@ namespace Models.Mapper
             test.Comment = dto.Comment;
             test.Deleted = dto.Deleted;
             test.ExpectedConclusion = dto.ExpectedConclusion;
-            test.FactCoclusion = dto.FactCoclusion;
+            test.FactConclusion = dto.FactConclusion;
             test.Passed = dto.Passed;
         }
     }

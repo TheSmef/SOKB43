@@ -263,7 +263,7 @@ namespace API.Migrations
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EquipmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ExpectedConclusion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    FactCoclusion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    FactConclusion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     TestData = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
@@ -292,17 +292,17 @@ namespace API.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "BirthDate", "First_name", "Last_name", "Otch", "PassportNumber", "PassportSeries", "PhoneNumber" },
-                values: new object[] { new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), new DateTime(1993, 3, 12, 0, 0, 0, 0, DateTimeKind.Local), "Админ", "Админ", null, "000000", "0000", "88888888888" });
+                values: new object[] { new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), new DateTime(1993, 3, 17, 0, 0, 0, 0, DateTimeKind.Local), "Админ", "Админ", null, "000000", "0000", "88888888888" });
 
             migrationBuilder.InsertData(
                 table: "Accounts",
                 columns: new[] { "UserId", "Email", "Login", "Password" },
-                values: new object[] { new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), "admin@admin.com", "admin", "$2a$11$vjrBjiSmnpGL5KZVQSm.JeoVipSDpV8h9yQcG6Y74CNlnvCBSC93y" });
+                values: new object[] { new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), "admin@admin.com", "admin", "$2a$11$0KnI9aT.6vqvhckuNCXIX.YfR6b43oVP7XsUM24KBbyA3bPzNuQpG" });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "AccountUserId", "Name" },
-                values: new object[] { new Guid("cf75871a-30a6-4cac-9b50-c3c9830d58a0"), new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), "Администратор" });
+                values: new object[] { new Guid("9e07eacc-00a7-4714-bd7a-3d063ec80d45"), new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"), "Администратор" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_Email",

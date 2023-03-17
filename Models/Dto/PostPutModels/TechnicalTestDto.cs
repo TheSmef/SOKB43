@@ -24,7 +24,7 @@ namespace Models.Dto.PostPutModels
         [Required(ErrorMessage = "Фактический результат обязателен для ввода!")]
         [MinLength(3, ErrorMessage = "Фактический результат не может быть меньше 3 символов!")]
         [MaxLength(50, ErrorMessage = "Фактический результат не может быть более 50 символов!")]
-        public string FactCoclusion { get; set; } = string.Empty;
+        public string FactConclusion { get; set; } = string.Empty;
         [Required(ErrorMessage = "Данные тестирования обязательны для ввода!")]
         [MinLength(3, ErrorMessage = "Данные тестирования не могут быть меньше 3 символов!")]
         [MaxLength(150, ErrorMessage = "Данные тестирования не могут быть более 150 символов!")]

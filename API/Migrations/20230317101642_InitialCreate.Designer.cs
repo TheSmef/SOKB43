@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230312003853_InitialCreate")]
+    [Migration("20230317101642_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -64,7 +64,7 @@ namespace API.Migrations
                             UserId = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
                             Email = "admin@admin.com",
                             Login = "admin",
-                            Password = "$2a$11$vjrBjiSmnpGL5KZVQSm.JeoVipSDpV8h9yQcG6Y74CNlnvCBSC93y"
+                            Password = "$2a$11$0KnI9aT.6vqvhckuNCXIX.YfR6b43oVP7XsUM24KBbyA3bPzNuQpG"
                         });
                 });
 
@@ -226,7 +226,7 @@ namespace API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cf75871a-30a6-4cac-9b50-c3c9830d58a0"),
+                            Id = new Guid("9e07eacc-00a7-4714-bd7a-3d063ec80d45"),
                             AccountUserId = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
                             Name = "Администратор"
                         });
@@ -337,7 +337,7 @@ namespace API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("FactCoclusion")
+                    b.Property<string>("FactConclusion")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -462,7 +462,7 @@ namespace API.Migrations
                         new
                         {
                             Id = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
-                            BirthDate = new DateTime(1993, 3, 12, 0, 0, 0, 0, DateTimeKind.Local),
+                            BirthDate = new DateTime(1993, 3, 17, 0, 0, 0, 0, DateTimeKind.Local),
                             Firstname = "Админ",
                             Lastname = "Админ",
                             PassportNumber = "000000",

@@ -22,7 +22,7 @@ namespace Models.Entity
         public string ExpectedConclusion { get; set; } = string.Empty;
         [Required]
         [StringLength(50)]
-        public string FactCoclusion { get; set; } = string.Empty;
+        public string FactConclusion { get; set; } = string.Empty;
         [Required]
         [StringLength(150)]
         public string TestData { get; set; } = string.Empty;
