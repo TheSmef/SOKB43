@@ -38,8 +38,6 @@ namespace WEB.Pages.Profile
         private IProfileService? ProfileService { get; set; }
         [Inject]
         private NotificationService? NotificationService { get; set; }
-        [CascadingParameter]
-        private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
         [Inject]
         private ILocalStorageService? StorageService { get; set; }
         [Inject]
@@ -69,7 +67,7 @@ namespace WEB.Pages.Profile
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()))
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()))
                 {
                     await LoadData(args);
                 }
@@ -112,7 +110,7 @@ namespace WEB.Pages.Profile
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()))
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()))
                 {
                     await DeleteToken(data);
                 }

@@ -65,9 +65,6 @@ namespace WEB.Pages.DataPages.Tests
         [Inject]
         private NotificationService? NotificationService { get; set; }
 
-        [CascadingParameter]
-        private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
-
         [Inject]
         private DialogService? DialogService { get; set; }
 
@@ -124,7 +121,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Отдел тестирования"}))
                 {
                     await EditTest(model);
@@ -160,7 +157,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Отдел тестирования"}))
                 {
                     await ChangeStatus(model);
@@ -194,7 +191,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Отдел тестирования"}))
                 {
                     await LoadChildData(args, model);
@@ -227,7 +224,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Отдел тестирования"}))
                 {
                     await LoadData(args);
@@ -265,7 +262,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Отдел тестирования"}))
                 {
                     await DeleteTest(model);

@@ -38,9 +38,6 @@ namespace WEB.Pages.Profile
         [Inject]
         private DialogService? DialogService { get; set; }
 
-        [CascadingParameter]
-        private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
-
         [Inject]
         private IAuthInterceptor? AuthInterceptor { get; set; }
 
@@ -78,7 +75,7 @@ namespace WEB.Pages.Profile
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()))
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()))
                 {
                     await HandleEdit();
                 }

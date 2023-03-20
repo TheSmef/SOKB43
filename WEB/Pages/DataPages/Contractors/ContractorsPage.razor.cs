@@ -47,9 +47,6 @@ namespace WEB.Pages.DataPages.Contractors
         [Inject]
         private NotificationService? NotificationService { get; set; }
 
-        [CascadingParameter]
-        private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
-
         [Inject]
         private DialogService? DialogService { get; set; }
 
@@ -87,7 +84,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Менеджер по работе с клиентами"}))
                 {
                     await EditOrder(model);
@@ -130,7 +127,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Менеджер по работе с клиентами"}))
                 {
                     await DeleteOrder(order);
@@ -164,7 +161,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Отдел кадров"}))
                 {
                     await LoadChildData(args, contractor);
@@ -218,7 +215,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Менеджер по работе с клиентами"}))
                 {
                     await EditOrder(model);
@@ -270,7 +267,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Менеджер по работе с клиентами"}))
                 {
                     await LoadData(args);
@@ -317,7 +314,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Менеджер по работе с клиентами"}))
                 {
                     await EditRecord(data);
@@ -352,7 +349,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Менеджер по работе с клиентами"}))
                 {
                     await DeleteRecord(data);

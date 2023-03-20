@@ -37,9 +37,6 @@ namespace WEB.Pages.DataPages.Services
         [Inject]
         private NotificationService? NotificationService { get; set; }
 
-        [CascadingParameter]
-        private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
-
         [Inject]
         private IAuthInterceptor? AuthInterceptor { get; set; }
 
@@ -70,7 +67,7 @@ namespace WEB.Pages.DataPages.Services
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания"}))
                 {
                     await HandleAdd();

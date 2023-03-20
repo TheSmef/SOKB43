@@ -39,9 +39,6 @@ namespace WEB.Pages.DataPages.Users
         [Inject]
         private DialogService? DialogService { get; set; }
 
-        [CascadingParameter]
-        private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
-
         [Inject]
         private IAuthInterceptor? AuthInterceptor { get; set; }
 
@@ -70,7 +67,7 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
                 {
                     await HandleAdd();
                 }

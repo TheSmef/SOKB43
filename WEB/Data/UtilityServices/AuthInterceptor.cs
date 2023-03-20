@@ -18,23 +18,19 @@ namespace WEB.Data.UtilityServices
             this.storageService = storageService;
         }
 
-        public async Task<bool> ReloadAuthState(AuthenticationState? state ,List<string> roles)
+        public async Task<bool> ReloadAuthState(List<string> roles)
         {
             try
             {
-                if (state == null)
-                {
-                    return false;
-                }
                 await storageService!.RemoveItemAsync("jwttoken");
-                await authenticationStateProvider!.GetAuthenticationStateAsync();
-                if (state.User?.Identity != null)
+                AuthenticationState stateFact = await authenticationStateProvider!.GetAuthenticationStateAsync();
+                if (stateFact.User?.Identity != null)
                 {
                     if (roles.Count != 0)
                     {
                         foreach (string value in roles)
                         {
-                            if (state!.User!.Claims.Where(x => x.Value == value).Any())
+                            if (stateFact!.User!.Claims.Where(x => x.Value == value).Any())
                             {
                                 return true;
                             }

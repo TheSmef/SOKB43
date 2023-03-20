@@ -4,6 +4,6 @@ namespace WEB.Data.UtilityServices.Base
 {
     public interface IAuthInterceptor
     {
-        public Task<bool> ReloadAuthState(AuthenticationState state ,List<string> roles);
+        public Task<bool> ReloadAuthState(List<string> roles);
     }
 }

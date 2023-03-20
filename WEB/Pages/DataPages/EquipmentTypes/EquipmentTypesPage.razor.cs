@@ -39,9 +39,6 @@ namespace WEB.Pages.DataPages.EquipmentTypes
         [Inject]
         private NotificationService? NotificationService { get; set; }
 
-        [CascadingParameter]
-        private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
-
         [Inject]
         private DialogService? DialogService { get; set; }
 
@@ -82,7 +79,7 @@ namespace WEB.Pages.DataPages.EquipmentTypes
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Технический писатель"}))
                 {
                     await LoadData(args);
@@ -127,7 +124,7 @@ namespace WEB.Pages.DataPages.EquipmentTypes
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Технический писатель"}))
                 {
                     await EditRecord(data);
@@ -162,7 +159,7 @@ namespace WEB.Pages.DataPages.EquipmentTypes
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(await AuthenticationStateTask!, new List<string>()
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Технический писатель"}))
                 {
                     await DeleteRecord(data);
