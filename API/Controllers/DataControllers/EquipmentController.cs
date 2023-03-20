@@ -100,6 +100,14 @@ namespace API.Controllers.DataControllers
             {
                 return BadRequest("Данный код оборудования занят!");
             }
+            if (!_context.TechnicalTasks.Where(x => x.Id == eqDto.TechnicalTaskId).Any())
+            {
+                return BadRequest("Данного технического задания не существует!");
+            }
+            if (!_context.Orders.Where(x => x.Id == eqDto.OrderId).Any())
+            {
+                return BadRequest("Данного заказа не существует!");
+            }
             equipment.TechnicalTask = _context.TechnicalTasks.Where(x => x.Id == eqDto.TechnicalTaskId).First();
             equipment.Order = _context.Orders.Where(x => x.Id == eqDto.OrderId).First();
             await _context.Equipments.AddAsync(equipment);
@@ -120,6 +128,14 @@ namespace API.Controllers.DataControllers
             if (_context.Equipments.Where(x => x.EquipmentCode == eqDto.EquipmentCode).Any() && eqDto.EquipmentCode != equipment.EquipmentCode)
             {
                 return BadRequest("Данный код оборудования занят!");
+            }
+            if (!_context.TechnicalTasks.Where(x => x.Id == eqDto.TechnicalTaskId).Any())
+            {
+                return BadRequest("Данного технического задания не существует!");
+            }
+            if (!_context.Orders.Where(x => x.Id == eqDto.OrderId).Any())
+            {
+                return BadRequest("Данного заказа не существует!");
             }
             SafeMapper.MapEquipmentFromEquipmentDto(eqDto, equipment);
             equipment.TechnicalTask = _context.TechnicalTasks.Where(x => x.Id == eqDto.TechnicalTaskId).First();

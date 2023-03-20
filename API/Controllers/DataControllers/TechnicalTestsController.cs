@@ -103,6 +103,10 @@ namespace API.Controllers.DataControllers
         [Authorize(Roles = "Администратор, Отдел тестирования")]
         public async Task<ActionResult<TechnicalTest>> postTechnicalTest(TechnicalTestDto testDto)
         {
+            if (!_context.Equipments.Where(x => x.Id == testDto.EquipmentId).Any())
+            {
+                return BadRequest("Данное оборудование не существует!");
+            }
             Guid id = Guid.Parse(User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).First().Value);
             TechnicalTest test = _mapper.Map<TechnicalTest>(testDto);
             test.User = _context.Users.Where(x => x.Id == id).First();
@@ -124,6 +128,10 @@ namespace API.Controllers.DataControllers
             if (test == null)
             {
                 return BadRequest("Запись не существует!");
+            }
+            if (!_context.Equipments.Where(x => x.Id == testDto.EquipmentId).Any())
+            {
+                return BadRequest("Данное оборудование не существует!");
             }
             SafeMapper.MapTechnicalTestFromDto(testDto, test);
             test.Equipment = _context.Equipments.Where(x => x.Id == testDto.EquipmentId).First();

@@ -1,0 +1,430 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Models.Attributes.DateAttribute">
+    <Position X="37" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Attributes\DateAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Attributes.GuidNotNullAttribute">
+    <Position X="31" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Attributes\GuidNotNullAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Attributes.NullableAttribute">
+    <Position X="33.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Attributes\NullableAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Dto.GetModels.BaseDtoGetModels.BaseDtoGetModel">
+    <Position X="16" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAEAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Dto\GetModels\BaseDtoGetModels\BaseDtoGetModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Dto.GetModels.ProfileModels.ProfileGetModel">
+    <Position X="37" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\GetModels\ProfileModels\ProfileGetModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Dto.GetModels.ContractorsGetDtoModel">
+    <Position X="20.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\GetModels\ContractorsGetDtoModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Collection" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Dto.GetModels.EquipmentDtoGetModel">
+    <Position X="25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\GetModels\EquipmentDtoGetModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Collection" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Dto.GetModels.EquipmentTypesGetDtoModel">
+    <Position X="4.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\GetModels\EquipmentTypesGetDtoModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Collection" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Dto.GetModels.OrderGetDtoModel">
+    <Position X="9.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\GetModels\OrderGetDtoModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Collection" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Dto.GetModels.PostsGetDtoModel">
+    <Position X="13.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\GetModels\PostsGetDtoModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Collection" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Dto.GetModels.ServiceGetDtoModel">
+    <Position X="16" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\GetModels\ServiceGetDtoModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Collection" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Dto.GetModels.TechnicalTasksGetDtoModel">
+    <Position X="18.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\GetModels\TechnicalTasksGetDtoModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Collection" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Dto.GetModels.TechnicalTestsGetDtoModel">
+    <Position X="22.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\GetModels\TechnicalTestsGetDtoModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Collection" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Dto.GetModels.TokensGetDtoModel">
+    <Position X="27.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\GetModels\TokensGetDtoModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Collection" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Dto.GetModels.UserPostsGetDtoModel">
+    <Position X="7" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\GetModels\UserPostsGetDtoModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Collection" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Dto.GetModels.UsersGetDtoModel">
+    <Position X="11.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\GetModels\UsersGetDtoModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Collection" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Dto.PostPutModels.AccountModels.AuthModel">
+    <Position X="34.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAQAAAgAAA=</HashCode>
+      <FileName>Dto\PostPutModels\AccountModels\AuthModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Dto.PostPutModels.AccountModels.RegModel">
+    <Position X="33" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAACAAAgAAAAEAQAQAgAAAAAACAABQAAAAAIA=</HashCode>
+      <FileName>Dto\PostPutModels\AccountModels\RegModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Dto.PostPutModels.AccountModels.UpdateModel">
+    <Position X="31" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAACAAAgAAAAEAQAQAgEAAAAACAABQAAAAAIA=</HashCode>
+      <FileName>Dto\PostPutModels\AccountModels\UpdateModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Dto.PostPutModels.EquipmentDto">
+    <Position X="38.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAEAAAAAAAAAAAAEAAAACAAAAABAAAAAAAAAAE=</HashCode>
+      <FileName>Dto\PostPutModels\EquipmentDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Dto.PostPutModels.OrderDto">
+    <Position X="35.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAABAAAAAAAAAAQ=</HashCode>
+      <FileName>Dto\PostPutModels\OrderDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Dto.PostPutModels.ServiceDto">
+    <Position X="35.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAEAAAAAAAAAAAAEAAAIAAAAAABAAAAAEAAAAQ=</HashCode>
+      <FileName>Dto\PostPutModels\ServiceDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Dto.PostPutModels.TechnicalTaskDto">
+    <Position X="35.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAgAAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAA=</HashCode>
+      <FileName>Dto\PostPutModels\TechnicalTaskDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Dto.PostPutModels.TechnicalTestDto">
+    <Position X="38.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAgAAAEAAAgBAAAAAAAEAEAIQAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\PostPutModels\TechnicalTestDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Dto.PostPutModels.UserDto">
+    <Position X="31.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAACAAAgAAAAEAQAQAggAAAAACAABQAAAAAIA=</HashCode>
+      <FileName>Dto\PostPutModels\UserDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Dto.PostPutModels.UserPostDto">
+    <Position X="33" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAEAAAAAEAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\PostPutModels\UserPostDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Dto.PostPutModels.UserUpdateDto">
+    <Position X="36.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAACAAAgAAAAEAQAQAggAAAAACAABQAAAAAIA=</HashCode>
+      <FileName>Dto\PostPutModels\UserUpdateDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Entity.Base.BaseModel">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity\Base\BaseModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Entity.Account">
+    <Position X="20.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAACAAAAAAAAAAAAgAAgAAAAACAAAQAAAAAAA=</HashCode>
+      <FileName>Entity\Account.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="User" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Models.Entity.Contractor">
+    <Position X="7.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAACAgAAAAAAAAQAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity\Contractor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Entity.Equipment">
+    <Position X="11.75" Y="2.25" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Models.Entity.Equipment.EquipmentStatusEnum" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Entity\Equipment.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>gAEAAAAEAAAAAAAAAAAAEAAAADAAACABAAAAAAAAAAA=</HashCode>
+      <FileName>Entity\Equipment.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Order" />
+      <Property Name="TechnicalTask" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Services" />
+      <Property Name="TechicalTests" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Entity.Order">
+    <Position X="16.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAABAAAAAAAAAgQ=</HashCode>
+      <FileName>Entity\Order.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Entity.Post">
+    <Position X="20.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Entity\Post.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="UserPosts" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Entity.Role">
+    <Position X="25.25" Y="2.25" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Models.Entity.Role.NameRole" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Entity\Role.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity\Role.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AccountUser" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Models.Entity.Service">
+    <Position X="29.75" Y="2.25" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Models.Entity.Service.ServiceTypeEnum" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Entity\Service.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Models.Entity.Service.ServiceStatusEnum" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Entity\Service.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAIAAAEAAAAAAAAAAAAEAQAAAAAAAABAAAAAEAAAAQ=</HashCode>
+      <FileName>Entity\Service.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Equipment" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Models.Entity.TechnicalTask">
+    <Position X="5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAIAAgAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAgA=</HashCode>
+      <FileName>Entity\TechnicalTask.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TypeEquipment" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Equipments" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Entity.TechnicalTest">
+    <Position X="9.5" Y="2.25" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Models.Entity.TechnicalTest.TestPriorityEnum" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Entity\TechnicalTest.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>EAAhAAAEAAAgBAAAAAAAEAUAAQAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Entity\TechnicalTest.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Equipment" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Models.Entity.Token">
+    <Position X="14" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAABAAAAAAAAAEA=</HashCode>
+      <FileName>Entity\Token.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Account" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Models.Entity.TypeEquipment">
+    <Position X="18.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity\TypeEquipment.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="TechnicalTasks" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Entity.User">
+    <Position X="23" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAgAAAAEAQAQAAAAAAAAAAABgAAAAAMA=</HashCode>
+      <FileName>Entity\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Account" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="UserPosts" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Entity.UserPost">
+    <Position X="27.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAARAAAAAAAAAAAAAAAAEAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity\UserPost.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Post" />
+      <Property Name="User" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Models.Mapper.AutoMapperProfile">
+    <Position X="35" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapper\AutoMapperProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Mapper.SafeMapper">
+    <Position X="33.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAggAAAAAAAACEAAAAAAAA=</HashCode>
+      <FileName>Mapper\SafeMapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.QuerySupporter.QuerySupporter">
+    <Position X="37" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAgAAAABAIAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>QuerySupporter\QuerySupporter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.Utility.EnumUtility">
+    <Position X="37" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\EnumUtility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

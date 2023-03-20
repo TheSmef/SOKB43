@@ -94,6 +94,10 @@ namespace API.Controllers.DataControllers
         [HttpPost]
         public async Task<ActionResult<Service>> postService(ServiceDto serviceDto)
         {
+            if (!_context.Equipments.Where(x => x.Id == serviceDto.EquipmentId).Any())
+            {
+                return BadRequest("Данное оборудование не существует!");
+            }
             Service service = _mapper.Map<Service>(serviceDto);
             service.Equipment = _context.Equipments.Where(x => x.Id == serviceDto.EquipmentId).First();
             await _context.Services.AddAsync(service);
@@ -108,6 +112,10 @@ namespace API.Controllers.DataControllers
             if (serviceCheck == null)
             {
                 return BadRequest("Запись не существует!");
+            }
+            if (!_context.Equipments.Where(x => x.Id == serviceDto.EquipmentId).Any())
+            {
+                return BadRequest("Данное оборудование не существует!");
             }
             SafeMapper.MapServiceFromServiceDto(serviceDto, serviceCheck);
             serviceCheck.Equipment = _context.Equipments.Where(x => x.Id == serviceDto.EquipmentId).First();

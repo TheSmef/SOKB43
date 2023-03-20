@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="API.Controllers.AccountsController.AuthController">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAIAAAABAAAAAABAAAAAAAAAAAAAAEAAgAAAAA=</HashCode>
+      <FileName>Controllers\AccountControllers\AuthController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="API.Controllers.AccountsController.ProfileController">
+    <Position X="3.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAABAAAAAAFAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\AccountControllers\ProfileController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="API.Controllers.DataControllers.ContractorsController">
+    <Position X="3.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAABAAABAAAABAAAACAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\DataControllers\ContractorsController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="API.Controllers.DataControllers.EquipmentController">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABBAAAAABAAACAAAAAAACCAAACAAAAAA=</HashCode>
+      <FileName>Controllers\DataControllers\EquipmentController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="API.Controllers.DataControllers.EquipmentTypesController">
+    <Position X="9.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAABAAAEAQAAAAAAAAAAAAAAAAIAQAAAAA=</HashCode>
+      <FileName>Controllers\DataControllers\EquipmentTypesController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="API.Controllers.DataControllers.OrdersController">
+    <Position X="6.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAgABAAAAFAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Controllers\DataControllers\OrdersController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="API.Controllers.DataControllers.PostsController">
+    <Position X="3.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAEgAAAAAAQAAAAAEAAAAAEAA=</HashCode>
+      <FileName>Controllers\DataControllers\PostsController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="API.Controllers.DataControllers.ServicesController">
+    <Position X="3.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEBAAAAAABEAgAAAACAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\DataControllers\ServicesController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="API.Controllers.DataControllers.TechnicalTasksController">
+    <Position X="6.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABBAAAAABkEAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Controllers\DataControllers\TechnicalTasksController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="API.Controllers.DataControllers.TechnicalTestsController">
+    <Position X="0.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAABAAIAAAAAAAAAAAAAIAAAgEg=</HashCode>
+      <FileName>Controllers\DataControllers\TechnicalTestsController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="API.Controllers.DataControllers.UserPostsController">
+    <Position X="12.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAABAAAIAAAAAAAgBAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Controllers\DataControllers\UserPostsController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="API.Controllers.DataControllers.UsersController">
+    <Position X="9.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAACAAAAAABAAAAAABAAAAAAAiAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Controllers\DataControllers\UsersController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="API.Controllers.UtilityControllers.EnumsController">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACgAAEAAAAAAAAAAAAAAABAAAAAAAQ=</HashCode>
+      <FileName>Controllers\UtilityControllers\EnumsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="API.Data.DataContext">
+    <Position X="6.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAEAACAAAAAAAMAABABAAAAAEgAABACAAAAgAAABAgA=</HashCode>
+      <FileName>Data\DataContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="API.Migrations.InitialCreate">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20230317101642_InitialCreate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="API.Migrations.DataContextModelSnapshot">
+    <Position X="11.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Migrations\DataContextModelSnapshot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="API.Security.HashProvider">
+    <Position X="14.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Security\HashProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="API.Utility.PageCounter">
+    <Position X="13.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\PageCounter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="API.Utility.TokenHandler">
+    <Position X="14.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Utility\TokenHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

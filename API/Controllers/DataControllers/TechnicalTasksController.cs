@@ -94,6 +94,10 @@ namespace API.Controllers.DataControllers
             {
                 return BadRequest("Техническое задание с данным названием оборудования уже существует!");
             }
+            if (!_context.TypesEquipment.Where(x => x.Id == taskDto.TypeEquipmentId).Any())
+            {
+                return BadRequest("Данный тип оборудования не существует!");
+            }
             TechnicalTask task = _mapper.Map<TechnicalTask>(taskDto);
             task.TypeEquipment = _context.TypesEquipment.Where(x => x.Id == taskDto.TypeEquipmentId).First();
 
@@ -114,6 +118,10 @@ namespace API.Controllers.DataControllers
             if (_context.TechnicalTasks.Where(x => x.NameEquipment == taskDto.NameEquipment).Any() && taskCheck.NameEquipment != taskDto.NameEquipment)
             {
                 return BadRequest("Техническое задание с данным названием оборудования уже существует!");
+            }
+            if (!_context.TypesEquipment.Where(x => x.Id == taskDto.TypeEquipmentId).Any())
+            {
+                return BadRequest("Данный тип оборудования не существует!");
             }
             SafeMapper.MapTechnicalTaskFromTechnicalTaskDto(taskDto, taskCheck);
             taskCheck.TypeEquipment = _context.TypesEquipment.Where(x => x.Id == taskDto.TypeEquipmentId).First();

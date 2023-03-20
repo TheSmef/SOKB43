@@ -85,6 +85,10 @@ namespace API.Controllers.DataControllers
         [HttpPost]
         public async Task<ActionResult<Order>> postOrder(OrderDto order)
         {
+            if (!_context.Conctractors.Where(x => x.Id == order.ContractorId).Any())
+            {
+                return BadRequest("Данный контрагент не существует!");
+            }
             Order orderPost = new Order();
             orderPost.Date = order.Date;
             orderPost.Contractor = _context.Conctractors.Where(x => x.Id == order.ContractorId).First();
@@ -101,6 +105,10 @@ namespace API.Controllers.DataControllers
             if (orderCheck == null)
             {
                 return BadRequest("Запись не существует!");
+            }
+            if (!_context.Conctractors.Where(x => x.Id == orderDto.ContractorId).Any())
+            {
+                return BadRequest("Данный контрагент не существует!");
             }
             orderCheck.Date = orderDto.Date;
             orderCheck.Contractor = _context.Conctractors.Where(x => x.Id == orderDto.ContractorId).First();
