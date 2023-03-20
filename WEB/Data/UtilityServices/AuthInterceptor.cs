@@ -23,14 +23,14 @@ namespace WEB.Data.UtilityServices
             try
             {
                 await storageService!.RemoveItemAsync("jwttoken");
-                AuthenticationState stateFact = await authenticationStateProvider!.GetAuthenticationStateAsync();
-                if (stateFact.User?.Identity != null)
+                AuthenticationState state = await authenticationStateProvider!.GetAuthenticationStateAsync();
+                if (state.User?.Identity != null)
                 {
                     if (roles.Count != 0)
                     {
                         foreach (string value in roles)
                         {
-                            if (stateFact!.User!.Claims.Where(x => x.Value == value).Any())
+                            if (state!.User!.Claims.Where(x => x.Value == value).Any())
                             {
                                 return true;
                             }
