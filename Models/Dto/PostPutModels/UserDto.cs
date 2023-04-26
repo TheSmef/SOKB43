@@ -13,7 +13,7 @@ namespace Models.Dto.PostPutModels
     public class UserDto
     {
         [Required(ErrorMessage = "Электронная почта обязательна для ввода!")]
-        [EmailAddress(ErrorMessage = "Неправильный формат электронной почты!")]
+        [RegularExpression("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", ErrorMessage = "Неправильный формат электронной почты!")]
         [MaxLength(255, ErrorMessage = "Электронная почта не может быть более 255 символов!")]
         public string Email { get; set; } = string.Empty;
         [Required(ErrorMessage = "Пароль обязателен для ввода!")]

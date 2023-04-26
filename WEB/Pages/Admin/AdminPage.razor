@@ -1,0 +1,50 @@
+﻿@page "/admin"
+
+@using MudBlazor;
+@using WEB.Data.Services.Base;
+@using WEB.Data.UtilityServices.Base;
+@using WEB.Utility;
+@attribute [Authorize]
+
+
+<PageTitle>Администрирование</PageTitle>
+
+<AuthorizeView Roles="Администратор" Context="_context">
+    <Authorized>
+        <RadzenContent Container="main">
+            <ChildContent>
+                <RadzenHeading Size="H1" Text="Администрирование">
+                </RadzenHeading>
+                <div class="row" >
+                    <div class="col-md-4" style="width: 100%">
+                        <RadzenCard>
+                            <RadzenButton Icon="assignment_returned" style="margin-bottom: 10px" Text="Создать резервную копию базы данных" Click="GetBackUpFile">
+                            </RadzenButton>
+                            <MudFileUpload T="IBrowserFile" FilesChanged="UploadFile" Accept=".bak">
+                                <ButtonTemplate>
+                                    <MudButton HtmlTag="label"
+                                               DisableElevation="true"
+                                               Variant="MudBlazor.Variant.Filled"
+                                               Color="Color.Inherit"
+                                               IconSize="Size.Large"
+                                               StartIcon="@Icons.Material.Filled.CloudUpload"
+                                               Style="text-transform: none"
+                                               for="@context">
+                                        Востановить базу данных
+                                    </MudButton>
+                                </ButtonTemplate>
+                            </MudFileUpload>
+                        </RadzenCard>
+                    </div>
+
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </Authorized>
+    <NotAuthorized>
+        <RadzenLabel Style="text-align:center" Text="@ConstantValues.ERROR_CLAIMS" />
+    </NotAuthorized>
+</AuthorizeView>
+
+
+

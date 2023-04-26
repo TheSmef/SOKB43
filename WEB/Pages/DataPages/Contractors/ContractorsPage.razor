@@ -8,6 +8,7 @@
 @using Models.QuerySupporter;
 @using System.Security.Claims;
 @using Models.Utility;
+@using System.Globalization;
 @using WEB.Data.Services.Base;
 @using WEB.Data.UtilityServices.Base;
 @using WEB.Pages.DataPages.Contractors.Orders;
@@ -30,6 +31,8 @@
                     <div class="col-md-12">
                         <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Добавить" Click="@AddRecord">
                         </RadzenButton>
+                        <RadzenButton Icon="donut_large" ButtonStyle="ButtonStyle.Success" style="margin-bottom: 10px" Text="Общая статистика" Click="@(() => CheckStats())">
+                        </RadzenButton>
                         <RadzenDataGrid @ref="grid" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" ExpandMode=DataGridExpandMode.Single AllowPaging="true" AllowSorting="true" TItem="Contractor" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
                                         EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
                                         StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
@@ -39,6 +42,8 @@
                             <Template Context="data">
                                 <RadzenHeading Size="H2" Text="Заказы контрагента" />
                                 <RadzenButton Icon="add_circle_outline" style="margin-left: 10px; margin-right: 10px; margin-bottom: 10px" Text="Добавить" Click="@(() => AddOrder(data))" />
+                                <RadzenButton Icon="donut_large" ButtonStyle="ButtonStyle.Success" style="margin-bottom: 10px" Text="Статистика контрагента" Click="@(() => CheckStats(data))">
+                                </RadzenButton>
                                 <RadzenDataGrid @ref=childgrid Data="@(orders!.Collection)" TItem="Order" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" ExpandMode=DataGridExpandMode.Single AllowSorting="true" TItem="User" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
                                                 EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
                                                 StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
@@ -52,6 +57,12 @@
                                             </Template>
                                         </RadzenDataGridColumn>
                                         <RadzenDataGridColumn TItem="Order" Property="Sum" Width="50%" MinWidth="140px" Title="Сумма заказа">
+                                            <Template Context="order">
+                                                @(order.Sum.ToString("C2"))
+                                            </Template>
+                                            <FooterTemplate>
+                                                @($"Общая сумма заказов: {orders!.Total.ToString("C2")}")
+                                            </FooterTemplate>
                                         </RadzenDataGridColumn>
                                         <RadzenDataGridColumn TItem="Order" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
                                             <Template Context="_context">

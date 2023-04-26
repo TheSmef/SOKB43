@@ -37,6 +37,9 @@
                                 <RadzenDataGridColumn TItem="Post" Property="Name" Width="70%" MinWidth="180px" Title="Название должности">
                                 </RadzenDataGridColumn>
                                 <RadzenDataGridColumn TItem="Post" Property="Salary" Width="40%" MinWidth="180px" Title="Зарплата">
+                                    <Template Context="post">
+                                        @(post.Salary.ToString("C2"))
+                                    </Template>
                                 </RadzenDataGridColumn>
                                 <RadzenDataGridColumn TItem="Post" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
                                     <Template Context="_context">

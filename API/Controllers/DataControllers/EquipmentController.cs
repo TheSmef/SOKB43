@@ -17,6 +17,11 @@ using Models.Dto.PostPutModels;
 using Models.Dto.GetModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using Models.Dto.StatsModels.GetModels;
+using Models.Dto.StatsModels.ParamModels;
+using ClosedXML.Excel;
+using Models.Dto.FileModels;
+using Models.ExportModels;
 
 namespace API.Controllers.DataControllers
 {
@@ -33,6 +38,78 @@ namespace API.Controllers.DataControllers
         {
             _context = context;
             _mapper = mapper;
+        }
+
+        [HttpGet("Export")]
+        [Authorize(Roles = "Администратор, Менеджер по работе с клиентами")]
+        public async Task<ActionResult<FileModel>> exportEquipment(
+            [FromQuery] QuerySupporter query)
+        {
+            var items = _context.Equipments.Include(x => x.TechnicalTask)
+                .ThenInclude(x => x!.TypeEquipment).AsQueryable();
+            if (query == null)
+            {
+                return BadRequest("Нет параметров для данных!");
+            }
+            if (!string.IsNullOrEmpty(query.Filter))
+            {
+                if (query.FilterParams != null)
+                {
+                    items = items.Where(query.Filter, query.FilterParams);
+                }
+                else
+                {
+                    items = items.Where(query.Filter);
+                }
+            }
+            if (!string.IsNullOrEmpty(query.OrderBy))
+            {
+                items = items.OrderBy(query.OrderBy);
+            }
+            List<EquipmentExportModel> export = new List<EquipmentExportModel>();
+            foreach(var item in await items.ToListAsync())
+            {
+                export.Add(SafeMapper.MapEquipmentForExport(item));
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                XLWorkbook wb = ExcelExporter.getExcelReport(export, "Оборудование");
+                wb.SaveAs(ms);
+                FileModel response = new FileModel() { Name = $"Оборудование_{DateTime.Today.ToShortDateString()}.xlsx", Data = ms.ToArray() };
+                return Ok(response);
+            }
+        }
+
+        [HttpGet("Stats")]
+        [Authorize(Roles = "Администратор, Менеджер по работе с клиентами")]
+        public async Task<ActionResult<List<EquipmentTypesStatsModel>>> GetTypesStats(
+            [FromQuery] DateQuery query, [FromQuery] Guid? id)
+        {
+            if (query.StartDate.AddMonths(3) < query.EndDate)
+            {
+                return BadRequest("Период просмотра статистики не должен превышать 3 месяцев");
+            }
+            var items = _context.Equipments.Where(x => x.Order!.Date >= query.StartDate && x.Order!.Date <= query.EndDate && x.Deleted == false);
+            if (!_context.Conctractors.Where(x => x.Id == id).Any() && id != null)
+            {
+                return BadRequest("Данного контрагента не существует");
+            }
+            else if (id != null)
+            {
+                items = items.Where(x => x.Order!.Contractor!.Id == id);
+            }
+            List<TypeEquipment> types = await items.Select(x => x.TechnicalTask!.TypeEquipment!).GroupBy(x => x.Name).Select(x => x.First()).ToListAsync();
+            List<EquipmentTypesStatsModel> responce = new List<EquipmentTypesStatsModel>();
+            foreach (var type in types)
+            {
+                responce.Add(new EquipmentTypesStatsModel()
+                {
+                    TypeName = type.Name,
+                    Amount = items.Where(x => x.TechnicalTask!.TypeEquipment!.Id == type.Id).Count()
+                });
+            }
+            return Ok(responce);
         }
 
 
@@ -149,12 +226,12 @@ namespace API.Controllers.DataControllers
         [Authorize(Roles = "Администратор, Менеджер по работе с клиентами")]
         public async Task<ActionResult> deleteEquipment([FromQuery] Guid id)
         {
-            Equipment? delete = await _context.Equipments.Where(x => x.Id == id).Include(x => x.Services).Include(x => x.TechicalTests).FirstOrDefaultAsync();
+            Equipment? delete = await _context.Equipments.Where(x => x.Id == id).Include(x => x.Services).Include(x => x.TechnicalTests).FirstOrDefaultAsync();
             if (delete == null)
             {
                 return BadRequest("Запись не существует!");
             }
-            if (delete.Services!.Any() || delete.TechicalTests!.Any())
+            if (delete.Services!.Any() || delete.TechnicalTests!.Any())
             {
                 return BadRequest("Невозможно удалить запись, у неё присутствуют дочерние записи!");
             }

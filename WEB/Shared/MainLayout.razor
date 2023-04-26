@@ -1,4 +1,5 @@
 ﻿@using Blazored.LocalStorage;
+@using MudBlazor
 @using WEB.Data.Services.Base;
 @using WEB.Utility;
 @inherits LayoutComponentBase
@@ -9,6 +10,7 @@
 <RadzenNotification />
 <RadzenContextMenu />
 <RadzenTooltip />
+<MudThemeProvider/>
 
 <PageTitle>СОКБ-43</PageTitle>
 
@@ -90,6 +92,14 @@
                             <Authorized>
                                 <RadzenPanelMenuItem Text="Тестирование" Icon="bug_report">
                                     <RadzenPanelMenuItem Text="Тестирование оборудования" Path="tests">
+                                    </RadzenPanelMenuItem>
+                                </RadzenPanelMenuItem>
+                            </Authorized>
+                        </AuthorizeView>
+                        <AuthorizeView Roles="Администратор">
+                            <Authorized>
+                                <RadzenPanelMenuItem Text="Администрирование" Icon="language">
+                                    <RadzenPanelMenuItem Text="Работа с базой данных" Path="admin">
                                     </RadzenPanelMenuItem>
                                 </RadzenPanelMenuItem>
                             </Authorized>

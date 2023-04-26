@@ -30,7 +30,7 @@ namespace Models.Entity
         [Required]
         public bool Deleted { get; set; } = false;
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public virtual List<TechnicalTest>? TechicalTests { get; set; }
+        public virtual List<TechnicalTest>? TechnicalTests { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public virtual List<Service>? Services { get; set; }
 

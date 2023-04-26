@@ -1,4 +1,6 @@
-﻿using Models.QuerySupporter;
+﻿using Models.Dto.StatsModels.ParamModels;
+using Models.QuerySupporter;
+using System.Text.Json.Serialization;
 
 namespace WEB.Utility
 {
@@ -20,6 +22,16 @@ namespace WEB.Utility
                     uriquery.Add("FilterParam", param);
                 }
             }
+            return uriquery;
+        }
+
+        public static Dictionary<string, string> MapToQuery(DateQuery query)
+        {
+            var uriquery = new Dictionary<string, string>
+                {
+                        { "StartDate", query.StartDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") },
+                        { "EndDate", query.EndDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") },
+                };
             return uriquery;
         }
     }

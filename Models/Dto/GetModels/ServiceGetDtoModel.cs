@@ -11,5 +11,6 @@ namespace Models.Dto.GetModels
     public class ServiceGetDtoModel : BaseDtoGetModel
     {
         public ICollection<Service>? Collection { get; set; }
+        public decimal Total { get; set; }
     }
 }

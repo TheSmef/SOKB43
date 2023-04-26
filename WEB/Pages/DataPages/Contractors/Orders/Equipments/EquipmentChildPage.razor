@@ -25,6 +25,7 @@
                     <div class="col-md-12">
                         <div style="display: inline-block; white-space: nowrap">
                             <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Добавить" Click="@AddRecord" />
+                            <RadzenButton Icon="get_app" ButtonStyle="ButtonStyle.Light" style="margin-bottom: 10px; margin-left: 10px;" Text="Экспортировать" Click="@ExportEquipment" />
                             <RadzenButton Icon="delete_forever" ButtonStyle="ButtonStyle.Warning" style="margin-left: 10px; margin-right: 10px; margin-bottom: 10px" Text="Просмотр корзины" Click="@CheckRecyclerBin" />
                         </div>
                         <RadzenDataGrid @ref="grid" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" AllowSorting="true" TItem="Equipment" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"

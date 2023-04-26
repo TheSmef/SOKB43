@@ -1,0 +1,58 @@
+﻿@using Models.Dto.StatsModels.GetModels;
+@using Models.Dto.StatsModels.ParamModels;
+@using Models.Entity;
+@using WEB.Data.Services.Base;
+@using WEB.Data.UtilityServices.Base;
+@using WEB.Utility;
+
+<RadzenContent Container="main">
+    <ChildContent>
+        <div style="margin-bottom: 1rem" class="flex-column">
+            <div>
+                <RadzenLabel Text="Дата начала периода" Component="Date" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div>
+                <RadzenDatePicker @bind-Value=@(query.StartDate) DateFormat="d" Class="w-100" Max="query.EndDate" />
+            </div>
+        </div>
+        <div style="margin-bottom: 1rem" class="flex-column">
+            <div>
+                <RadzenLabel Text="Дата конца периода" Component="Date" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div>
+                <RadzenDatePicker @bind-Value=@(query.EndDate) DateFormat="d" Class="w-100" Min="query.StartDate" />
+            </div>
+        </div>
+        <div>
+            <RadzenButton Icon="cached" Text="Составить" ButtonStyle="ButtonStyle.Primary" Click="@Load">
+            </RadzenButton>
+        </div>
+        <div style="margin-bottom: 1rem" class="flex-column">
+            <div>
+                <RadzenChart>
+                    <RadzenPieSeries Data="@typestats" Title="Количество оборудования" CategoryProperty="TypeName" ValueProperty="Amount">
+                    </RadzenPieSeries>
+                    <RadzenLegend Position="LegendPosition.Bottom">
+                    </RadzenLegend>
+                </RadzenChart>
+            </div>
+        </div>
+        <div style="margin-bottom: 1rem" class="flex-column">
+            <div>
+                <RadzenChart>
+                    <RadzenAreaSeries Interpolation="@Interpolation.Line" Data="@incomestats" CategoryProperty="Date" Title="Сумма доходов" ValueProperty="Total" />
+                    <RadzenCategoryAxis Padding="20" Formatter="@Formater.FormatDate" />
+                    <RadzenValueAxis Formatter="@Formater.FormatSum">
+                        <RadzenGridLines Visible="true" />
+                        <RadzenAxisTitle Text="Сумма доходов" />
+                    </RadzenValueAxis>
+                    <RadzenLegend Visible="false" />
+                </RadzenChart>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>
+
+

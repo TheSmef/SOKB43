@@ -11,5 +11,6 @@ namespace Models.Dto.GetModels
     public class OrderGetDtoModel : BaseDtoGetModel
     {
         public ICollection<Order>? Collection { get; set; }
+        public decimal Total { get; set; }
     }
 }

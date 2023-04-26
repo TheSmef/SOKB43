@@ -47,7 +47,7 @@ namespace API.Controllers.AccountsController
         }
 
         [HttpGet("Tokens")]
-        public async Task<ActionResult<ICollection<Token>>> getCurrentTokens([FromQuery] QuerySupporter query)
+        public async Task<ActionResult<TokensGetDtoModel>> getCurrentTokens([FromQuery] QuerySupporter query)
         {
             Guid id = Guid.Parse(User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).First().Value);
             var items = _context.Tokens.Where(x => x.Account!.UserId == id);

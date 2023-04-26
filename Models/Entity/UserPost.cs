@@ -14,5 +14,7 @@ namespace Models.Entity
         [Required]
         public decimal Share { get; set; }
         public bool Deleted { get; set; } = false;
+        [NotMapped]
+        public decimal Salary { get { return Share*Post!.Salary; } }
     }
 }

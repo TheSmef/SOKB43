@@ -18,6 +18,8 @@ using Models.Dto.GetModels;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using System.Security.Claims;
+using ClosedXML.Excel;
+using Models.Dto.FileModels;
 
 namespace API.Controllers.DataControllers
 {
@@ -34,6 +36,39 @@ namespace API.Controllers.DataControllers
         {
             _context = context;
             _mapper = mapper;
+        }
+
+        [HttpGet("Export")]
+        public async Task<ActionResult<FileModel>> exportTechnicalTests(
+            [FromQuery] QuerySupporter query)
+        {
+            var items = _context.TechnicalTests.AsQueryable();
+            if (query == null)
+            {
+                return BadRequest("Нет параметров для данных!");
+            }
+            if (!string.IsNullOrEmpty(query.Filter))
+            {
+                if (query.FilterParams != null)
+                {
+                    items = items.Where(query.Filter, query.FilterParams);
+                }
+                else
+                {
+                    items = items.Where(query.Filter);
+                }
+            }
+            if (!string.IsNullOrEmpty(query.OrderBy))
+            {
+                items = items.OrderBy(query.OrderBy);
+            }
+            using (MemoryStream ms = new MemoryStream())
+            {
+                XLWorkbook wb = ExcelExporter.getExcelReport(await items.ToListAsync(), "Тестирования");
+                wb.SaveAs(ms);
+                FileModel response = new FileModel() { Name = $"Тестирования_{DateTime.Today.ToShortDateString()}.xlsx", Data = ms.ToArray() };
+                return Ok(response);
+            }
         }
 
 

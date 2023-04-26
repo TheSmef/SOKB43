@@ -11,5 +11,6 @@ namespace Models.Dto.GetModels
     public class UserPostsGetDtoModel : BaseDtoGetModel
     {
         public ICollection<UserPost>? Collection { get; set; }
+        public decimal Total { get; set; }
     }
 }

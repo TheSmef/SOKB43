@@ -17,6 +17,8 @@ using Models.Dto.PostPutModels;
 using Models.Dto.GetModels;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using ClosedXML.Excel;
+using Models.Dto.FileModels;
 
 namespace API.Controllers.DataControllers
 {
@@ -31,6 +33,39 @@ namespace API.Controllers.DataControllers
         {
             _context = context;
             _mapper = mapper;
+        }
+
+        [HttpGet("Export")]
+        public async Task<ActionResult<FileModel>> exportServices(
+            [FromQuery] QuerySupporter query)
+        {
+            var items = _context.Services.AsQueryable();
+            if (query == null)
+            {
+                return BadRequest("Нет параметров для данных!");
+            }
+            if (!string.IsNullOrEmpty(query.Filter))
+            {
+                if (query.FilterParams != null)
+                {
+                    items = items.Where(query.Filter, query.FilterParams);
+                }
+                else
+                {
+                    items = items.Where(query.Filter);
+                }
+            }
+            if (!string.IsNullOrEmpty(query.OrderBy))
+            {
+                items = items.OrderBy(query.OrderBy);
+            }
+            using (MemoryStream ms = new MemoryStream())
+            {
+                XLWorkbook wb = ExcelExporter.getExcelReport(await items.ToListAsync(), "Обслуживание");
+                wb.SaveAs(ms);
+                FileModel response = new FileModel() { Name = $"Обслуживание_{DateTime.Today.ToShortDateString()}.xlsx", Data = ms.ToArray() };
+                return Ok(response);
+            }
         }
 
         [HttpGet]
@@ -72,6 +107,7 @@ namespace API.Controllers.DataControllers
             serviceGetDtoModel.CurrentPageIndex = serviceGetDtoModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);
             serviceGetDtoModel.Collection = await items.ToListAsync();
+            serviceGetDtoModel.Total = items.Sum(x => x.Sum);
             return Ok(serviceGetDtoModel);
         }
 

@@ -61,7 +61,7 @@ namespace WEB.Pages.DataPages.Contractors.Orders
             try
             {
                 await OrderService!.UpdateOrder(order, orderEdit!.Id);
-                NotificationService!.Notify(NotificationSeverity.Success, "Успешное изменение!", "Заказ успешно изменеён", 4000);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешное изменение!", "Заказ успешно изменён", 4000);
                 Close();
             }
             catch (UnAuthException)

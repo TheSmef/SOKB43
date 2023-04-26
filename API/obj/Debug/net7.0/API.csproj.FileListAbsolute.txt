@@ -864,3 +864,12 @@ C:\Users\User\Documents\GitHub\SOKB43\API\obj\Debug\net7.0\refint\API.dll
 C:\Users\User\Documents\GitHub\SOKB43\API\obj\Debug\net7.0\API.pdb
 C:\Users\User\Documents\GitHub\SOKB43\API\obj\Debug\net7.0\API.genruntimeconfig.cache
 C:\Users\User\Documents\GitHub\SOKB43\API\obj\Debug\net7.0\ref\API.dll
+C:\Users\User\Documents\GitHub\SOKB43\API\bin\Debug\net7.0\ClosedXML.dll
+C:\Users\User\Documents\GitHub\SOKB43\API\bin\Debug\net7.0\ClosedXML.Report.dll
+C:\Users\User\Documents\GitHub\SOKB43\API\bin\Debug\net7.0\DocumentFormat.OpenXml.dll
+C:\Users\User\Documents\GitHub\SOKB43\API\bin\Debug\net7.0\ExcelNumberFormat.dll
+C:\Users\User\Documents\GitHub\SOKB43\API\bin\Debug\net7.0\Irony.dll
+C:\Users\User\Documents\GitHub\SOKB43\API\bin\Debug\net7.0\MoreLinq.dll
+C:\Users\User\Documents\GitHub\SOKB43\API\bin\Debug\net7.0\SixLabors.Fonts.dll
+C:\Users\User\Documents\GitHub\SOKB43\API\bin\Debug\net7.0\System.IO.Packaging.dll
+C:\Users\User\Documents\GitHub\SOKB43\API\bin\Debug\net7.0\XLParser.dll

@@ -28,6 +28,8 @@
         public const string SERVICEADD_TITLE = "Добавление обслуживания";
         public const string SERVICEEDIT_TITLE = "Изменение обслуживания";
         public const string ORDERADD_TITLE = "Добавление заказа";
+        public const string ALL_STATS_TITLE = "Общая статистика";
+        public const string STATS_TITLE = "Статистика контрагента ";
         public const string ORDEREDIT_TITLE = "Изменение заказа";
         public const string EQADD_TITLE = "Добавление оборудования";
         public const string EQEDIT_TITLE = "Изменение оборудования";

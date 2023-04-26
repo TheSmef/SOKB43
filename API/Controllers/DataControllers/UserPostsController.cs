@@ -61,6 +61,7 @@ namespace API.Controllers.DataControllers
             }
             userPostsGetDtoModel.TotalPages = PageCounter.CountPages(items.Count(), query.Top);
             userPostsGetDtoModel.ElementsCount = items.Count();
+            userPostsGetDtoModel.Total = items.ToList().Sum(x => x.Salary);
             items = items.Skip(query.Skip);
             userPostsGetDtoModel.CurrentPageIndex = userPostsGetDtoModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);

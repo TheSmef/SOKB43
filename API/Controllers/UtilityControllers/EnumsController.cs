@@ -24,21 +24,21 @@ namespace API.Controllers.UtilityControllers
 
         [HttpGet("EquipmentStatus")]
         [Authorize(Roles = "Администратор, Менеджер по работе с клиентами, Отдел тестирования, Отдел обслуживания")]
-        public ActionResult getEquipmentStatuses()
+        public ActionResult<List<string>> getEquipmentStatuses()
         {
             return Ok(EnumUtility.GetStringsValues(typeof(EquipmentStatusEnum)));
         }
 
         [HttpGet("ServiceStatus")]
         [Authorize(Roles = "Администратор, Менеджер по работе с клиентами, Отдел обслуживания")]
-        public ActionResult getServiceStatuses()
+        public ActionResult<List<string>> getServiceStatuses()
         {
             return Ok(EnumUtility.GetStringsValues(typeof(ServiceStatusEnum)));
         }
 
         [HttpGet("TestPriority")]
         [Authorize(Roles = "Администратор, Отдел тестирования")]
-        public ActionResult getTestPriorities()
+        public ActionResult<List<string>> getTestPriorities()
         {
             return Ok(EnumUtility.GetStringsValues(typeof(TestPriorityEnum)));
         }
@@ -46,7 +46,7 @@ namespace API.Controllers.UtilityControllers
 
         [HttpGet("Roles")]
         [Authorize(Roles = "Администратор, Отдел кадров")]
-        public ActionResult getRoles()
+        public ActionResult<List<string>> getRoles()
         {
             return Ok(EnumUtility.GetStringsValues(typeof(TestPriorityEnum)));
         }

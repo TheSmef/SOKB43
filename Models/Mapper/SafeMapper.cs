@@ -1,6 +1,7 @@
 ﻿using Models.Dto.PostPutModels;
 using Models.Dto.PostPutModels.AccountModels;
 using Models.Entity;
+using Models.ExportModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,6 +77,17 @@ namespace Models.Mapper
             equipment.EquipmentCode = dto.EquipmentCode;
             equipment.Date = dto.Date;
             equipment.Deleted = dto.Deleted;
+        }
+
+        public static EquipmentExportModel MapEquipmentForExport(Equipment equipment)
+        {
+            EquipmentExportModel model = new EquipmentExportModel();
+            model.NameEquipment = equipment.TechnicalTask!.NameEquipment;
+            model.TypeEquipment = equipment.TechnicalTask!.TypeEquipment!.Name;
+            model.EquipmentCode = equipment.EquipmentCode;
+            model.Date = equipment.Date;
+            model.Status = equipment.Status;
+            return model;
         }
 
         public static void MapTechnicalTaskFromTechnicalTaskDto(TechnicalTaskDto dto, TechnicalTask task)

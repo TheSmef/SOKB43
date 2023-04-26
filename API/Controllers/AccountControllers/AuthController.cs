@@ -2,13 +2,16 @@
 using API.Security;
 using API.Utility;
 using AutoMapper;
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Models.Dto.FileModels;
 using Models.Dto.PostPutModels;
 using Models.Dto.PostPutModels.AccountModels;
 using Models.Entity;
+using MoreLinq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -34,8 +37,9 @@ namespace API.Controllers.AccountsController
             _mapper = mapper;
             _configuration = configuration;
         }
+
         [HttpPost]
-        public async Task<ActionResult> signUn(RegModel model)
+        public async Task<ActionResult<string>> signUn(RegModel model)
         {
             User user = _mapper.Map<User>(model);
             user.Account = _mapper.Map<Account>(model);
@@ -71,7 +75,7 @@ namespace API.Controllers.AccountsController
         }
 
         [HttpPut]
-        public async Task<ActionResult> signIn(AuthModel model)
+        public async Task<ActionResult<string>> signIn(AuthModel model)
         {
             Account? account = await _context.Accounts.Where(x => x.Email == model.Login || x.Login == model.Login).Include(x => x.User).FirstOrDefaultAsync();
             if (account == null)
@@ -102,7 +106,7 @@ namespace API.Controllers.AccountsController
         }
 
         [HttpPut("GetToken")]
-        public async Task<ActionResult> getJwtToken([FromBody] string refreshtoken)
+        public async Task<ActionResult<string>> getJwtToken([FromBody] string refreshtoken)
         {
             Token? token = await _context.Tokens.Where(x => x.TokenStr == refreshtoken)
                 .Include(x => x.Account).ThenInclude(x => x!.User)

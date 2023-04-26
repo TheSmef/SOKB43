@@ -119,3 +119,11 @@ C:\Users\User\Documents\GitHub\SOKB43\WEB.Tests\obj\Debug\net7.0\refint\WEB.Test
 C:\Users\User\Documents\GitHub\SOKB43\WEB.Tests\obj\Debug\net7.0\WEB.Tests.pdb
 C:\Users\User\Documents\GitHub\SOKB43\WEB.Tests\obj\Debug\net7.0\WEB.Tests.genruntimeconfig.cache
 C:\Users\User\Documents\GitHub\SOKB43\WEB.Tests\obj\Debug\net7.0\ref\WEB.Tests.dll
+C:\Users\User\Documents\GitHub\SOKB43\WEB.Tests\bin\Debug\net7.0\BlazorDownloadFile.dll
+C:\Users\User\Documents\GitHub\SOKB43\WEB.Tests\bin\Debug\net7.0\Microsoft.AspNetCore.Authorization.dll
+C:\Users\User\Documents\GitHub\SOKB43\WEB.Tests\bin\Debug\net7.0\Microsoft.AspNetCore.Components.dll
+C:\Users\User\Documents\GitHub\SOKB43\WEB.Tests\bin\Debug\net7.0\Microsoft.AspNetCore.Components.Forms.dll
+C:\Users\User\Documents\GitHub\SOKB43\WEB.Tests\bin\Debug\net7.0\Microsoft.AspNetCore.Components.Web.dll
+C:\Users\User\Documents\GitHub\SOKB43\WEB.Tests\bin\Debug\net7.0\Microsoft.AspNetCore.Metadata.dll
+C:\Users\User\Documents\GitHub\SOKB43\WEB.Tests\bin\Debug\net7.0\Microsoft.JSInterop.dll
+C:\Users\User\Documents\GitHub\SOKB43\WEB.Tests\bin\Debug\net7.0\MudBlazor.dll

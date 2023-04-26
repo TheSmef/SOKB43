@@ -51,6 +51,12 @@
                                         <RadzenDataGridColumn TItem="Service" Property="ServiceType" Width="20%" MinWidth="180px" Title="Тип обслуживания">
                                         </RadzenDataGridColumn>
                                         <RadzenDataGridColumn TItem="Service" Property="Sum" Width="20%" MinWidth="180px" Title="Цена обслуживания">
+                                            <Template Context="service">
+                                                @(service.Sum.ToString("C2"))
+                                            </Template>
+                                            <FooterTemplate>
+                                                @($"Общая сумма работ: {service!.Total.ToString("C2")}")
+                                            </FooterTemplate>
                                         </RadzenDataGridColumn>
                                         <RadzenDataGridColumn TItem="Service" Property="Date" Width="20%" MinWidth="180px" Title="Дата обслуживания">
                                             <Template Context="childcontext">

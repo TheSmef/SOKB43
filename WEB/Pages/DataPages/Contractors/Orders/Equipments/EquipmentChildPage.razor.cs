@@ -133,6 +133,35 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
             await grid!.Reload();
         }
 
+        private async Task ExportEquipment()
+        {
+            try
+            {
+                await EquipmentService!.ExportEquipment(query);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешный экспорт оборудования!", "Оборудование успешно экспортировано", 4000);
+            }
+            catch (UnAuthException)
+            {
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
+                {"Администратор", "Менеджер по работе с клиентами"}))
+                {
+                    await ExportEquipment();
+                }
+                else
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
+                }
+            }
+            catch (AppException e)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+            }
+            catch
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла неизвестная ошибка при запросе, попробуйте повторить запрос позже", 4000);
+            }
+        }
+
         private async Task EditRecord(Equipment data)
         {
             try

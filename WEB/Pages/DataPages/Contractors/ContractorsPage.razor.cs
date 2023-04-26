@@ -26,6 +26,7 @@ using WEB.Data.UtilityServices.Base;
 using WEB.Pages.DataPages.Contractors.Orders;
 using WEB.Pages.DataPages.Contractors.Orders.Equipments;
 using WEB.Utility;
+using WEB.Pages.DataPages.Statistic;
 
 namespace WEB.Pages.DataPages.Contractors
 {
@@ -292,6 +293,17 @@ namespace WEB.Pages.DataPages.Contractors
             await DialogService!.OpenAsync<ContractorAddPage>(ConstantValues.CONTRACTORADD_TITLE, null, new DialogOptions()
             {CloseDialogOnOverlayClick = true});
             await grid!.Reload();
+        }
+
+        private async Task CheckStats(Contractor? Contractor = null)
+        {
+            string title = ConstantValues.ALL_STATS_TITLE;
+            if (Contractor != null)
+            {
+                title = ConstantValues.STATS_TITLE + Contractor.Name;
+            }
+            await DialogService!.OpenAsync<StatsPage>(title, new Dictionary<string, object?> () { { ConstantValues.CONTRACTOR, Contractor } }, new DialogOptions()
+            { CloseDialogOnOverlayClick = true, Resizable = true, Width = "800px" });
         }
 
         private async Task EditRecord(Contractor data)

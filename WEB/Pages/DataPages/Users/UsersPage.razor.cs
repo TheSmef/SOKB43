@@ -60,6 +60,10 @@ namespace WEB.Pages.DataPages.Users
         private IMapper? Mapper { get; set; }
 
         private List<Role> roles = new List<Role>();
+        protected override void OnInitialized()
+        {
+            
+        }
         private async Task RowExpended(User user)
         {
             roles.Clear();

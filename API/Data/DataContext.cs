@@ -35,7 +35,7 @@ namespace API.Data
 
             modelBuilder.Entity<Service>().HasOne(e => e.Equipment).WithMany(e => e.Services).OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<TechnicalTest>().HasOne(e => e.Equipment).WithMany(e => e.TechicalTests).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<TechnicalTest>().HasOne(e => e.Equipment).WithMany(e => e.TechnicalTests).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<TechnicalTest>().HasOne(e => e.User).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<TechnicalTest>().Property(e => e.Comment).IsRequired(false);
 

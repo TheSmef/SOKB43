@@ -35,7 +35,7 @@
                                         StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
                                         GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
                                         PagerAlwaysVisible="true" Count="@(users!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@LoadData" Data="@(users.Collection)"
-                                        ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ContextMenu" AllowColumnResize="true" RowExpand="@RowExpended">
+                                        ShowPagingSummary="true" AllowColumnReorder="true" AllowFilterDateInput=true PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ContextMenu" AllowColumnResize="true" RowExpand="@RowExpended">
                             <Template Context="data">
                                 <RadzenTabs>
                                     <Tabs>
@@ -59,11 +59,17 @@
                                                     <RadzenDataGridColumn TItem="UserPost" Property="Share" Width="25%" MinWidth="200px" Title="Ставка">
                                                     </RadzenDataGridColumn>
                                                     <RadzenDataGridColumn TItem="UserPost" Property="Post.Salary" Width="30%" MinWidth="200px" Title="Зарплата должности">
+                                                        <Template Context="post">
+                                                            @(post.Post!.Salary.ToString("C2"))
+                                                        </Template>
                                                     </RadzenDataGridColumn>
                                                     <RadzenDataGridColumn TItem="UserPost" Filterable="false" Sortable="false" Width="30%" MinWidth="250px" Title="Зарплата сотрудника">
                                                         <Template Context="post">
-                                                            @((double)(post.Share * post.Post!.Salary))
+                                                            @(post.Salary.ToString("C2"))
                                                         </Template>
+                                                        <FooterTemplate>
+                                                            @($"Общая заработная плата сотрудника: {userPosts!.Total.ToString("C2")}")
+                                                        </FooterTemplate>
                                                     </RadzenDataGridColumn>
                                                     <RadzenDataGridColumn TItem="UserPost" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
                                                         <Template Context="_context">

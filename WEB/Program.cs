@@ -1,10 +1,13 @@
+using BlazorDownloadFile;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.DependencyInjection;
 using Models.Mapper;
+using MudBlazor.Services;
 using Radzen;
+using System.Globalization;
 using WEB.Data.Services;
 using WEB.Data.Services.Base;
 using WEB.Data.UtilityServices;
@@ -13,9 +16,10 @@ using WEB.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddBlazorDownloadFile();
+builder.Services.AddMudServices();
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthenticationCore();
@@ -43,15 +47,14 @@ builder.Services.AddScoped<IServicesService, ServicesService>();
 builder.Services.AddScoped<ITechnicalTestsService, TechnicalTestsService>();
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 builder.Services.AddScoped<ITechnicalTaskService, TechnicalTaskService>();
+builder.Services.AddScoped<IBackUpService, BackUpService>();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthProvider>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -60,6 +63,24 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.Use(async (context, next) =>
+{
+    CultureInfo? culture = CultureInfo.CurrentCulture.Clone() as CultureInfo;
+    if (culture != null)
+    {
+        culture.NumberFormat.NumberDecimalSeparator = ".";
+        culture.NumberFormat.NumberGroupSeparator = ".";
+        culture.NumberFormat.CurrencyDecimalSeparator = ".";
+        culture.NumberFormat.PercentDecimalSeparator = ".";
+        culture.NumberFormat.PercentGroupSeparator = ".";
+        CultureInfo.CurrentCulture = culture;
+        CultureInfo.CurrentUICulture = culture;
+    }
+
+    await next();
+});
+
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");

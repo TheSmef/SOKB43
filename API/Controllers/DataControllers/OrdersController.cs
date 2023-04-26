@@ -12,12 +12,14 @@ using Microsoft.EntityFrameworkCore;
 using Models.Dto.PostPutModels;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using Models.Dto.StatsModels.ParamModels;
+using Models.Dto.StatsModels.GetModels;
 
 namespace API.Controllers.DataControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Администратор, Менеджер по работе с клиентами, Отдел обслуживания")]
+    [Authorize(Roles = "Администратор, Менеджер по работе с клиентами")]
     public class OrdersController : Controller
     {
         private readonly DataContext _context;
@@ -25,6 +27,41 @@ namespace API.Controllers.DataControllers
         public OrdersController(DataContext context)
         {
             _context = context;
+        }
+
+        [HttpGet("Stats")]
+        public async Task<ActionResult<List<IncomeStatsModel>>> GetIncomeStats(
+            [FromQuery] DateQuery query, [FromQuery] Guid? id)
+        {
+            if (query.StartDate.AddMonths(3) < query.EndDate)
+            {
+                return BadRequest("Период просмотра статистики не должен превышать 3 месяцев");
+            }
+            var orders = _context.Orders.Where(x => x.Date >= query.StartDate && x.Date <= query.EndDate);
+            var services = _context.Services.Where(x => x.Date >= query.StartDate && x.Date <= query.EndDate && x.Deleted == false);
+            if (!_context.Conctractors.Where(x => x.Id == id).Any() && id != null)
+            {
+                return BadRequest("Данного контрагента не существует");
+            }
+            else if (id != null)
+            {
+                orders = orders.Where(x => x.Contractor!.Id == id);
+                services = _context.Services.Where(x => x.Equipment!.Order!.Contractor!.Id == id);
+            }
+            List<DateTime> dates = await orders.Select(x => x.Date).GroupBy(x => x.Date).Select(x => x.First()).ToListAsync();
+            dates.AddRange(await services.Select(x => x.Date)
+                .GroupBy(x => x.Date).Select(x => x.First()).ToListAsync());
+            dates = dates.GroupBy(x => x).Select(x => x.First()).OrderBy(x => x).ToList();
+            List<IncomeStatsModel> responce = new List<IncomeStatsModel>();
+            foreach (var date in dates)
+            {
+                responce.Add(new IncomeStatsModel()
+                {
+                    Date = date.ToLongDateString(),
+                    Total = orders.Where(x => x.Date == date).Sum(x => x.Sum) + services.Where(x => x.Date == date).Sum(x => x.Sum)
+                });
+            }
+            return Ok(responce);
         }
 
 
@@ -62,6 +99,7 @@ namespace API.Controllers.DataControllers
             }
             ordersGetDtoModel.TotalPages = PageCounter.CountPages(items.Count(), query.Top);
             ordersGetDtoModel.ElementsCount = items.Count();
+            ordersGetDtoModel.Total = items.Sum(x => x.Sum);
             items = items.Skip(query.Skip);
             ordersGetDtoModel.CurrentPageIndex = ordersGetDtoModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);

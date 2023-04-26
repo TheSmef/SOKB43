@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
 using Models.Dto.GetModels;
 using Models.Dto.PostPutModels;
+using Models.Dto.StatsModels.GetModels;
+using Models.Dto.StatsModels.ParamModels;
 using Models.Entity;
 using Models.QuerySupporter;
 using System.Net;
@@ -89,6 +91,59 @@ namespace WEB.Data.Services
                 else
                 {
                     throw new AppException("Ошибка соединения", "Произошла неизвестная ошибка при запросе!");
+                }
+
+            }
+            catch (AppException)
+            {
+                throw;
+            }
+            catch (UnAuthException)
+            {
+                throw;
+            }
+            catch
+            {
+                throw new AppException("Ошибка соединения", "Произошла неизвестная ошибка при запросе!");
+            }
+        }
+
+        public async Task<List<IncomeStatsModel>> GetIncomeStats(DateQuery query, Guid? id = null)
+        {
+            try
+            {
+                var uriquery = QueryMapper.MapToQuery(query);
+
+                if (id != null)
+                {
+                    uriquery.Add("id", id.ToString()!);
+                }
+
+
+                var uri = QueryHelpers.AddQueryString("Orders/Stats", uriquery!);
+
+                var response = await client.GetAsync(uri);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    List<IncomeStatsModel>? stats = await response.Content.ReadFromJsonAsync<List<IncomeStatsModel>>();
+                    if (stats == null)
+                    {
+                        throw new AppException("Ошибка запроса", "Ошибка при запросе статистики, попробуйте позже");
+                    }
+                    return stats;
+                }
+                else if (response.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    throw new AppException("Ошибка запроса", await response.Content.ReadAsStringAsync());
+                }
+                else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
+                {
+                    throw new UnAuthException();
+                }
+                else
+                {
+                    throw new AppException("Ошибка запроса", "Ошибка при запросе статистики, попробуйте позже");
                 }
 
             }

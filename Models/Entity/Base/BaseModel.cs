@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClosedXML.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Models.Entity.Base
     public class BaseModel
     {
         [Key]
+        [XLColumn(Ignore = true)]
         public Guid Id { get; set; } = new Guid();
     }
 }
