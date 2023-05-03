@@ -12,5 +12,7 @@ namespace WEB.Data.Services.Base
         public Task<Service> UpdateService(ServiceDto model, Guid id);
         public Task<Service> AddService(ServiceDto model);
         public Task DeleteService(Guid id);
+        public Task ExportServices(QuerySupporter query);
+        public Task ImportServices(byte[] data, Guid id);
     }
 }

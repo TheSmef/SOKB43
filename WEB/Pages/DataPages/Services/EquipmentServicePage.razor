@@ -13,6 +13,7 @@
 @using WEB.Data.Services.Base;
 @using WEB.Data.UtilityServices.Base;
 @using WEB.Utility;
+@using MudBlazor;
 
 
 
@@ -38,8 +39,24 @@
                             <Template Context="data">
                                 <RadzenHeading Size="H2" Text="Обслуживающие работы" />
                                 <div style="display: inline-block; white-space: nowrap">
-                                    <RadzenButton Icon="add_circle_outline" style="margin-left: 10px; margin-right: 10px; margin-bottom: 10px" Text="Добавить" Click="@(() => AddService(data))" />
-                                    <RadzenButton Icon="delete_forever" ButtonStyle="ButtonStyle.Warning" style="margin-left: 10px; margin-right: 10px; margin-bottom: 10px" Text="Просмотр корзины" Click="(() => CheckBin(data))" />
+                                    <RadzenButton Icon="add_circle_outline" style="margin-top: 6px; margin-bottom: 10px;" Text="Добавить" Click="@(() => AddService(data))" />
+                                    <RadzenButton Icon="delete_forever" ButtonStyle="ButtonStyle.Warning" style="margin-top: 6px; margin-bottom: 10px; margin-left: 10px" Text="Просмотр корзины" Click="(() => CheckBin(data))" />
+                                    <RadzenButton Icon="get_app" ButtonStyle="ButtonStyle.Light" style="margin-top: 6px; margin-bottom: 10px; margin-left: 10px;" Text="Экспортировать" Click="@ExportServices" />
+                                    <MudFileUpload T="IBrowserFile" Accept=".xlsx" FilesChanged="((content) => UploadFile(content, data.Id))" style="margin-bottom: 10px; display: inline-block; margin-left: 10px;">
+                                        <ButtonTemplate Context="buttondata">
+                                            <MudButton HtmlTag="label"
+                                                       DisableElevation="true"
+                                                       Variant="MudBlazor.Variant.Filled"
+                                                       Color="Color.Inherit"
+                                                       IconSize="Size.Large"
+                                                       StartIcon="@Icons.Material.Filled.CloudUpload"
+                                                       Style="text-transform: none; "
+                                                       FullWidth=false
+                                                       for="@buttondata">
+                                                Импортировать
+                                            </MudButton>
+                                        </ButtonTemplate>
+                                    </MudFileUpload>
                                 </div>
                                 <RadzenDataGrid @ref="childgrid" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" AllowSorting="true" TItem="Service" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
                                                 EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
@@ -72,7 +89,7 @@
                                         </RadzenDataGridColumn>
                                         <RadzenDataGridColumn TItem="Service" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
                                             <Template Context="_context">
-                                                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="(() => EditService(_context))">
+                                                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Radzen.Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="(() => EditService(_context))">
                                                 </RadzenButton>
                                                 <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="(() => DeleteService(_context))">
                                                 </RadzenButton>

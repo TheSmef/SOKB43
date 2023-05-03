@@ -11,5 +11,7 @@ namespace WEB.Data.Services.Base
         public Task<Contractor> UpdateContractor(Contractor model);
         public Task<Contractor> AddContractor(Contractor model);
         public Task DeleteContractor(Guid id);
+        public Task ExportContractors(QuerySupporter query);
+        public Task ImportContractors(byte[] data);
     }
 }

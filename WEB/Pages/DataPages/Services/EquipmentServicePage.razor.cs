@@ -26,6 +26,7 @@ using Models.Utility;
 using WEB.Data.Services.Base;
 using WEB.Data.UtilityServices.Base;
 using WEB.Utility;
+using WEB.Data.Services;
 
 namespace WEB.Pages.DataPages.Services
 {
@@ -84,6 +85,37 @@ namespace WEB.Pages.DataPages.Services
             LoadDataArgs args = new LoadDataArgs()
             {Skip = 0, Top = 5};
             await LoadChildData(args, model);
+        }
+
+        private async Task UploadFile(IBrowserFile file, Guid id)
+        {
+            try
+            {
+                MemoryStream ms = new MemoryStream();
+                await file.OpenReadStream(file.Size).CopyToAsync(ms);
+                await ServicesService!.ImportServices(ms.ToArray(), id);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешное импортирование!", "Обслуживания успешно импортированы", 4000);
+                await childgrid!.Reload();
+            }
+            catch (UnAuthException)
+            {
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел обслуживания" }))
+                {
+                    await UploadFile(file, id);
+                }
+                else
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
+                }
+            }
+            catch (AppException e)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+            }
+            catch
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла неизвестная ошибка при запросе, попробуйте повторить запрос позже", 4000);
+            }
         }
 
         private async Task LoadChildData(LoadDataArgs args, Equipment model)
@@ -204,6 +236,35 @@ namespace WEB.Pages.DataPages.Services
             {{ConstantValues.EQ, model}}, new DialogOptions()
             {CloseDialogOnOverlayClick = true, Width = "800px", Resizable=true });
             await childgrid!.Reload();
+        }
+
+        private async Task ExportServices()
+        {
+            try
+            {
+                await ServicesService!.ExportServices(query);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешный экспорт обслуживания!", "Обслуживания успешно экспортированы", 4000);
+            }
+            catch (UnAuthException)
+            {
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
+                {"Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания"}))
+                {
+                    await ExportServices();
+                }
+                else
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
+                }
+            }
+            catch (AppException e)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+            }
+            catch
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла неизвестная ошибка при запросе, попробуйте повторить запрос позже", 4000);
+            }
         }
 
         private async Task AddService(Equipment model)

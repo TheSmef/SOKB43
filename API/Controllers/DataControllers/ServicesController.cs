@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using ClosedXML.Excel;
 using Models.Dto.FileModels;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.Controllers.DataControllers
 {
@@ -33,6 +34,32 @@ namespace API.Controllers.DataControllers
         {
             _context = context;
             _mapper = mapper;
+        }
+
+        [HttpPost("Import")]
+        public async Task<ActionResult> importServices(byte[] data, Guid id)
+        {
+            List<ServiceDto> services = ExcelExporter.getImportModel<ServiceDto>(data, "Обслуживание");
+            List<Service> itemsToAdd = new List<Service>();
+            if (!_context.Equipments.Where(x => x.Id == id).Any())
+            {
+                return BadRequest("Данное оборудование не существует!");
+            }
+            foreach (var service in services)
+            {
+                service.EquipmentId = id;
+                ValidationContext validationContext = new ValidationContext(service);
+                if (!Validator.TryValidateObject(service, validationContext, null, true))
+                {
+                    return BadRequest($"Ошибка валидации внутри файла импортирования, исправте ошибку валидации и повторите попытку (Ошибка на строке {services.IndexOf(service) + 2})");
+                }
+                Service item = _mapper.Map<Service>(service);
+                item.Equipment = _context.Equipments.Where(x => x.Id == service.EquipmentId).First();
+                itemsToAdd.Add(item);
+            }
+            await _context.Services.AddRangeAsync(itemsToAdd);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
         [HttpGet("Export")]
@@ -61,7 +88,13 @@ namespace API.Controllers.DataControllers
             }
             using (MemoryStream ms = new MemoryStream())
             {
-                XLWorkbook wb = ExcelExporter.getExcelReport(await items.ToListAsync(), "Обслуживание");
+                List<ServiceDto> data = new List<ServiceDto>();
+                foreach (var item in await items.ToListAsync())
+                {
+                    data.Add(_mapper.Map<ServiceDto>(item));
+                }
+                XLWorkbook wb = ExcelExporter.getExcelReport(data, "Обслуживание");
+                wb.Worksheet("Обслуживание").Column(3).Style.NumberFormat.SetFormat("0.00 ₽");
                 wb.SaveAs(ms);
                 FileModel response = new FileModel() { Name = $"Обслуживание_{DateTime.Today.ToShortDateString()}.xlsx", Data = ms.ToArray() };
                 return Ok(response);

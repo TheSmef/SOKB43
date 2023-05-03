@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
+﻿using BlazorDownloadFile;
+using Microsoft.AspNetCore.WebUtilities;
+using Models.Dto.FileModels;
 using Models.Dto.GetModels;
 using Models.Entity;
 using Models.QuerySupporter;
@@ -10,11 +12,12 @@ namespace WEB.Data.Services
 {
     public class ContractorService : IContractorService
     {
-
+        private IBlazorDownloadFileService DownloadService;
         private readonly HttpClient client;
-        public ContractorService(HttpClient client)
+        public ContractorService(HttpClient client, IBlazorDownloadFileService DownloadService)
         {
             this.client = client;
+            this.DownloadService = DownloadService;
         }
         public async Task<Contractor> AddContractor(Contractor model)
         {
@@ -83,6 +86,51 @@ namespace WEB.Data.Services
                 else if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
                     throw new AppException("Ошибка запроса", await response.Content.ReadAsStringAsync());
+                }
+                else
+                {
+                    throw new AppException("Ошибка соединения", "Произошла неизвестная ошибка при запросе!");
+                }
+
+            }
+            catch (AppException)
+            {
+                throw;
+            }
+            catch (UnAuthException)
+            {
+                throw;
+            }
+            catch
+            {
+                throw new AppException("Ошибка соединения", "Произошла неизвестная ошибка при запросе!");
+            }
+        }
+
+        public async Task ExportContractors(QuerySupporter query)
+        {
+            try
+            {
+                var uriquery = QueryMapper.MapToQuery(query);
+                var uri = QueryHelpers.AddQueryString("Contractors/Export", uriquery!);
+                var response = await client.GetAsync(uri);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    FileModel? record = await response.Content.ReadFromJsonAsync<FileModel>();
+                    if (record == null)
+                    {
+                        throw new AppException("Ошибка запроса", "Ошибка при экспорте, попробуйте позже");
+                    }
+                    await DownloadService.DownloadFile(record.Name, record.Data, "application/ostet-stream");
+                }
+                else if (response.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    throw new AppException("Ошибка запроса", await response.Content.ReadAsStringAsync());
+                }
+                else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
+                {
+                    throw new UnAuthException();
                 }
                 else
                 {
@@ -229,6 +277,44 @@ namespace WEB.Data.Services
                 else
                 {
                     throw new AppException("Ошибка изменения", "Произошла неизвестная ошибка при изменении, попробуйте позже!");
+                }
+
+            }
+            catch (AppException)
+            {
+                throw;
+            }
+            catch (UnAuthException)
+            {
+                throw;
+            }
+            catch
+            {
+                throw new AppException("Ошибка соединения", "Произошла неизвестная ошибка при запросе!");
+            }
+        }
+
+        public async Task ImportContractors(byte[] data)
+        {
+            try
+            {
+                var response = await client.PostAsJsonAsync("Contractors/Import", data);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    return;
+                }
+                else if (response.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    throw new AppException("Ошибка запроса", await response.Content.ReadAsStringAsync());
+                }
+                else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
+                {
+                    throw new UnAuthException();
+                }
+                else
+                {
+                    throw new AppException("Ошибка запроса", "Ошибка при импортировании, попробуйте позже");
                 }
 
             }

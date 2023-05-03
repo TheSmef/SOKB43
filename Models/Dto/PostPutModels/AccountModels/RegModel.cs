@@ -21,7 +21,7 @@ namespace Models.Dto.PostPutModels.AccountModels
         [RegularExpression(pattern: "^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,30}$",
             ErrorMessage = "Пароль должен быть 8-30 символов, содержать в себе как минимум одну букву, как минимум 1 цифру и как минимум 1 символ (!@#$%^&*)")]
         public string Password { get; set; } = string.Empty;
-        [Required(ErrorMessage = "Подтверждение пароль обязательно для ввода!")]
+        [Required(ErrorMessage = "Подтверждение пароля обязательно для ввода!")]
         [Compare(nameof(Password), ErrorMessage = "Введённые пароли не совпадают!")]
         public string PasswordConfirm { get; set; } = string.Empty;
         [Required(ErrorMessage = "Логин обязателен для ввода!")]

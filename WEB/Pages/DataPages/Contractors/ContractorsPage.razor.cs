@@ -27,6 +27,7 @@ using WEB.Pages.DataPages.Contractors.Orders;
 using WEB.Pages.DataPages.Contractors.Orders.Equipments;
 using WEB.Utility;
 using WEB.Pages.DataPages.Statistic;
+using WEB.Data.Services;
 
 namespace WEB.Pages.DataPages.Contractors
 {
@@ -288,11 +289,71 @@ namespace WEB.Pages.DataPages.Contractors
             }
         }
 
+        private async Task UploadFile(IBrowserFile file)
+        {
+            try
+            {
+                MemoryStream ms = new MemoryStream();
+                await file.OpenReadStream(file.Size).CopyToAsync(ms);
+                await ContractorService!.ImportContractors(ms.ToArray());
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешное импортирование!", "Контрагенты успешно импортированы", 4000);
+                await grid!.Reload();
+            }
+            catch (UnAuthException)
+            {
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Менеджер по работе с клиентами"}))
+                {
+                    await UploadFile(file);
+                }
+                else
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
+                }
+            }
+            catch (AppException e)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+            }
+            catch
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла неизвестная ошибка при запросе, попробуйте повторить запрос позже", 4000);
+            }
+        }
+
         private async Task AddRecord()
         {
             await DialogService!.OpenAsync<ContractorAddPage>(ConstantValues.CONTRACTORADD_TITLE, null, new DialogOptions()
             {CloseDialogOnOverlayClick = true});
             await grid!.Reload();
+        }
+
+        private async Task ExportContractors()
+        {
+            try
+            {
+                await ContractorService!.ExportContractors(query);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешный экспорт контрагентов!", "Контрагенты успешно экспортированы", 4000);
+            }
+            catch (UnAuthException)
+            {
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
+                {"Администратор", "Менеджер по работе с клиентами"}))
+                {
+                    await ExportContractors();
+                }
+                else
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
+                }
+            }
+            catch (AppException e)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+            }
+            catch
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла неизвестная ошибка при запросе, попробуйте повторить запрос позже", 4000);
+            }
         }
 
         private async Task CheckStats(Contractor? Contractor = null)

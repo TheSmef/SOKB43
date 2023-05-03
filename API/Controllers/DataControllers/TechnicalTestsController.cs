@@ -20,6 +20,7 @@ using System.Data;
 using System.Security.Claims;
 using ClosedXML.Excel;
 using Models.Dto.FileModels;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.Controllers.DataControllers
 {
@@ -36,6 +37,35 @@ namespace API.Controllers.DataControllers
         {
             _context = context;
             _mapper = mapper;
+        }
+
+        [HttpPost("Import")]
+        public async Task<ActionResult> importTechnicalTests(byte[] data, Guid id)
+        {
+            List<TechnicalTestDto> tests = ExcelExporter.getImportModel<TechnicalTestDto>(data, "Тестирования");
+            List<TechnicalTest> itemsToAdd = new List<TechnicalTest>();
+            if (!_context.Equipments.Where(x => x.Id == id).Any())
+            {
+                return BadRequest("Данное оборудование не существует!");
+            }
+            foreach (var test in tests)
+            {
+                test.EquipmentId = id;
+                ValidationContext validationContext = new ValidationContext(test);
+                var results = new List<ValidationResult>();
+                if (!Validator.TryValidateObject(test, validationContext, results, true))
+                {
+                    return BadRequest($"Ошибка валидации внутри файла импортирования, исправте ошибку валидации и повторите попытку (Ошибка на строке {tests.IndexOf(test) + 2})");
+                }
+                Guid idUser = Guid.Parse(User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).First().Value);
+                TechnicalTest item = _mapper.Map<TechnicalTest>(test);
+                item.User = _context.Users.Where(x => x.Id == idUser).First();
+                item.Equipment = _context.Equipments.Where(x => x.Id == test.EquipmentId).First();
+                itemsToAdd.Add(item);
+            }
+            await _context.TechnicalTests.AddRangeAsync(itemsToAdd);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
         [HttpGet("Export")]
@@ -64,7 +94,12 @@ namespace API.Controllers.DataControllers
             }
             using (MemoryStream ms = new MemoryStream())
             {
-                XLWorkbook wb = ExcelExporter.getExcelReport(await items.ToListAsync(), "Тестирования");
+                List<TechnicalTestDto> data = new List<TechnicalTestDto>();
+                foreach (var item in await items.ToListAsync())
+                {
+                    data.Add(_mapper.Map<TechnicalTestDto>(item));
+                }
+                XLWorkbook wb = ExcelExporter.getExcelReport(data, "Тестирования");
                 wb.SaveAs(ms);
                 FileModel response = new FileModel() { Name = $"Тестирования_{DateTime.Today.ToShortDateString()}.xlsx", Data = ms.ToArray() };
                 return Ok(response);

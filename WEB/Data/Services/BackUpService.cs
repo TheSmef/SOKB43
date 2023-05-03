@@ -81,7 +81,7 @@ namespace WEB.Data.Services
                 }
                 else
                 {
-                    throw new AppException("Ошибка запроса", "Ошибка при запросе контрагентов, попробуйте позже");
+                    throw new AppException("Ошибка запроса", "Ошибка при восстановлении базы данных, попробуйте позже");
                 }
 
             }

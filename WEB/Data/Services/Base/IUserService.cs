@@ -12,5 +12,6 @@ namespace WEB.Data.Services.Base
         public Task<User> UpdateUser(UserUpdateDto model, Guid id);
         public Task<User> AddUser(UserDto model);
         public Task DeleteUser(Guid id);
+        public Task ExportUsers(QuerySupporter query);
     }
 }

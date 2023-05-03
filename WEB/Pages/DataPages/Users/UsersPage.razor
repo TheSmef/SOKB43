@@ -28,8 +28,8 @@
                 </RadzenHeading>
                 <div class="row">
                     <div class="col-md-12">
-                        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Добавить" Click="@AddUser">
-                        </RadzenButton>
+                        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Добавить" Click="@AddUser"/>
+                        <RadzenButton Icon="get_app" ButtonStyle="ButtonStyle.Light" style="margin-bottom: 10px; margin-left: 10px;" Text="Экспортировать" Click="@ExportUsers" />
                         <RadzenDataGrid @ref="grid" AllowFiltering="true" FilterMode="Radzen.FilterMode.Advanced" AllowPaging="true" ExpandMode=DataGridExpandMode.Single AllowSorting="true" TItem="User" EmptyText="@ConstantValues.COLLECTION_EMPTY" PageSize="5"
                                         EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
                                         StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"

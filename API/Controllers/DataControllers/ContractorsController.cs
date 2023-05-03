@@ -11,6 +11,8 @@ using System.Linq.Dynamic.Core;
 using Microsoft.AspNetCore.Authorization;
 using ClosedXML.Excel;
 using Models.Dto.FileModels;
+using AutoMapper.Configuration;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.Controllers.DataControllers
 {
@@ -23,6 +25,27 @@ namespace API.Controllers.DataControllers
         public ContractorsController(DataContext context)
         {
             _context = context;
+        }
+
+        [HttpPost("Import")]
+        public async Task<ActionResult> importContractors(byte[] data)
+        {
+            List<Contractor> contractors = ExcelExporter.getImportModel<Contractor>(data, "Контрагенты");
+            foreach (var contractor in contractors)
+            {
+                System.ComponentModel.DataAnnotations.ValidationContext validationContext 
+                    = new System.ComponentModel.DataAnnotations.ValidationContext(contractor);
+                if (!Validator.TryValidateObject(contractor, validationContext, null, true)
+                    || _context.Conctractors.Where(x => x.Name == contractor.Name).Any()
+                    || _context.Conctractors.Where(x => x.Email == contractor.Email).Any()
+                    || _context.Conctractors.Where(x => x.PhoneNumber == contractor.PhoneNumber).Any())
+                {
+                    return BadRequest($"Ошибка валидации внутри файла импортирования, исправте ошибку валидации и повторите попытку (Ошибка на строке {contractors.IndexOf(contractor) + 2})");
+                }
+            }
+            await _context.Conctractors.AddRangeAsync(contractors);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
         [HttpGet("Export")]
