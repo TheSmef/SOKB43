@@ -124,7 +124,7 @@ namespace WEB.Pages.DataPages.Tests
             }
         }
 
-        private async Task UploadFile(IBrowserFile file, Guid id)
+        private async Task ImportExcel(IBrowserFile file, Guid id)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace WEB.Pages.DataPages.Tests
             {
                 if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел тестирования" }))
                 {
-                    await UploadFile(file, id);
+                    await ImportExcel(file, id);
                 }
                 else
                 {

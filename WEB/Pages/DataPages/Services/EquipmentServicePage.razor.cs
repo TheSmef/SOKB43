@@ -37,25 +37,31 @@ namespace WEB.Pages.DataPages.Services
             switch (value.Value)
             {
                 case 1:
-                {
-                    await EditService(args.Data);
-                    break;
-                }
+                    {
+                        await EditService(args.Data);
+                        break;
+                    }
 
                 case 2:
-                {
-                    await DeleteService(args.Data);
-                    break;
-                }
+                    {
+                        await DeleteService(args.Data);
+                        break;
+                    }
+
+                case 3:
+                    {
+                        await GetServiceDocument(args.Data);
+                        break;
+                    }
             }
         }
 
         private RadzenDataGrid<Service>? childgrid;
         private RadzenDataGrid<Equipment>? grid;
         private EquipmentDtoGetModel? records = new EquipmentDtoGetModel()
-        {CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0};
+        { CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0 };
         private ServiceGetDtoModel? service = new ServiceGetDtoModel()
-        {CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0};
+        { CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0 };
         private QuerySupporter query = new QuerySupporter();
         [Inject]
         private IEquipmentService? EquipmentService { get; set; }
@@ -81,13 +87,41 @@ namespace WEB.Pages.DataPages.Services
         private async Task RowExpanded(Equipment model)
         {
             service = new ServiceGetDtoModel()
-            {CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0};
+            { CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0 };
             LoadDataArgs args = new LoadDataArgs()
-            {Skip = 0, Top = 5};
+            { Skip = 0, Top = 5 };
             await LoadChildData(args, model);
         }
 
-        private async Task UploadFile(IBrowserFile file, Guid id)
+        private async Task GetServiceDocument(Service model)
+        {
+            try
+            {
+                await ServicesService!.GetWordDocument(model.Id);
+            }
+            catch (UnAuthException)
+            {
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>() {
+                    "Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания" }))
+                {
+                    await GetServiceDocument(model);
+                }
+                else
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
+                }
+            }
+            catch (AppException e)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+            }
+            catch
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла неизвестная ошибка при запросе, попробуйте повторить запрос позже", 4000);
+            }
+        }
+
+        private async Task ImportExcel(IBrowserFile file, Guid id)
         {
             try
             {
@@ -99,9 +133,10 @@ namespace WEB.Pages.DataPages.Services
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел обслуживания" }))
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>() {
+                    "Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания" }))
                 {
-                    await UploadFile(file, id);
+                    await ImportExcel(file, id);
                 }
                 else
                 {
@@ -122,7 +157,7 @@ namespace WEB.Pages.DataPages.Services
         {
             try
             {
-                query = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Equipment.Id)) ==  " + "\"" + model.Id.ToString() + "\") and ((np(Deleted)) == false)" : args.Filter + " and ((np(Equipment.Id)) == " + "\"" + model.Id.ToString() + "\") and ((np(Deleted)) == false)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
+                query = new QuerySupporter { Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Equipment.Id)) ==  " + "\"" + model.Id.ToString() + "\") and ((np(Deleted)) == false)" : args.Filter + " and ((np(Equipment.Id)) == " + "\"" + model.Id.ToString() + "\") and ((np(Deleted)) == false)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value };
                 service = await ServicesService!.GetServices(query);
                 if (service!.Collection!.Count == 0 && service!.CurrentPageIndex != 1)
                 {
@@ -156,7 +191,7 @@ namespace WEB.Pages.DataPages.Services
             try
             {
                 if (await DialogService!.Confirm(ConstantValues.DELETE_RECORD, ConstantValues.DELETE_RECORD_TITLE, new ConfirmOptions()
-                {CloseDialogOnOverlayClick = true, CancelButtonText = ConstantValues.CANCEL, OkButtonText = ConstantValues.OK_DELETE}) == true)
+                { CloseDialogOnOverlayClick = true, CancelButtonText = ConstantValues.CANCEL, OkButtonText = ConstantValues.OK_DELETE }) == true)
                 {
                     Service serviceCheck = await ServicesService!.GetServiceById(model.Id);
                     ServiceDto serviceDto = Mapper!.Map<ServiceDto>(serviceCheck);
@@ -204,7 +239,7 @@ namespace WEB.Pages.DataPages.Services
 
                 await DialogService!.OpenAsync<ServiceEditPage>(ConstantValues.SERVICEEDIT_TITLE, new Dictionary<string, object>()
                 {{ConstantValues.RECORD, record}}, new DialogOptions()
-                {CloseDialogOnOverlayClick = true});
+                { CloseDialogOnOverlayClick = true });
                 await childgrid!.Reload();
             }
             catch (UnAuthException)
@@ -234,7 +269,7 @@ namespace WEB.Pages.DataPages.Services
         {
             await DialogService!.OpenAsync<ServiceBin>(ConstantValues.SERVICE_BIN_TITLE, new Dictionary<string, object>()
             {{ConstantValues.EQ, model}}, new DialogOptions()
-            {CloseDialogOnOverlayClick = true, Width = "800px", Resizable=true });
+            { CloseDialogOnOverlayClick = true, Width = "800px", Resizable = true });
             await childgrid!.Reload();
         }
 
@@ -271,7 +306,7 @@ namespace WEB.Pages.DataPages.Services
         {
             await DialogService!.OpenAsync<ServiceAddPage>(ConstantValues.SERVICEADD_TITLE, new Dictionary<string, object>()
             {{ConstantValues.EQ, model}}, new DialogOptions()
-            {CloseDialogOnOverlayClick = true});
+            { CloseDialogOnOverlayClick = true });
             await childgrid!.Reload();
         }
 
@@ -279,7 +314,7 @@ namespace WEB.Pages.DataPages.Services
         {
             try
             {
-                query = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Deleted)) == false)" : args.Filter + " and ((np(Deleted)) == false)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
+                query = new QuerySupporter { Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Deleted)) == false)" : args.Filter + " and ((np(Deleted)) == false)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value };
                 records = await EquipmentService!.GetEquipment(query);
                 if (records!.Collection!.Count == 0 && records!.CurrentPageIndex != 1)
                 {

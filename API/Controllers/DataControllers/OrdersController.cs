@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using Models.Dto.StatsModels.ParamModels;
 using Models.Dto.StatsModels.GetModels;
+using Models.Dto.FileModels;
+
 
 namespace API.Controllers.DataControllers
 {
@@ -29,7 +31,29 @@ namespace API.Controllers.DataControllers
             _context = context;
         }
 
-        [HttpGet("Stats")]
+        [HttpGet("Document")]
+        public async Task<ActionResult<FileModel>> GetOrderWordDocument(
+            [FromQuery] Guid orderId)
+        {
+            if (!_context.Orders.Where(x => x.Id == orderId).Any())
+            {
+                return BadRequest("Данный заказ не существует");
+            }
+            if (!_context.Equipments.Where(x => x.Order!.Id == orderId).Any())
+            {
+                return BadRequest("Данный заказ не содержит оборудования");
+            }
+            Order order = await _context.Orders.Where(x => x.Id == orderId)
+                .Include(x => x.Contractor).FirstAsync();
+            List<Equipment> equipments = await _context.Equipments.Where(x => x.Order!.Id == orderId && x.Deleted == false)
+                .Include(x => x.TechnicalTask).ThenInclude(x => x!.TypeEquipment).ToListAsync();
+            MemoryStream ms = WordHelper.GetOrderDocument(order, equipments);
+
+            FileModel response = new FileModel() { Name = $"Договор_{order.Date.ToShortDateString()}.docx", Data = ms.ToArray() };
+            return Ok(response);
+        }
+
+            [HttpGet("Stats")]
         public async Task<ActionResult<List<IncomeStatsModel>>> GetIncomeStats(
             [FromQuery] DateQuery query, [FromQuery] Guid? id)
         {

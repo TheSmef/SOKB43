@@ -15,5 +15,6 @@ namespace WEB.Data.Services.Base
         public Task<Order> AddOrder(OrderDto model);
         public Task DeleteOrder(Guid id);
         public Task<List<IncomeStatsModel>> GetIncomeStats(DateQuery query, Guid? id = null);
+        public Task GetWordDocument(Guid id);
     }
 }

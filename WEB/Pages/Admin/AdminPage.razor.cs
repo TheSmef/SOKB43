@@ -61,7 +61,7 @@ namespace WEB.Pages.Admin
             }
         }
 
-        private async Task UploadFile(IBrowserFile file)
+        private async Task RestoreDatabase(IBrowserFile file)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace WEB.Pages.Admin
             {
                 if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор" }))
                 {
-                    await UploadFile(file);
+                    await RestoreDatabase(file);
                 }
                 else
                 {

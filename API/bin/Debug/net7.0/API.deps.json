@@ -13,6 +13,7 @@
           "BCrypt.Net-Next": "4.0.3",
           "ClosedXML": "0.101.0",
           "ClosedXML.Report": "0.2.6",
+          "DocumentFormat.OpenXml": "2.20.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.5",
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.2.0",
           "Microsoft.AspNetCore.OpenApi": "7.0.5",
@@ -96,7 +97,7 @@
       },
       "ClosedXML/0.101.0": {
         "dependencies": {
-          "DocumentFormat.OpenXml": "2.16.0",
+          "DocumentFormat.OpenXml": "2.20.0",
           "ExcelNumberFormat": "1.1.0",
           "SixLabors.Fonts": "1.0.0-beta19",
           "System.IO.Packaging": "6.0.0",
@@ -122,14 +123,14 @@
           }
         }
       },
-      "DocumentFormat.OpenXml/2.16.0": {
+      "DocumentFormat.OpenXml/2.20.0": {
         "dependencies": {
           "System.IO.Packaging": "6.0.0"
         },
         "runtime": {
-          "lib/netstandard2.0/DocumentFormat.OpenXml.dll": {
-            "assemblyVersion": "2.16.0.0",
-            "fileVersion": "2.16.0.0"
+          "lib/net6.0/DocumentFormat.OpenXml.dll": {
+            "assemblyVersion": "2.20.0.0",
+            "fileVersion": "2.20.0.0"
           }
         }
       },
@@ -2835,12 +2836,12 @@
       "path": "closedxml.report/0.2.6",
       "hashPath": "closedxml.report.0.2.6.nupkg.sha512"
     },
-    "DocumentFormat.OpenXml/2.16.0": {
+    "DocumentFormat.OpenXml/2.20.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-RhpnDgyyx1KjZm98T3w3bSXFHG/7ZNUaVmz4NAUA+jmV3PcVNZeW87Y04CpBNLdDHEMSspirfo0B5kLRaoE97w==",
-      "path": "documentformat.openxml/2.16.0",
-      "hashPath": "documentformat.openxml.2.16.0.nupkg.sha512"
+      "sha512": "sha512-+oFMsEppo/W6KpGTRXaJl2jTFYn9zeon4FaZuDoCijQ1/0JaPENaCef7d4Y3f8v116eKhVBwd4Ya+/NDglxkjw==",
+      "path": "documentformat.openxml/2.20.0",
+      "hashPath": "documentformat.openxml.2.20.0.nupkg.sha512"
     },
     "ExcelNumberFormat/1.1.0": {
       "type": "package",

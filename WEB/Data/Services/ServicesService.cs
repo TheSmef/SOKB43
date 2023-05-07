@@ -338,5 +338,54 @@ namespace WEB.Data.Services
                 throw new AppException("Ошибка соединения", "Произошла неизвестная ошибка при запросе!");
             }
         }
+
+        public async Task GetWordDocument(Guid id)
+        {
+            try
+            {
+
+                var query = new Dictionary<string, string>
+                {
+                        { "serviceId", id.ToString() }
+                };
+                var uri = QueryHelpers.AddQueryString("Services/Document", query!);
+                var response = await client.GetAsync(uri);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    FileModel? record = await response.Content.ReadFromJsonAsync<FileModel>();
+                    if (record == null)
+                    {
+                        throw new AppException("Ошибка запроса", "Ошибка при получении документа, попробуйте позже");
+                    }
+                    await DownloadService.DownloadFile(record.Name, record.Data, "application/ostet-stream");
+                }
+                else if (response.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    throw new AppException("Ошибка запроса", await response.Content.ReadAsStringAsync());
+                }
+                else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
+                {
+                    throw new UnAuthException();
+                }
+                else
+                {
+                    throw new AppException("Ошибка соединения", "Произошла неизвестная ошибка при запросе!");
+                }
+
+            }
+            catch (AppException)
+            {
+                throw;
+            }
+            catch (UnAuthException)
+            {
+                throw;
+            }
+            catch
+            {
+                throw new AppException("Ошибка соединения", "Произошла неизвестная ошибка при запросе!");
+            }
+        }
     }
 }

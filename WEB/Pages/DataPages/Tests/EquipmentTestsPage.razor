@@ -45,7 +45,7 @@
                                                 <RadzenButton Icon="add_circle_outline" style="margin-top: 6px; margin-bottom: 10px;" Text="Добавить" Click="@(() => AddTest(data))" />
                                                 <RadzenButton Icon="delete_forever" ButtonStyle="ButtonStyle.Warning" style="margin-top: 6px; margin-bottom: 10px; margin-left: 10px" Text="Просмотр корзины" Click="@(() => CheckBin(data))" />
                                                 <RadzenButton Icon="get_app" ButtonStyle="ButtonStyle.Light" style="margin-top: 6px; margin-bottom: 10px; margin-left: 10px;" Text="Экспортировать" Click="@ExportTests" />
-                                                <MudFileUpload T="IBrowserFile" Accept=".xlsx" FilesChanged="((content) => UploadFile(content, data.Id))" style="margin-bottom: 10px; display: inline-block; margin-left: 10px;">
+                                                <MudFileUpload T="IBrowserFile" Accept=".xlsx" FilesChanged="((content) => ImportExcel(content, data.Id))" style="margin-bottom: 10px; display: inline-block; margin-left: 10px;">
                                                     <ButtonTemplate Context="buttondata">
                                                         <MudButton HtmlTag="label"
                                                                    DisableElevation="true"

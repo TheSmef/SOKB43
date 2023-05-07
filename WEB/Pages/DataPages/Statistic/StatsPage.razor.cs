@@ -68,7 +68,7 @@ namespace WEB.Pages.DataPages.Statistic
             {
                 if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Менеджер по работе с клиентами" }))
                 {
-                    await OnInitializedAsync();
+                    await Load();
                 }
                 else
                 {

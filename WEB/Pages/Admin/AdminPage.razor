@@ -20,7 +20,7 @@
                         <RadzenCard>
                             <RadzenButton Icon="assignment_returned" style="margin-bottom: 10px" Text="Создать резервную копию базы данных" Click="GetBackUpFile">
                             </RadzenButton>
-                            <MudFileUpload T="IBrowserFile" FilesChanged="UploadFile" Accept=".bak">
+                            <MudFileUpload T="IBrowserFile" FilesChanged="RestoreDatabase" Accept=".bak">
                                 <ButtonTemplate>
                                     <MudButton HtmlTag="label"
                                                DisableElevation="true"

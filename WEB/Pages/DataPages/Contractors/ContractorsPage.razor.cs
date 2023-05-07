@@ -36,9 +36,9 @@ namespace WEB.Pages.DataPages.Contractors
         private RadzenDataGrid<Contractor>? grid;
         private RadzenDataGrid<Order>? childgrid;
         private OrderGetDtoModel? orders = new OrderGetDtoModel()
-        {CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0};
+        { CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0 };
         private ContractorsGetDtoModel? records = new ContractorsGetDtoModel()
-        {CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0};
+        { CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0 };
         private QuerySupporter query = new QuerySupporter();
         [Inject]
         private IContractorService? ContractorService { get; set; }
@@ -61,9 +61,9 @@ namespace WEB.Pages.DataPages.Contractors
         private async Task RowExpended(Contractor record)
         {
             orders = new OrderGetDtoModel()
-            {CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0};
+            { CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0 };
             LoadDataArgs args = new LoadDataArgs()
-            {Skip = 0, Top = 5};
+            { Skip = 0, Top = 5 };
             await LoadChildData(args, record);
         }
 
@@ -81,7 +81,7 @@ namespace WEB.Pages.DataPages.Contractors
 
                 await DialogService!.OpenAsync<OrdersEditPage>(ConstantValues.ORDEREDIT_TITLE, new Dictionary<string, object>()
                 {{ConstantValues.ORDEREDIT, order}}, new DialogOptions()
-                {CloseDialogOnOverlayClick = true});
+                { CloseDialogOnOverlayClick = true });
                 await childgrid!.Reload();
             }
             catch (UnAuthException)
@@ -111,7 +111,7 @@ namespace WEB.Pages.DataPages.Contractors
         {
             await DialogService!.OpenAsync<OrdersAddPage>(ConstantValues.ORDERADD_TITLE, new Dictionary<string, object>()
             {{ConstantValues.CONTRACTOR, contractor}}, new DialogOptions()
-            {CloseDialogOnOverlayClick = true});
+            { CloseDialogOnOverlayClick = true });
             await childgrid!.Reload();
         }
 
@@ -120,7 +120,7 @@ namespace WEB.Pages.DataPages.Contractors
             try
             {
                 if (await DialogService!.Confirm(ConstantValues.DELETE_RECORD, ConstantValues.DELETE_RECORD_TITLE, new ConfirmOptions()
-                {CloseDialogOnOverlayClick = true, CancelButtonText = ConstantValues.CANCEL, OkButtonText = ConstantValues.OK_DELETE}) == true)
+                { CloseDialogOnOverlayClick = true, CancelButtonText = ConstantValues.CANCEL, OkButtonText = ConstantValues.OK_DELETE }) == true)
                 {
                     await OrderService!.DeleteOrder(order.Id);
                     NotificationService!.Notify(NotificationSeverity.Success, "Успешное удаление!", "Заказ успешно удалён", 4000);
@@ -154,7 +154,7 @@ namespace WEB.Pages.DataPages.Contractors
         {
             try
             {
-                query = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Contractor.Id)) ==  " + "\"" + contractor.Id.ToString() + "\")" : args.Filter + " and ((np(Contractor.Id)) == " + "\"" + contractor.Id.ToString() + "\")", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
+                query = new QuerySupporter { Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Contractor.Id)) ==  " + "\"" + contractor.Id.ToString() + "\")" : args.Filter + " and ((np(Contractor.Id)) == " + "\"" + contractor.Id.ToString() + "\")", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value };
                 orders = await OrderService!.GetOrders(query);
                 if (orders!.Collection!.Count == 0 && orders!.CurrentPageIndex != 1)
                 {
@@ -188,22 +188,57 @@ namespace WEB.Pages.DataPages.Contractors
             switch (value.Value)
             {
                 case 1:
-                {
-                    await EditOrder(args.Data);
-                    break;
-                }
+                    {
+                        await EditOrder(args.Data);
+                        break;
+                    }
 
                 case 2:
-                {
-                    await DeleteOrder(args.Data);
-                    break;
-                }
+                    {
+                        await DeleteOrder(args.Data);
+                        break;
+                    }
 
                 case 3:
+                    {
+                        await CheckEquipment(args.Data);
+                        break;
+                    }
+
+                case 4:
+                    {
+                        await GetOrderDocument(args.Data);
+                        break;
+                    }
+            }
+        }
+
+        private async Task GetOrderDocument(Order model)
+        {
+            try
+            {
+                await OrderService!.GetWordDocument(model.Id);
+            }
+            catch (UnAuthException)
+            {
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
+                {"Администратор", "Менеджер по работе с клиентами"}))
                 {
-                    await CheckEquipment(args.Data);
-                    break;
+                    await GetOrderDocument(model);
                 }
+                else
+                {
+                    NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла ошибка доступа, вы не имеете доступ к данной функции", 4000);
+                }
+            }
+            catch (AppException e)
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, e.Title, e.Message, 4000);
+                await childgrid!.Reload();
+            }
+            catch
+            {
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла неизвестная ошибка при запросе, попробуйте повторить запрос позже", 4000);
             }
         }
 
@@ -213,14 +248,14 @@ namespace WEB.Pages.DataPages.Contractors
             {
                 await DialogService!.OpenAsync<EquipmentChildPage>(ConstantValues.EQ_TITLE, new Dictionary<string, object>()
                 {{ConstantValues.ORDER, model}}, new DialogOptions()
-                {CloseDialogOnOverlayClick = true, Width = "800px", Resizable = true });
+                { CloseDialogOnOverlayClick = true, Width = "800px", Resizable = true });
             }
             catch (UnAuthException)
             {
                 if (await AuthInterceptor!.ReloadAuthState(new List<string>()
                 {"Администратор", "Менеджер по работе с клиентами"}))
                 {
-                    await EditOrder(model);
+                    await CheckEquipment(model);
                 }
                 else
                 {
@@ -243,16 +278,16 @@ namespace WEB.Pages.DataPages.Contractors
             switch (value.Value)
             {
                 case 1:
-                {
-                    await EditRecord(args.Data);
-                    break;
-                }
+                    {
+                        await EditRecord(args.Data);
+                        break;
+                    }
 
                 case 2:
-                {
-                    await DeleteRecord(args.Data);
-                    break;
-                }
+                    {
+                        await DeleteRecord(args.Data);
+                        break;
+                    }
             }
         }
 
@@ -260,7 +295,7 @@ namespace WEB.Pages.DataPages.Contractors
         {
             try
             {
-                query = new QuerySupporter{Filter = args.Filter, OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
+                query = new QuerySupporter { Filter = args.Filter, OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value };
                 records = await ContractorService!.GetContractors(query);
                 if (records!.Collection!.Count == 0 && records!.CurrentPageIndex != 1)
                 {
@@ -289,7 +324,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
         }
 
-        private async Task UploadFile(IBrowserFile file)
+        private async Task ImportExcel(IBrowserFile file)
         {
             try
             {
@@ -301,9 +336,9 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Менеджер по работе с клиентами" }))
                 {
-                    await UploadFile(file);
+                    await ImportExcel(file);
                 }
                 else
                 {
@@ -323,7 +358,7 @@ namespace WEB.Pages.DataPages.Contractors
         private async Task AddRecord()
         {
             await DialogService!.OpenAsync<ContractorAddPage>(ConstantValues.CONTRACTORADD_TITLE, null, new DialogOptions()
-            {CloseDialogOnOverlayClick = true});
+            { CloseDialogOnOverlayClick = true });
             await grid!.Reload();
         }
 
@@ -363,7 +398,7 @@ namespace WEB.Pages.DataPages.Contractors
             {
                 title = ConstantValues.STATS_TITLE + Contractor.Name;
             }
-            await DialogService!.OpenAsync<StatsPage>(title, new Dictionary<string, object?> () { { ConstantValues.CONTRACTOR, Contractor } }, new DialogOptions()
+            await DialogService!.OpenAsync<StatsPage>(title, new Dictionary<string, object?>() { { ConstantValues.CONTRACTOR, Contractor } }, new DialogOptions()
             { CloseDialogOnOverlayClick = true, Resizable = true, Width = "800px" });
         }
 
@@ -381,7 +416,7 @@ namespace WEB.Pages.DataPages.Contractors
 
                 await DialogService!.OpenAsync<ContractorEditPage>(ConstantValues.CONTRACTOREDIT_TITLE, new Dictionary<string, object>()
                 {{ConstantValues.CONTRACTOR, record}}, new DialogOptions()
-                {CloseDialogOnOverlayClick = true});
+                { CloseDialogOnOverlayClick = true });
                 await grid!.Reload();
                 await grid!.Reload();
             }
@@ -413,7 +448,7 @@ namespace WEB.Pages.DataPages.Contractors
             try
             {
                 if (await DialogService!.Confirm(ConstantValues.DELETE_RECORD, ConstantValues.DELETE_RECORD_TITLE, new ConfirmOptions()
-                {CloseDialogOnOverlayClick = true, CancelButtonText = ConstantValues.CANCEL, OkButtonText = ConstantValues.OK_DELETE}) == true)
+                { CloseDialogOnOverlayClick = true, CancelButtonText = ConstantValues.CANCEL, OkButtonText = ConstantValues.OK_DELETE }) == true)
                 {
                     await ContractorService!.DeleteContractor(data.Id);
                     NotificationService!.Notify(NotificationSeverity.Success, "Успешное удаление!", "Контрагент успешно удалён", 4000);

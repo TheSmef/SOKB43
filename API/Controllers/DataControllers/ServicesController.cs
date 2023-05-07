@@ -36,6 +36,24 @@ namespace API.Controllers.DataControllers
             _mapper = mapper;
         }
 
+        [HttpGet("Document")]
+        public async Task<ActionResult<FileModel>> GetServiceWordDocument(
+            [FromQuery] Guid serviceId)
+        {
+            if (!_context.Services.Where(x => x.Id == serviceId).Any())
+            {
+                return BadRequest("Данное обслуживание не существует");
+            }
+            Service service = await _context.Services.Where(x => x.Id == serviceId).
+                Include(x => x.Equipment).ThenInclude(x => x!.TechnicalTask).ThenInclude(x =>x!.TypeEquipment).
+                Include(x => x.Equipment).ThenInclude(x => x!.Order).ThenInclude(x => x!.Contractor).FirstAsync();
+            MemoryStream ms = WordHelper.GetServiceDocument(service);
+
+            FileModel response = new FileModel() { Name = $"Договор_обслуживания_{service.Date.ToShortDateString()}.docx", Data = ms.ToArray() };
+            return Ok(response);
+        }
+
+
         [HttpPost("Import")]
         public async Task<ActionResult> importServices(byte[] data, Guid id)
         {

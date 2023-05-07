@@ -42,7 +42,7 @@
                                     <RadzenButton Icon="add_circle_outline" style="margin-top: 6px; margin-bottom: 10px;" Text="Добавить" Click="@(() => AddService(data))" />
                                     <RadzenButton Icon="delete_forever" ButtonStyle="ButtonStyle.Warning" style="margin-top: 6px; margin-bottom: 10px; margin-left: 10px" Text="Просмотр корзины" Click="(() => CheckBin(data))" />
                                     <RadzenButton Icon="get_app" ButtonStyle="ButtonStyle.Light" style="margin-top: 6px; margin-bottom: 10px; margin-left: 10px;" Text="Экспортировать" Click="@ExportServices" />
-                                    <MudFileUpload T="IBrowserFile" Accept=".xlsx" FilesChanged="((content) => UploadFile(content, data.Id))" style="margin-bottom: 10px; display: inline-block; margin-left: 10px;">
+                                    <MudFileUpload T="IBrowserFile" Accept=".xlsx" FilesChanged="((content) => ImportExcel(content, data.Id))" style="margin-bottom: 10px; display: inline-block; margin-left: 10px;">
                                         <ButtonTemplate Context="buttondata">
                                             <MudButton HtmlTag="label"
                                                        DisableElevation="true"
@@ -136,8 +136,11 @@
 @code {
     private void ContextMenu(DataGridCellMouseEventArgs<Service> args) => ContextMenuService!.Open(args, ds =>
     @<RadzenMenu Click="@((value) => ContextMenuSelector(args, value))">
-        <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
-        <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
+        <RadzenMenuItem Icon="get_app" Text="Составить договор" Value="3"></RadzenMenuItem>
+        <RadzenMenuItem Text="Работа с данными">
+            <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
+            <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
+        </RadzenMenuItem>
     </RadzenMenu>
     );
 }

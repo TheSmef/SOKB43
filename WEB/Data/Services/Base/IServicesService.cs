@@ -14,5 +14,6 @@ namespace WEB.Data.Services.Base
         public Task DeleteService(Guid id);
         public Task ExportServices(QuerySupporter query);
         public Task ImportServices(byte[] data, Guid id);
+        public Task GetWordDocument(Guid id);
     }
 }

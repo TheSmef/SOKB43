@@ -33,7 +33,7 @@
                         <RadzenButton Icon="add_circle_outline" Text="Добавить" style="margin-top: 6px; margin-right: 10px;" Click="@AddRecord" />
                         <RadzenButton Icon="donut_large" ButtonStyle="ButtonStyle.Success" style="margin-right: 10px;margin-top: 6px" Text="Общая статистика" Click="@(() => CheckStats())" />
                         <RadzenButton Icon="get_app" ButtonStyle="ButtonStyle.Light" style="margin-right: 10px;margin-top: 6px" Text="Экспортировать" Click="@ExportContractors" />
-                        <MudFileUpload T="IBrowserFile" FilesChanged="UploadFile" Accept=".xlsx" style="margin-bottom: 10px; display: inline-block">
+                        <MudFileUpload T="IBrowserFile" FilesChanged="ImportExcel" Accept=".xlsx" style="margin-bottom: 10px; display: inline-block">
                             <ButtonTemplate Context="data">
                                 <MudButton HtmlTag="label"
                                            DisableElevation="true"
@@ -135,6 +135,7 @@
     private void ChildContextMenu(DataGridCellMouseEventArgs<Order> args) => ContextMenuService!.Open(args, ds =>
     @<RadzenMenu Click="@((value) => ChildContextMenuSelector(args, value))">
         <RadzenMenuItem Icon="pageview" Text="Состав заказа" Value="3"></RadzenMenuItem>
+        <RadzenMenuItem Icon="get_app" Text="Составить договор" Value="4"></RadzenMenuItem>
         <RadzenMenuItem Text="Работа с данными">
             <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
             <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>

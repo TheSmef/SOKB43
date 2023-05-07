@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
+﻿using BlazorDownloadFile;
+using Microsoft.AspNetCore.WebUtilities;
+using Models.Dto.FileModels;
 using Models.Dto.GetModels;
 using Models.Dto.PostPutModels;
 using Models.Dto.StatsModels.GetModels;
@@ -16,9 +18,11 @@ namespace WEB.Data.Services
 
 
         private readonly HttpClient client;
-        public OrderService(HttpClient client)
+        private readonly IBlazorDownloadFileService DownloadService;
+        public OrderService(HttpClient client, IBlazorDownloadFileService DownloadService)
         {
             this.client = client;
+            this.DownloadService = DownloadService;
         }
         public async Task<Order> AddOrder(OrderDto model)
         {
@@ -238,6 +242,54 @@ namespace WEB.Data.Services
                 else
                 {
                     throw new AppException("Ошибка запроса", "Ошибка при запросе заказов, попробуйте позже");
+                }
+
+            }
+            catch (AppException)
+            {
+                throw;
+            }
+            catch (UnAuthException)
+            {
+                throw;
+            }
+            catch
+            {
+                throw new AppException("Ошибка соединения", "Произошла неизвестная ошибка при запросе!");
+            }
+        }
+
+        public async Task GetWordDocument(Guid id)
+        {
+            try
+            {
+                var query = new Dictionary<string, string>
+                {
+                        { "orderId", id.ToString() }
+                };
+                var uri = QueryHelpers.AddQueryString("Orders/Document", query!);
+                var response = await client.GetAsync(uri);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    FileModel? record = await response.Content.ReadFromJsonAsync<FileModel>();
+                    if (record == null)
+                    {
+                        throw new AppException("Ошибка запроса", "Ошибка при получении документа, попробуйте позже");
+                    }
+                    await DownloadService.DownloadFile(record.Name, record.Data, "application/ostet-stream");
+                }
+                else if (response.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    throw new AppException("Ошибка запроса", await response.Content.ReadAsStringAsync());
+                }
+                else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
+                {
+                    throw new UnAuthException();
+                }
+                else
+                {
+                    throw new AppException("Ошибка соединения", "Произошла неизвестная ошибка при запросе!");
                 }
 
             }
