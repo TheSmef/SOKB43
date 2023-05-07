@@ -39,7 +39,7 @@
                                         ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ContextMenu" AllowColumnResize="true">
                             <Template Context="data">
 
-                                <RadzenTemplateForm Data="@data" TItem="TechnicalTask" Submit="@(() => SaveTaskContent(data))">
+                                <RadzenTemplateForm Data="@data" TItem="TechnicalTask" Submit="@(async () => await SaveTaskContent(data))">
                                     <ChildContent Context="model">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -76,9 +76,9 @@
                                 </RadzenDataGridColumn>
                                 <RadzenDataGridColumn TItem="TechnicalTask" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
                                     <Template Context="_context">
-                                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(() => EditTask(_context))">
+                                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(async () => await EditTask(_context))">
                                         </RadzenButton>
-                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeleteTask(_context))">
+                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(async () => await DeleteTask(_context))">
                                         </RadzenButton>
                                     </Template>
                                 </RadzenDataGridColumn>
@@ -96,7 +96,7 @@
 
 @code{
     private void ContextMenu(DataGridCellMouseEventArgs<TechnicalTask> args) => ContextMenuService!.Open(args, ds =>
-    @<RadzenMenu Click="@((value) => ContextMenuSelector(args, value))">
+    @<RadzenMenu Click="@(async (value) => await ContextMenuSelector(args, value))">
         <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
         <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
     </RadzenMenu>

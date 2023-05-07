@@ -42,8 +42,8 @@
                                         <RadzenTabsItem Text="Должности сотрудника">
 
                                                 <div style="display: inline-block; white-space: nowrap">
-                                                <RadzenButton Icon="add_circle_outline" style="margin-left: 10px; margin-right: 10px; margin-bottom: 10px" Text="Добавить" Click="@(() => @AddUserPost(data))" />
-                                                <RadzenButton Icon="delete_forever" ButtonStyle="ButtonStyle.Warning" style="margin-left: 10px; margin-right: 10px; margin-bottom: 10px" Text="Просмотр корзины" Click="@(() => CheckRecyclerBin(data))" />
+                                                <RadzenButton Icon="add_circle_outline" style="margin-left: 10px; margin-right: 10px; margin-bottom: 10px" Text="Добавить" Click="@(async () => await AddUserPost(data))" />
+                                                <RadzenButton Icon="delete_forever" ButtonStyle="ButtonStyle.Warning" style="margin-left: 10px; margin-right: 10px; margin-bottom: 10px" Text="Просмотр корзины" Click="@(async () => await CheckRecyclerBin(data))" />
                                                 </div>
 
 
@@ -51,7 +51,7 @@
                                                             EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
                                                             StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
                                                             GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
-                                                            PagerAlwaysVisible="true" Count="@(userPosts!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@((args) => LoadChildData(args, data))"
+                                                            PagerAlwaysVisible="true" Count="@(userPosts!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@(async (args) => await LoadChildData(args, data))"
                                                             ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ChildContextMenu">
                                                 <Columns>
                                                     <RadzenDataGridColumn TItem="UserPost" Property="Post.Name" Width="30%" MinWidth="250px" Title="Название должности">
@@ -73,9 +73,9 @@
                                                     </RadzenDataGridColumn>
                                                     <RadzenDataGridColumn TItem="UserPost" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
                                                         <Template Context="_context">
-                                                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(() => EditUserPost(_context))">
+                                                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(async () => await EditUserPost(_context))">
                                                             </RadzenButton>
-                                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeleteUserPost(_context))">
+                                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(async () => await DeleteUserPost(_context))">
                                                             </RadzenButton>
                                                         </Template>
                                                     </RadzenDataGridColumn>
@@ -92,7 +92,7 @@
                                                                                TextProperty="Name" Style="height:280px" class="w-100" />
                                                             </div>
                                                             <div>
-                                                                <RadzenButton style="margin-top: 10px; margin-bottom: 10px" Text="Сохранить" Click="(() => ChangeRoles(data))">
+                                                                <RadzenButton style="margin-top: 10px; margin-bottom: 10px" Text="Сохранить" Click="(async () => await ChangeRoles(data))">
                                                                 </RadzenButton>
                                                             </div>
                                                         </div>
@@ -134,9 +134,9 @@
                                 </RadzenDataGridColumn>
                                 <RadzenDataGridColumn TItem="User" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
                                     <Template Context="_context">
-                                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(() => EditUser(_context))">
+                                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(async () => await EditUser(_context))">
                                         </RadzenButton>
-                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeleteUser(_context))">
+                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(async () => await DeleteUser(_context))">
                                         </RadzenButton>
                                     </Template>
                                 </RadzenDataGridColumn>
@@ -154,7 +154,7 @@
 
 @code{
     private void ContextMenu(DataGridCellMouseEventArgs<User> args) => ContextMenuService!.Open(args, ds =>
-    @<RadzenMenu Click="@((value) => ContextMenuSelector(args, value))">
+    @<RadzenMenu Click="@(async (value) => await ContextMenuSelector(args, value))">
         <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
         <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
 
@@ -162,7 +162,7 @@
     );
 
     private void ChildContextMenu(DataGridCellMouseEventArgs<UserPost> args) => ContextMenuService!.Open(args, ds =>
-    @<RadzenMenu Click="@((value) => ChildContextMenuSelector(args, value))">
+    @<RadzenMenu Click="@(async (value) => await ChildContextMenuSelector(args, value))">
         <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
         <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
 

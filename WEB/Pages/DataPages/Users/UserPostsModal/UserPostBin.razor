@@ -33,9 +33,9 @@
                         </RadzenDataGridColumn>
                         <RadzenDataGridColumn TItem="UserPost" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
                             <Template Context="_context">
-                                <RadzenButton Icon="assignment_return" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(() => RestoreUserPost(_context))">
+                                <RadzenButton Icon="assignment_return" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(async () => await RestoreUserPost(_context))">
                                 </RadzenButton>
-                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeleteUserPost(_context))">
+                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(async () => await DeleteUserPost(_context))">
                                 </RadzenButton>
                             </Template>
                         </RadzenDataGridColumn>
@@ -49,7 +49,7 @@
 
 @code{
     private void ContextMenu(DataGridCellMouseEventArgs<UserPost> args) => ContextMenuService!.Open(args, ds =>
-    @<RadzenMenu Click="@((value) => ContextMenuSelector(args, value))">
+    @<RadzenMenu Click="@(async (value) => await ContextMenuSelector(args, value))">
         <RadzenMenuItem Icon="assignment_return" Text="Восстановить запись" Value="1"></RadzenMenuItem>
         <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
 

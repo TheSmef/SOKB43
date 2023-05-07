@@ -27,7 +27,7 @@
                         <RadzenDataGridColumn TItem="Token" Property="Date" Title="Дата создания" />
                         <RadzenDataGridColumn TItem="Token" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="80px" TextAlign="TextAlign.Center" Frozen="true">
                             <Template Context="_context">
-                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeleteToken(_context))">
+                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(async () => await DeleteToken(_context))">
                                 </RadzenButton>
                             </Template>
                         </RadzenDataGridColumn>
@@ -42,7 +42,7 @@
 
 @code{
     private void ContextMenu(DataGridCellMouseEventArgs<Token> args) => ContextMenuService!.Open(args, ds =>
-    @<RadzenMenu Click="@(() => DeleteToken(args.Data))">
+    @<RadzenMenu Click="@(async () => await DeleteToken(args.Data))">
 
         <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="1"></RadzenMenuItem>
 

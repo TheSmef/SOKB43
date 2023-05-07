@@ -19,7 +19,7 @@
                                 EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
                                 StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
                                 GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
-                                PagerAlwaysVisible="true" Count="@(bin!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@((args) => LoadData(args))" Data="@(bin.Collection)"
+                                PagerAlwaysVisible="true" Count="@(bin!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@(async (args) => await LoadData(args))" Data="@(bin.Collection)"
                                 ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" AllowColumnResize="true" CellContextMenu="@ContextMenu">
                     <Columns>
                         <RadzenDataGridColumn TItem="Service" Property="ServiceType" Width="20%" MinWidth="230px" Title="Тип обслуживания">
@@ -40,9 +40,9 @@
                         </RadzenDataGridColumn>
                         <RadzenDataGridColumn TItem="Service" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
                             <Template Context="_context">
-                                <RadzenButton Icon="assignment_return" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="(() => RestoreRecord(_context))">
+                                <RadzenButton Icon="assignment_return" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="(async () => await RestoreRecord(_context))">
                                 </RadzenButton>
-                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="(() => DeleteRecord(_context))">
+                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="(async () => await DeleteRecord(_context))">
                                 </RadzenButton>
                             </Template>
                         </RadzenDataGridColumn>
@@ -56,7 +56,7 @@
 
 @code {
     private void ContextMenu(DataGridCellMouseEventArgs<Service> args) => ContextMenuService!.Open(args, ds =>
-    @<RadzenMenu Click="@((value) => ContextMenuSelector(args, value))">
+    @<RadzenMenu Click="@(async (value) => await ContextMenuSelector(args, value))">
         <RadzenMenuItem Icon="assignment_return" Text="Восстановить запись" Value="1"></RadzenMenuItem>
         <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
 

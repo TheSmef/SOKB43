@@ -42,10 +42,10 @@
                                         <RadzenTabsItem Text="Тестирование оборудования">
 
                                             <div style="display: inline-block; white-space: nowrap">
-                                                <RadzenButton Icon="add_circle_outline" style="margin-top: 6px; margin-bottom: 10px;" Text="Добавить" Click="@(() => AddTest(data))" />
-                                                <RadzenButton Icon="delete_forever" ButtonStyle="ButtonStyle.Warning" style="margin-top: 6px; margin-bottom: 10px; margin-left: 10px" Text="Просмотр корзины" Click="@(() => CheckBin(data))" />
+                                                <RadzenButton Icon="add_circle_outline" style="margin-top: 6px; margin-bottom: 10px;" Text="Добавить" Click="@(async () => await AddTest(data))" />
+                                                <RadzenButton Icon="delete_forever" ButtonStyle="ButtonStyle.Warning" style="margin-top: 6px; margin-bottom: 10px; margin-left: 10px" Text="Просмотр корзины" Click="@(async () => await CheckBin(data))" />
                                                 <RadzenButton Icon="get_app" ButtonStyle="ButtonStyle.Light" style="margin-top: 6px; margin-bottom: 10px; margin-left: 10px;" Text="Экспортировать" Click="@ExportTests" />
-                                                <MudFileUpload T="IBrowserFile" Accept=".xlsx" FilesChanged="((content) => ImportExcel(content, data.Id))" style="margin-bottom: 10px; display: inline-block; margin-left: 10px;">
+                                                <MudFileUpload T="IBrowserFile" Accept=".xlsx" FilesChanged="(async (content) => await ImportExcel(content, data.Id))" style="margin-bottom: 10px; display: inline-block; margin-left: 10px;">
                                                     <ButtonTemplate Context="buttondata">
                                                         <MudButton HtmlTag="label"
                                                                    DisableElevation="true"
@@ -68,7 +68,7 @@
                                                             StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
                                                             GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
                                                             PagerAlwaysVisible="true" Count="@(tests!.ElementsCount)" AllowMultiColumnSorting="false"
-                                                            ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ContextMenu" LoadData="@((args) => LoadChildData(args, data))">
+                                                            ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" CellContextMenu="@ContextMenu" LoadData="@(async (args) => await LoadChildData(args, data))">
                                                 <Columns>
                                                     <RadzenDataGridColumn TItem="TechnicalTest" Property="Premium" Width="10%" MinWidth="130px" Title="Статус">
                                                         <Template Context="childdata">
@@ -109,9 +109,9 @@
                                                     </RadzenDataGridColumn>
                                                     <RadzenDataGridColumn TItem="TechnicalTest" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
                                                         <Template Context="_context">
-                                                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Radzen.Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(() => EditTest(_context))">
+                                                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Radzen.Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="@(async () => await EditTest(_context))">
                                                             </RadzenButton>
-                                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(() => DeleteTest(_context))">
+                                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="@(async () => await DeleteTest(_context))">
                                                             </RadzenButton>
                                                         </Template>
                                                     </RadzenDataGridColumn>
@@ -128,7 +128,7 @@
                                                                                Style="height:280px" class="w-100" />
                                                             </div>
                                                             <div>
-                                                                <RadzenButton style="margin-top: 10px; margin-bottom: 10px" Text="Сохранить" Click="@(() => ChangeStatus(data))">
+                                                                <RadzenButton style="margin-top: 10px; margin-bottom: 10px" Text="Сохранить" Click="@(async () => await ChangeStatus(data))">
                                                                 </RadzenButton>
                                                             </div>
                                                         </div>
@@ -176,7 +176,7 @@
 
 @code{
     private void ContextMenu(DataGridCellMouseEventArgs<TechnicalTest> args) => ContextMenuService!.Open(args, ds =>
-    @<RadzenMenu Click="@((value) => ContextMenuSelector(args, value))">
+    @<RadzenMenu Click="@(async (value) => await ContextMenuSelector(args, value))">
         <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
         <RadzenMenuItem Icon="delete" Text="Удалить запись" Value="2"></RadzenMenuItem>
 

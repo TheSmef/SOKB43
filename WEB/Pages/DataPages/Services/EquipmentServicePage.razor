@@ -39,10 +39,10 @@
                             <Template Context="data">
                                 <RadzenHeading Size="H2" Text="Обслуживающие работы" />
                                 <div style="display: inline-block; white-space: nowrap">
-                                    <RadzenButton Icon="add_circle_outline" style="margin-top: 6px; margin-bottom: 10px;" Text="Добавить" Click="@(() => AddService(data))" />
-                                    <RadzenButton Icon="delete_forever" ButtonStyle="ButtonStyle.Warning" style="margin-top: 6px; margin-bottom: 10px; margin-left: 10px" Text="Просмотр корзины" Click="(() => CheckBin(data))" />
+                                    <RadzenButton Icon="add_circle_outline" style="margin-top: 6px; margin-bottom: 10px;" Text="Добавить" Click="@(async () => await AddService(data))" />
+                                    <RadzenButton Icon="delete_forever" ButtonStyle="ButtonStyle.Warning" style="margin-top: 6px; margin-bottom: 10px; margin-left: 10px" Text="Просмотр корзины" Click="(async () => await CheckBin(data))" />
                                     <RadzenButton Icon="get_app" ButtonStyle="ButtonStyle.Light" style="margin-top: 6px; margin-bottom: 10px; margin-left: 10px;" Text="Экспортировать" Click="@ExportServices" />
-                                    <MudFileUpload T="IBrowserFile" Accept=".xlsx" FilesChanged="((content) => ImportExcel(content, data.Id))" style="margin-bottom: 10px; display: inline-block; margin-left: 10px;">
+                                    <MudFileUpload T="IBrowserFile" Accept=".xlsx" FilesChanged="(async (content) => await ImportExcel(content, data.Id))" style="margin-bottom: 10px; display: inline-block; margin-left: 10px;">
                                         <ButtonTemplate Context="buttondata">
                                             <MudButton HtmlTag="label"
                                                        DisableElevation="true"
@@ -62,7 +62,7 @@
                                                 EqualsText="Равно" NotEqualsText="Не равно" ContainsText="Содержит" DoesNotContainText="Не содержит" IsNotEmptyText="Не пустое" AndOperatorText="И" OrOperatorText="Или"
                                                 StartsWithText="Начинается с" EndsWithText="Заказнчивается с" IsNullText="Не записано" IsNotNullText="Записано" IsEmptyText="Пустое" LessThanText="Меньше чем" LessThanOrEqualsText="Меньше или равно"
                                                 GreaterThanText="Больше чем" GreaterThanOrEqualsText="Больше или равно" FilterText="Фильтр" ApplyFilterText="Применить" ClearFilterText="Очистить"
-                                                PagerAlwaysVisible="true" Count="@(service!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@((args) => LoadChildData(args, data))" Data="@(service.Collection)"
+                                                PagerAlwaysVisible="true" Count="@(service!.ElementsCount)" AllowMultiColumnSorting="false" LoadData="@(async (args) => await LoadChildData(args, data))" Data="@(service.Collection)"
                                                 ShowPagingSummary="true" AllowColumnReorder="true" PagingSummaryFormat="@ConstantValues.pagingSummaryFormat" AllowColumnResize="true" CellContextMenu="@ContextMenu">
                                     <Columns>
                                         <RadzenDataGridColumn TItem="Service" Property="ServiceType" Width="20%" MinWidth="180px" Title="Тип обслуживания">
@@ -89,9 +89,9 @@
                                         </RadzenDataGridColumn>
                                         <RadzenDataGridColumn TItem="Service" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">
                                             <Template Context="_context">
-                                                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Radzen.Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="(() => EditService(_context))">
+                                                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Radzen.Variant.Flat" Size="ButtonSize.Medium" @onclick:stopPropagation="true" Click="(async () => await EditService(_context))">
                                                 </RadzenButton>
-                                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="(() => DeleteService(_context))">
+                                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" @onclick:stopPropagation="true" class="my-1 ms-1" Click="(async () => await DeleteService(_context))">
                                                 </RadzenButton>
                                             </Template>
                                         </RadzenDataGridColumn>
@@ -135,7 +135,7 @@
 
 @code {
     private void ContextMenu(DataGridCellMouseEventArgs<Service> args) => ContextMenuService!.Open(args, ds =>
-    @<RadzenMenu Click="@((value) => ContextMenuSelector(args, value))">
+    @<RadzenMenu Click="@(async (value) => await ContextMenuSelector(args, value))">
         <RadzenMenuItem Icon="get_app" Text="Составить договор" Value="3"></RadzenMenuItem>
         <RadzenMenuItem Text="Работа с данными">
             <RadzenMenuItem Icon="edit" Text="Изменить запись" Value="1"></RadzenMenuItem>
