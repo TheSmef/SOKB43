@@ -24,7 +24,7 @@ namespace WEB.Tests.Tests
         {
             client = new HttpClient { BaseAddress = new Uri(TestData.URI) };
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TestData.JWTTOKEN);
-            service = new ContractorService(client);
+            service = new ContractorService(client, new DownloadServiceStub());
         }
 
         [Fact]

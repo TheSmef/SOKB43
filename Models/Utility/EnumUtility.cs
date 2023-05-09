@@ -12,11 +12,10 @@ namespace Models.Utility
         public static List<String> GetStringsValues(Type type)
         {
             List<String> values = new List<String>();
-            var enumType = type;
-            foreach (var name in Enum.GetNames(enumType))
+            foreach (var name in Enum.GetNames(type))
             {
-                var memberInfos = enumType.GetMember(name);
-                var enumValueMemberInfo = memberInfos.FirstOrDefault(m => m.DeclaringType == enumType);
+                var memberInfos = type.GetMember(name);
+                var enumValueMemberInfo = memberInfos.FirstOrDefault(m => m.DeclaringType == type);
                 var valueAttributes = enumValueMemberInfo!.GetCustomAttributes(typeof(DescriptionAttribute), false);
                 var description = ((DescriptionAttribute)valueAttributes[0]).Description;
                 values.Add(description);

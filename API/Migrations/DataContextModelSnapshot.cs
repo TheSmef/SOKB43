@@ -17,7 +17,7 @@ namespace API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -61,7 +61,7 @@ namespace API.Migrations
                             UserId = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
                             Email = "admin@admin.com",
                             Login = "admin",
-                            Password = "$2a$11$0KnI9aT.6vqvhckuNCXIX.YfR6b43oVP7XsUM24KBbyA3bPzNuQpG"
+                            Password = "$2a$11$iL7JhZiLPOC5Pj0qW8nsWek7/nBbdD/Hj3OGZtSIObkLjYdX3jqfO"
                         });
                 });
 
@@ -102,7 +102,7 @@ namespace API.Migrations
                     b.HasIndex("PhoneNumber")
                         .IsUnique();
 
-                    b.ToTable("Conctractors", t =>
+                    b.ToTable("Contractors", t =>
                         {
                             t.HasCheckConstraint("CH_Email_Contractor", "Email like '%@%.%'");
                         });
@@ -223,7 +223,7 @@ namespace API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9e07eacc-00a7-4714-bd7a-3d063ec80d45"),
+                            Id = new Guid("0618a478-23fe-44f1-a3ac-7712d7f2bd75"),
                             AccountUserId = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
                             Name = "Администратор"
                         });
@@ -459,9 +459,9 @@ namespace API.Migrations
                         new
                         {
                             Id = new Guid("f0e290a9-9054-4ae7-af3b-08dad84feb5b"),
-                            BirthDate = new DateTime(1993, 3, 17, 0, 0, 0, 0, DateTimeKind.Local),
-                            Firstname = "Админ",
-                            Lastname = "Админ",
+                            BirthDate = new DateTime(1993, 5, 9, 0, 0, 0, 0, DateTimeKind.Local),
+                            First_name = "Админ",
+                            Last_name = "Админ",
                             PassportNumber = "000000",
                             PassportSeries = "0000",
                             PhoneNumber = "88888888888"
@@ -576,7 +576,7 @@ namespace API.Migrations
             modelBuilder.Entity("Models.Entity.TechnicalTest", b =>
                 {
                     b.HasOne("Models.Entity.Equipment", "Equipment")
-                        .WithMany("TechicalTests")
+                        .WithMany("TechnicalTests")
                         .HasForeignKey("EquipmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -636,7 +636,7 @@ namespace API.Migrations
                 {
                     b.Navigation("Services");
 
-                    b.Navigation("TechicalTests");
+                    b.Navigation("TechnicalTests");
                 });
 
             modelBuilder.Entity("Models.Entity.Order", b =>

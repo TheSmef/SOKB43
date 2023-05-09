@@ -13,6 +13,7 @@ using WEB.Data.Services.Base;
 using WEB.Data.Services;
 using WEB.Tests.Constants;
 using WEB.Tests.Orderer;
+using WEB.Tests.Tests.Stubs;
 
 namespace WEB.Tests.Tests
 {
@@ -30,12 +31,12 @@ namespace WEB.Tests.Tests
         {
             client = new HttpClient { BaseAddress = new Uri(TestData.URI) };
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TestData.JWTTOKEN);
-            orderService = new OrderService(client);
-            contractorService = new ContractorService(client);
-            equipmentService = new EquipmentService(client);
+            orderService = new OrderService(client, new DownloadServiceStub());
+            contractorService = new ContractorService(client, new DownloadServiceStub());
+            equipmentService = new EquipmentService(client, new DownloadServiceStub());
             technicalTaskService = new TechnicalTaskService(client);
             equipmentTypeService = new EquipmentTypeService(client);
-            service = new TechnicalTestsService(client);
+            service = new TechnicalTestsService(client, new DownloadServiceStub());
         }
 
         [Fact]

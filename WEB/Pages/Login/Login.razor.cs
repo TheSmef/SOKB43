@@ -97,7 +97,7 @@ namespace WEB.Pages.Login
             }
             catch
             {
-                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла неизвестная ошибка при запросе к серверу, попробуйте повторить запрос позже", 4000);
+                NotificationService!.Notify(NotificationSeverity.Error, "Ошибка!", "Произошла неизвестная ошибка при запросе, попробуйте повторить запрос позже", 4000);
             }
         }
 

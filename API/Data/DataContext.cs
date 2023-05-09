@@ -116,7 +116,7 @@ namespace API.Data
         public DbSet<Token> Tokens { get; set; }
         public DbSet<TechnicalTest> TechnicalTests { get; set; }
         public DbSet<TechnicalTask> TechnicalTasks { get; set; }
-        public DbSet<Contractor> Conctractors { get; set; }
+        public DbSet<Contractor> Contractors { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<TypeEquipment> TypesEquipment { get; set; }
     }

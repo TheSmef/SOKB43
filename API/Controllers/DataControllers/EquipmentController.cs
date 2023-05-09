@@ -91,7 +91,7 @@ namespace API.Controllers.DataControllers
                 return BadRequest("Период просмотра статистики не должен превышать 3 месяцев");
             }
             var items = _context.Equipments.Where(x => x.Order!.Date >= query.StartDate && x.Order!.Date <= query.EndDate && x.Deleted == false);
-            if (!_context.Conctractors.Where(x => x.Id == id).Any() && id != null)
+            if (!_context.Contractors.Where(x => x.Id == id).Any() && id != null)
             {
                 return BadRequest("Данного контрагента не существует");
             }

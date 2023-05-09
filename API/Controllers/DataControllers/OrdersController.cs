@@ -63,7 +63,7 @@ namespace API.Controllers.DataControllers
             }
             var orders = _context.Orders.Where(x => x.Date >= query.StartDate && x.Date <= query.EndDate);
             var services = _context.Services.Where(x => x.Date >= query.StartDate && x.Date <= query.EndDate && x.Deleted == false);
-            if (!_context.Conctractors.Where(x => x.Id == id).Any() && id != null)
+            if (!_context.Contractors.Where(x => x.Id == id).Any() && id != null)
             {
                 return BadRequest("Данного контрагента не существует");
             }
@@ -147,13 +147,13 @@ namespace API.Controllers.DataControllers
         [HttpPost]
         public async Task<ActionResult<Order>> postOrder(OrderDto order)
         {
-            if (!_context.Conctractors.Where(x => x.Id == order.ContractorId).Any())
+            if (!_context.Contractors.Where(x => x.Id == order.ContractorId).Any())
             {
                 return BadRequest("Данный контрагент не существует!");
             }
             Order orderPost = new Order();
             orderPost.Date = order.Date;
-            orderPost.Contractor = _context.Conctractors.Where(x => x.Id == order.ContractorId).First();
+            orderPost.Contractor = _context.Contractors.Where(x => x.Id == order.ContractorId).First();
             orderPost.Sum = order.Sum;
             await _context.Orders.AddAsync(orderPost);
             await _context.SaveChangesAsync();
@@ -168,12 +168,12 @@ namespace API.Controllers.DataControllers
             {
                 return BadRequest("Запись не существует!");
             }
-            if (!_context.Conctractors.Where(x => x.Id == orderDto.ContractorId).Any())
+            if (!_context.Contractors.Where(x => x.Id == orderDto.ContractorId).Any())
             {
                 return BadRequest("Данный контрагент не существует!");
             }
             orderCheck.Date = orderDto.Date;
-            orderCheck.Contractor = _context.Conctractors.Where(x => x.Id == orderDto.ContractorId).First();
+            orderCheck.Contractor = _context.Contractors.Where(x => x.Id == orderDto.ContractorId).First();
             orderCheck.Sum = orderDto.Sum;
             await _context.SaveChangesAsync();
             return Ok(orderCheck);

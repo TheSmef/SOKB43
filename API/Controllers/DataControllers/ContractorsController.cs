@@ -36,14 +36,14 @@ namespace API.Controllers.DataControllers
                 System.ComponentModel.DataAnnotations.ValidationContext validationContext 
                     = new System.ComponentModel.DataAnnotations.ValidationContext(contractor);
                 if (!Validator.TryValidateObject(contractor, validationContext, null, true)
-                    || _context.Conctractors.Where(x => x.Name == contractor.Name).Any()
-                    || _context.Conctractors.Where(x => x.Email == contractor.Email).Any()
-                    || _context.Conctractors.Where(x => x.PhoneNumber == contractor.PhoneNumber).Any())
+                    || _context.Contractors.Where(x => x.Name == contractor.Name).Any()
+                    || _context.Contractors.Where(x => x.Email == contractor.Email).Any()
+                    || _context.Contractors.Where(x => x.PhoneNumber == contractor.PhoneNumber).Any())
                 {
                     return BadRequest($"Ошибка валидации внутри файла импортирования, исправте ошибку валидации и повторите попытку (Ошибка на строке {contractors.IndexOf(contractor) + 2})");
                 }
             }
-            await _context.Conctractors.AddRangeAsync(contractors);
+            await _context.Contractors.AddRangeAsync(contractors);
             await _context.SaveChangesAsync();
             return Ok();
         }
@@ -52,7 +52,7 @@ namespace API.Controllers.DataControllers
         public async Task<ActionResult<FileModel>> exportContractors(
             [FromQuery] QuerySupporter query)
         {
-            var items = _context.Conctractors.AsQueryable();
+            var items = _context.Contractors.AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
@@ -85,7 +85,7 @@ namespace API.Controllers.DataControllers
         public async Task<ActionResult<ContractorsGetDtoModel>> getContractors(
             [FromQuery] QuerySupporter query)
         {
-            var items = _context.Conctractors.AsQueryable();
+            var items = _context.Contractors.AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
@@ -124,9 +124,9 @@ namespace API.Controllers.DataControllers
         [HttpGet("single")]
         public async Task<ActionResult<Contractor>> getContractorById(Guid id)
         {
-            if (_context.Conctractors.Where(x => x.Id == id).Any())
+            if (_context.Contractors.Where(x => x.Id == id).Any())
             {
-                return Ok(await _context.Conctractors.Where(x => x.Id == id).FirstAsync());
+                return Ok(await _context.Contractors.Where(x => x.Id == id).FirstAsync());
             }
             else
             {
@@ -137,19 +137,19 @@ namespace API.Controllers.DataControllers
         [HttpPost]
         public async Task<ActionResult<Contractor>> postContractor(Contractor conctractor)
         {
-            if (_context.Conctractors.Where(x => x.Name == conctractor.Name).Any())
+            if (_context.Contractors.Where(x => x.Name == conctractor.Name).Any())
             {
                 return BadRequest("Контрагент с данным названием уже существует!");
             }
-            if (_context.Conctractors.Where(x => x.Email == conctractor.Email).Any())
+            if (_context.Contractors.Where(x => x.Email == conctractor.Email).Any())
             {
                 return BadRequest("Контрагент с данной электронной почтой уже существует!");
             }
-            if (_context.Conctractors.Where(x => x.PhoneNumber == conctractor.PhoneNumber).Any())
+            if (_context.Contractors.Where(x => x.PhoneNumber == conctractor.PhoneNumber).Any())
             {
                 return BadRequest("Контрагент с данным номером телефона уже существует!");
             }
-            await _context.Conctractors.AddAsync(conctractor);
+            await _context.Contractors.AddAsync(conctractor);
             await _context.SaveChangesAsync();
             return Ok(conctractor);
         }
@@ -157,20 +157,20 @@ namespace API.Controllers.DataControllers
         [HttpPut]
         public async Task<ActionResult<Contractor>> putContractor([FromQuery] Guid id, Contractor conctractor)
         {
-            Contractor? contractorCheck = await _context.Conctractors.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+            Contractor? contractorCheck = await _context.Contractors.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
             if (contractorCheck == null)
             {
                 return BadRequest("Запись не существует!");
             }
-            if (_context.Conctractors.Where(x => x.Name == conctractor.Name).Any() && conctractor.Name != contractorCheck.Name)
+            if (_context.Contractors.Where(x => x.Name == conctractor.Name).Any() && conctractor.Name != contractorCheck.Name)
             {
                 return BadRequest("Контрагент с данным названием уже существует!");
             }
-            if (_context.Conctractors.Where(x => x.Email == conctractor.Email).Any() && conctractor.Email != contractorCheck.Email)
+            if (_context.Contractors.Where(x => x.Email == conctractor.Email).Any() && conctractor.Email != contractorCheck.Email)
             {
                 return BadRequest("Контрагент с данной электронной почтой уже существует!");
             }
-            if (_context.Conctractors.Where(x => x.PhoneNumber == conctractor.PhoneNumber).Any() && conctractor.PhoneNumber != contractorCheck.PhoneNumber)
+            if (_context.Contractors.Where(x => x.PhoneNumber == conctractor.PhoneNumber).Any() && conctractor.PhoneNumber != contractorCheck.PhoneNumber)
             {
                 return BadRequest("Контрагент с данным номером телефона уже существует!");
             }
@@ -185,7 +185,7 @@ namespace API.Controllers.DataControllers
         [HttpDelete]
         public async Task<ActionResult> deleteContractor([FromQuery] Guid id)
         {
-            Contractor? delete = await _context.Conctractors.Where(x => x.Id == id).Include(x => x.Orders).FirstOrDefaultAsync();
+            Contractor? delete = await _context.Contractors.Where(x => x.Id == id).Include(x => x.Orders).FirstOrDefaultAsync();
             if (delete == null)
             {
                 return BadRequest("Запись не существует!");
@@ -194,7 +194,7 @@ namespace API.Controllers.DataControllers
             {
                 return BadRequest("Невозможно удалить запись, у неё присутствуют дочерние записи!");
             }
-            _context.Conctractors.Remove(delete);
+            _context.Contractors.Remove(delete);
             await _context.SaveChangesAsync();
             return Ok("Запись удалена");
         }

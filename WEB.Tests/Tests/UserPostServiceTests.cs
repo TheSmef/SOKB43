@@ -12,6 +12,7 @@ using WEB.Data.Services;
 using WEB.Data.Services.Base;
 using WEB.Tests.Constants;
 using WEB.Tests.Orderer;
+using WEB.Tests.Tests.Stubs;
 
 namespace WEB.Tests.Tests
 {
@@ -28,7 +29,7 @@ namespace WEB.Tests.Tests
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TestData.JWTTOKEN);
             service = new UserPostService(client);
             postService= new PostService(client);
-            userService= new UserService(client);
+            userService= new UserService(client, new DownloadServiceStub());
         }
 
         [Fact]

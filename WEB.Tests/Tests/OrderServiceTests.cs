@@ -12,6 +12,7 @@ using WEB.Data.Services;
 using WEB.Data.Services.Base;
 using WEB.Tests.Constants;
 using WEB.Tests.Orderer;
+using WEB.Tests.Tests.Stubs;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WEB.Tests.Tests
@@ -26,8 +27,8 @@ namespace WEB.Tests.Tests
         {
             client = new HttpClient { BaseAddress = new Uri(TestData.URI) };
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TestData.JWTTOKEN);
-            service = new OrderService(client);
-            contractorService = new ContractorService(client);
+            service = new OrderService(client, new DownloadServiceStub());
+            contractorService = new ContractorService(client, new DownloadServiceStub());
         }
 
         [Fact]

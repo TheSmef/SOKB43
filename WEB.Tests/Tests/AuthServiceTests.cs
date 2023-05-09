@@ -26,7 +26,7 @@ namespace WEB.Tests.Tests
         {
             client = new HttpClient { BaseAddress = new Uri(TestData.URI) };
             service = new AuthService(client, new LocalStorageStub(TestData.TOKEN));
-            serviceForDelete = new UserService(client);
+            serviceForDelete = new UserService(client, new DownloadServiceStub());
         }
 
         [Fact]
