@@ -40,6 +40,7 @@ namespace WEB.Pages.DataPages.Contractors
         private ContractorsGetDtoModel? records = new ContractorsGetDtoModel()
         { CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0 };
         private QuerySupporter query = new QuerySupporter();
+        private QuerySupporter childquery = new QuerySupporter();
         [Inject]
         private IContractorService? ContractorService { get; set; }
 
@@ -154,8 +155,8 @@ namespace WEB.Pages.DataPages.Contractors
         {
             try
             {
-                query = new QuerySupporter { Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Contractor.Id)) ==  " + "\"" + contractor.Id.ToString() + "\")" : args.Filter + " and ((np(Contractor.Id)) == " + "\"" + contractor.Id.ToString() + "\")", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value };
-                orders = await OrderService!.GetOrders(query);
+                childquery = new QuerySupporter { Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Contractor.Id)) ==  " + "\"" + contractor.Id.ToString() + "\")" : args.Filter + " and ((np(Contractor.Id)) == " + "\"" + contractor.Id.ToString() + "\")", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value };
+                orders = await OrderService!.GetOrders(childquery);
                 if (orders!.Collection!.Count == 0 && orders!.CurrentPageIndex != 1)
                 {
                     await childgrid!.GoToPage(orders!.CurrentPageIndex - 2);
@@ -218,6 +219,7 @@ namespace WEB.Pages.DataPages.Contractors
             try
             {
                 await OrderService!.GetWordDocument(model.Id);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешное составление договора!", "Договор успешно составлен", 4000);
             }
             catch (UnAuthException)
             {

@@ -63,6 +63,7 @@ namespace WEB.Pages.DataPages.Services
         private ServiceGetDtoModel? service = new ServiceGetDtoModel()
         { CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0 };
         private QuerySupporter query = new QuerySupporter();
+        private QuerySupporter childquery = new QuerySupporter();
         [Inject]
         private IEquipmentService? EquipmentService { get; set; }
 
@@ -98,6 +99,7 @@ namespace WEB.Pages.DataPages.Services
             try
             {
                 await ServicesService!.GetWordDocument(model.Id);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешное составление договора!", "Договор успешно составлен", 4000);
             }
             catch (UnAuthException)
             {
@@ -157,8 +159,8 @@ namespace WEB.Pages.DataPages.Services
         {
             try
             {
-                query = new QuerySupporter { Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Equipment.Id)) ==  " + "\"" + model.Id.ToString() + "\") and ((np(Deleted)) == false)" : args.Filter + " and ((np(Equipment.Id)) == " + "\"" + model.Id.ToString() + "\") and ((np(Deleted)) == false)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value };
-                service = await ServicesService!.GetServices(query);
+                childquery = new QuerySupporter { Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Equipment.Id)) ==  " + "\"" + model.Id.ToString() + "\") and ((np(Deleted)) == false)" : args.Filter + " and ((np(Equipment.Id)) == " + "\"" + model.Id.ToString() + "\") and ((np(Deleted)) == false)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value };
+                service = await ServicesService!.GetServices(childquery);
                 if (service!.Collection!.Count == 0 && service!.CurrentPageIndex != 1)
                 {
                     await childgrid!.GoToPage(records!.CurrentPageIndex - 2);
@@ -277,7 +279,7 @@ namespace WEB.Pages.DataPages.Services
         {
             try
             {
-                await ServicesService!.ExportServices(query);
+                await ServicesService!.ExportServices(childquery);
                 NotificationService!.Notify(NotificationSeverity.Success, "Успешный экспорт обслуживания!", "Обслуживания успешно экспортированы", 4000);
             }
             catch (UnAuthException)

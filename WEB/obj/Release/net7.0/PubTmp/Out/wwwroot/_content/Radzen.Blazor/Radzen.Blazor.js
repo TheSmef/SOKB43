@@ -821,6 +821,12 @@ window.Radzen = {
         if (closestPopup && closestPopup != popup) {
           return;
         }
+        var closestLink = e.target.closest && (e.target.closest('.rz-link') || e.target.closest('.rz-navigation-item-link'));
+        if (closestLink && closestLink.closest && closestLink.closest('a')) {
+            if (Radzen.closeAllPopups) {
+                Radzen.closeAllPopups();
+            }
+        }
         if (parent) {
           if (e.type == 'mousedown' && !parent.contains(e.target) && !popup.contains(e.target)) {
             Radzen.closePopup(id, instance, callback, e);
@@ -1189,7 +1195,7 @@ window.Radzen = {
     var inside = false;
     ref.mouseMoveHandler = this.throttle(function (e) {
       if (inside) {
-        if (e.target.matches('.rz-chart-tooltip') || e.target.closest('.rz-chart-tooltip')) {
+        if (e.target.matches('.rz-chart-tooltip-content') || e.target.closest('.rz-chart-tooltip-content')) {
             return
         }
         var rect = ref.getBoundingClientRect();
@@ -1209,7 +1215,9 @@ window.Radzen = {
       var rect = ref.getBoundingClientRect();
       var x = e.clientX - rect.left;
       var y = e.clientY - rect.top;
-      instance.invokeMethodAsync('Click', x, y);
+      if (!e.target.closest('.rz-marker')) {
+        instance.invokeMethodAsync('Click', x, y);
+      }
     };
 
     ref.addEventListener('mouseenter', ref.mouseEnterHandler);

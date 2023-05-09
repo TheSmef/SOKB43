@@ -39,6 +39,7 @@ namespace WEB.Pages.DataPages.Users
         private UserPostsGetDtoModel? userPosts = new UserPostsGetDtoModel()
         {CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0};
         private QuerySupporter query = new QuerySupporter();
+        private QuerySupporter childquery = new QuerySupporter();
         [Inject]
         private NotificationService? NotificationService { get; set; }
 
@@ -170,9 +171,9 @@ namespace WEB.Pages.DataPages.Users
         {
             try
             {
-                query = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? "((np(User.Id)) ==  " + "\"" + data.Id.ToString() + "\") and ((np(Deleted)) == false)"
+                childquery = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? "((np(User.Id)) ==  " + "\"" + data.Id.ToString() + "\") and ((np(Deleted)) == false)"
                     : args.Filter + " and ((np(User.Id)) == " + "\"" + data.Id.ToString() + "\") and ((np(Deleted)) == false)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
-                userPosts = await UserPostService!.GetUserPosts(query);
+                userPosts = await UserPostService!.GetUserPosts(childquery);
                 if (userPosts!.Collection!.Count == 0 && userPosts!.CurrentPageIndex != 1)
                 {
                     await childgrid!.GoToPage(userPosts!.CurrentPageIndex - 2);

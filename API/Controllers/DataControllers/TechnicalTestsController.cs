@@ -42,8 +42,20 @@ namespace API.Controllers.DataControllers
         [HttpPost("Import")]
         public async Task<ActionResult> importTechnicalTests(byte[] data, Guid id)
         {
-            List<TechnicalTestDto> tests = ExcelExporter.getImportModel<TechnicalTestDto>(data, "Тестирования");
+            List<TechnicalTestDto> tests = new List<TechnicalTestDto>();
+            try
+            {
+                tests = ExcelExporter.getImportModel<TechnicalTestDto>(data, "Тестирования");
+            }
+            catch
+            {
+                return BadRequest("Файл импортирования некорректен");
+            }
             List<TechnicalTest> itemsToAdd = new List<TechnicalTest>();
+            if (tests.Count == 0)
+            {
+                return BadRequest("Файл импортирования не содержит данные для импортирования");
+            }
             if (!_context.Equipments.Where(x => x.Id == id).Any())
             {
                 return BadRequest("Данное оборудование не существует!");
@@ -55,7 +67,7 @@ namespace API.Controllers.DataControllers
                 var results = new List<ValidationResult>();
                 if (!Validator.TryValidateObject(test, validationContext, results, true))
                 {
-                    return BadRequest($"Ошибка валидации внутри файла импортирования, исправте ошибку валидации и повторите попытку (Ошибка на строке {tests.IndexOf(test) + 2})");
+                    return BadRequest($"Ошибка валидации внутри файла импортирования, исправьте ошибку валидации и повторите попытку (Ошибка на строке {tests.IndexOf(test) + 2})");
                 }
                 Guid idUser = Guid.Parse(User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).First().Value);
                 TechnicalTest item = _mapper.Map<TechnicalTest>(test);

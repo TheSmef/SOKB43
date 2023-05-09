@@ -57,8 +57,20 @@ namespace API.Controllers.DataControllers
         [HttpPost("Import")]
         public async Task<ActionResult> importServices(byte[] data, Guid id)
         {
-            List<ServiceDto> services = ExcelExporter.getImportModel<ServiceDto>(data, "Обслуживание");
+            List<ServiceDto> services = new List<ServiceDto>();
+            try
+            {
+                services = ExcelExporter.getImportModel<ServiceDto>(data, "Обслуживание");
+            }
+            catch
+            {
+                return BadRequest("Файл импортирования некорректен");
+            }
             List<Service> itemsToAdd = new List<Service>();
+            if (services.Count == 0)
+            {
+                return BadRequest("Файл импортирования не содержит данные для импортирования");
+            }
             if (!_context.Equipments.Where(x => x.Id == id).Any())
             {
                 return BadRequest("Данное оборудование не существует!");
@@ -69,7 +81,7 @@ namespace API.Controllers.DataControllers
                 ValidationContext validationContext = new ValidationContext(service);
                 if (!Validator.TryValidateObject(service, validationContext, null, true))
                 {
-                    return BadRequest($"Ошибка валидации внутри файла импортирования, исправте ошибку валидации и повторите попытку (Ошибка на строке {services.IndexOf(service) + 2})");
+                    return BadRequest($"Ошибка валидации внутри файла импортирования, исправьте ошибку валидации и повторите попытку (Ошибка на строке {services.IndexOf(service) + 2})");
                 }
                 Service item = _mapper.Map<Service>(service);
                 item.Equipment = _context.Equipments.Where(x => x.Id == service.EquipmentId).First();

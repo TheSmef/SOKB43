@@ -25,10 +25,13 @@
                         <RadzenDataGridColumn TItem="UserPost" Property="Share" Width="25%" MinWidth="200px" Title="Ставка">
                         </RadzenDataGridColumn>
                         <RadzenDataGridColumn TItem="UserPost" Property="Post.Salary" Width="30%" MinWidth="200px" Title="Зарплата должности">
+                            <Template Context="post">
+                                @(post.Post!.Salary.ToString("C2"))
+                            </Template>
                         </RadzenDataGridColumn>
                         <RadzenDataGridColumn TItem="UserPost" Filterable="false" Sortable="false" Width="30%" MinWidth="250px" Title="Зарплата сотрудника">
                             <Template Context="post">
-                                @((double)(post.Share * post.Post!.Salary))
+                                @(post.Salary.ToString("C2"))
                             </Template>
                         </RadzenDataGridColumn>
                         <RadzenDataGridColumn TItem="UserPost" Filterable="false" Reorderable="false" Resizable="false" Sortable="false" Width="120px" TextAlign="TextAlign.Center" Frozen="true">

@@ -57,6 +57,7 @@ namespace WEB.Pages.DataPages.Tests
         private TechnicalTestsGetDtoModel? tests = new TechnicalTestsGetDtoModel()
         {CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0};
         private QuerySupporter query = new QuerySupporter();
+        private QuerySupporter childquery = new QuerySupporter();
         [Inject]
         private IEquipmentService? EquipmentService { get; set; }
 
@@ -99,8 +100,8 @@ namespace WEB.Pages.DataPages.Tests
         {
             try
             {
-                await TechnicalTestsService!.ExportTests(query);
-                NotificationService!.Notify(NotificationSeverity.Success, "Успешный экспорт оборудования!", "Оборудование успешно экспортировано", 4000);
+                await TechnicalTestsService!.ExportTests(childquery);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешный экспорт тестирования!", "Тестирования успешно экспортированы", 4000);
             }
             catch (UnAuthException)
             {
@@ -243,8 +244,8 @@ namespace WEB.Pages.DataPages.Tests
         {
             try
             {
-                query = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Equipment.Id)) ==  " + "\"" + model.Id.ToString() + "\") and ((np(Deleted)) == false)" : args.Filter + " and ((np(Equipment.Id)) == " + "\"" + model.Id.ToString() + "\") and ((np(Deleted)) == false)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
-                tests = await TechnicalTestsService!.GetTests(query);
+                childquery = new QuerySupporter{Filter = string.IsNullOrEmpty(args.Filter) ? "((np(Equipment.Id)) ==  " + "\"" + model.Id.ToString() + "\") and ((np(Deleted)) == false)" : args.Filter + " and ((np(Equipment.Id)) == " + "\"" + model.Id.ToString() + "\") and ((np(Deleted)) == false)", OrderBy = args.OrderBy, Skip = args.Skip!.Value, Top = args.Top!.Value};
+                tests = await TechnicalTestsService!.GetTests(childquery);
                 if (tests!.Collection!.Count == 0 && tests!.CurrentPageIndex != 1)
                 {
                     await childgrid!.GoToPage(tests!.CurrentPageIndex - 2);

@@ -2,7 +2,6 @@
 using API.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Models.Dto.GetModels;
 using Models.Entity;
 using Models.QuerySupporter;
@@ -30,7 +29,20 @@ namespace API.Controllers.DataControllers
         [HttpPost("Import")]
         public async Task<ActionResult> importContractors(byte[] data)
         {
-            List<Contractor> contractors = ExcelExporter.getImportModel<Contractor>(data, "Контрагенты");
+            List<Contractor> contractors = new List<Contractor>();
+            try
+            {
+                contractors = ExcelExporter.getImportModel<Contractor>(data, "Контрагенты");
+            }
+            catch
+            {
+                return BadRequest("Файл импортирования некорректен");
+            }
+
+            if (contractors.Count == 0)
+            {
+                return BadRequest("Файл импортирования не содержит данных для импортирования");
+            }
             foreach (var contractor in contractors)
             {
                 System.ComponentModel.DataAnnotations.ValidationContext validationContext 
@@ -40,7 +52,7 @@ namespace API.Controllers.DataControllers
                     || _context.Contractors.Where(x => x.Email == contractor.Email).Any()
                     || _context.Contractors.Where(x => x.PhoneNumber == contractor.PhoneNumber).Any())
                 {
-                    return BadRequest($"Ошибка валидации внутри файла импортирования, исправте ошибку валидации и повторите попытку (Ошибка на строке {contractors.IndexOf(contractor) + 2})");
+                    return BadRequest($"Ошибка валидации внутри файла импортирования, исправьте ошибку валидации и повторите попытку (Ошибка на строке {contractors.IndexOf(contractor) + 2})");
                 }
             }
             await _context.Contractors.AddRangeAsync(contractors);
