@@ -147,50 +147,50 @@ namespace API.Controllers.DataControllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Contractor>> postContractor(Contractor conctractor)
+        public async Task<ActionResult<Contractor>> postContractor(Contractor contractor)
         {
-            if (_context.Contractors.Where(x => x.Name == conctractor.Name).Any())
+            if (_context.Contractors.Where(x => x.Name == contractor.Name).Any())
             {
                 return BadRequest("Контрагент с данным названием уже существует!");
             }
-            if (_context.Contractors.Where(x => x.Email == conctractor.Email).Any())
+            if (_context.Contractors.Where(x => x.Email == contractor.Email).Any())
             {
                 return BadRequest("Контрагент с данной электронной почтой уже существует!");
             }
-            if (_context.Contractors.Where(x => x.PhoneNumber == conctractor.PhoneNumber).Any())
+            if (_context.Contractors.Where(x => x.PhoneNumber == contractor.PhoneNumber).Any())
             {
                 return BadRequest("Контрагент с данным номером телефона уже существует!");
             }
-            await _context.Contractors.AddAsync(conctractor);
+            await _context.Contractors.AddAsync(contractor);
             await _context.SaveChangesAsync();
-            return Ok(conctractor);
+            return Ok(contractor);
         }
 
         [HttpPut]
-        public async Task<ActionResult<Contractor>> putContractor([FromQuery] Guid id, Contractor conctractor)
+        public async Task<ActionResult<Contractor>> putContractor([FromQuery] Guid id, Contractor contractor)
         {
             Contractor? contractorCheck = await _context.Contractors.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
             if (contractorCheck == null)
             {
                 return BadRequest("Запись не существует!");
             }
-            if (_context.Contractors.Where(x => x.Name == conctractor.Name).Any() && conctractor.Name != contractorCheck.Name)
+            if (_context.Contractors.Where(x => x.Name == contractor.Name).Any() && contractor.Name != contractorCheck.Name)
             {
                 return BadRequest("Контрагент с данным названием уже существует!");
             }
-            if (_context.Contractors.Where(x => x.Email == conctractor.Email).Any() && conctractor.Email != contractorCheck.Email)
+            if (_context.Contractors.Where(x => x.Email == contractor.Email).Any() && contractor.Email != contractorCheck.Email)
             {
                 return BadRequest("Контрагент с данной электронной почтой уже существует!");
             }
-            if (_context.Contractors.Where(x => x.PhoneNumber == conctractor.PhoneNumber).Any() && conctractor.PhoneNumber != contractorCheck.PhoneNumber)
+            if (_context.Contractors.Where(x => x.PhoneNumber == contractor.PhoneNumber).Any() && contractor.PhoneNumber != contractorCheck.PhoneNumber)
             {
                 return BadRequest("Контрагент с данным номером телефона уже существует!");
             }
-            conctractor.Id = id;
-            conctractor.Orders = contractorCheck.Orders;
-            _context.Update(conctractor);
+            contractor.Id = id;
+            contractor.Orders = contractorCheck.Orders;
+            _context.Update(contractor);
             await _context.SaveChangesAsync();
-            return Ok(conctractor);
+            return Ok(contractor);
         }
 
 
