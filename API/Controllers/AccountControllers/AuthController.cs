@@ -77,7 +77,8 @@ namespace API.Controllers.AccountsController
         [HttpPut]
         public async Task<ActionResult<string>> signIn(AuthModel model)
         {
-            Account? account = await _context.Accounts.Where(x => x.Email == model.Login || x.Login == model.Login).Include(x => x.User).FirstOrDefaultAsync();
+            Account? account = await _context.Accounts.Where(x => x.Email == model.Login || x.Login == model.Login)
+                .Include(x => x.User).Include(x => x.Roles).FirstOrDefaultAsync();
             if (account == null)
             {
                 return NotFound();

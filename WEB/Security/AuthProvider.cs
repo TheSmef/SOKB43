@@ -28,6 +28,11 @@ namespace WEB.Security
             var state = new AuthenticationState(new ClaimsPrincipal());
             try
             {
+                var refreshtoken = await storage.GetItemAsStringAsync("token");
+                if (refreshtoken != null)
+                {
+                    await authService.getToken();
+                }
                 var token = await storage.GetItemAsStringAsync("jwttoken");
                 if (token != null)
                 {
@@ -42,33 +47,14 @@ namespace WEB.Security
                 }
                 else
                 {
-                    var refreshtoken = await storage.GetItemAsStringAsync("token");
-                    if (refreshtoken != null)
-                    {
-                        await authService.getToken();
-                    }
-                    token = await storage.GetItemAsStringAsync("jwttoken");
-                    if (token != null)
-                    {
-                        var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
-                        if (jwt.Claims.Any())
-                        {
-                            var identity = new ClaimsIdentity(ConstantValues.USER_AUTH_TYPE);
-                            identity.AddClaims(jwt.Claims);
-                            state = new AuthenticationState(new ClaimsPrincipal(identity));
-                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Replace("\n", ""));
-                        }
-                    }
-                    else
-                    {
-                        await storage.RemoveItemAsync("token");
-                        client.DefaultRequestHeaders.Authorization = null;
-                    }
+                    await storage.RemoveItemAsync("token");
+                    client.DefaultRequestHeaders.Authorization = null;
                 }
             }
             catch
             {
                 state = new AuthenticationState(new ClaimsPrincipal());
+                client.DefaultRequestHeaders.Authorization = null;
             }
             NotifyAuthenticationStateChanged(Task.FromResult(state));
             return state;
