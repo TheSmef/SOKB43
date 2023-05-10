@@ -49,6 +49,8 @@ namespace WEB.Pages.DataPages.TechnicalTasks
         public TechnicalTask? task { get; set; }
         private TechnicalTaskDto taskDto = new TechnicalTaskDto();
 
+        private string roles = "Администратор, Технический писатель";
+
         protected override void OnInitialized()
         {
             if (task == null)
@@ -71,8 +73,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Технический писатель"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadData(args);
                 }
@@ -105,8 +106,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Технический писатель"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await HandleAdd();
                 }

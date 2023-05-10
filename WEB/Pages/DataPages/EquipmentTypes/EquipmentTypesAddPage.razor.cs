@@ -39,6 +39,8 @@ namespace WEB.Pages.DataPages.EquipmentTypes
         private DialogService? DialogService { get; set; }
 
         private TypeEquipment type = new TypeEquipment();
+
+        private string roles = "Администратор, Технический писатель";
         private async Task HandleAdd()
         {
             try
@@ -49,8 +51,7 @@ namespace WEB.Pages.DataPages.EquipmentTypes
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Технический писатель"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await HandleAdd();
                 }

@@ -53,6 +53,8 @@ namespace WEB.Pages.DataPages.TechnicalTasks
         [Inject]
         private IUserPostService? UserPostService { get; set; }
 
+        private string roles = "Администратор, Технический писатель";
+
         private async Task ContextMenuSelector(DataGridCellMouseEventArgs<TechnicalTask> args, MenuItemEventArgs value)
         {
             switch (value.Value)
@@ -84,8 +86,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Технический писатель"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadData(args);
                 }
@@ -129,8 +130,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Технический писатель"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await EditTask(model);
                 }
@@ -164,8 +164,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Технический писатель"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await DeleteTask(model);
                 }
@@ -201,8 +200,7 @@ namespace WEB.Pages.DataPages.TechnicalTasks
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Технический писатель"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await SaveTaskContent(model);
                 }

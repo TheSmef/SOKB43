@@ -9,7 +9,7 @@
 
 <PageTitle>Администрирование</PageTitle>
 
-<AuthorizeView Roles="Администратор" Context="_context">
+<AuthorizeView Roles="@roles" Context="_context">
     <Authorized>
         <RadzenContent Container="main">
             <ChildContent>

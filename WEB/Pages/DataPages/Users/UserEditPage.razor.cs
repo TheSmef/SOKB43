@@ -49,6 +49,8 @@ namespace WEB.Pages.DataPages.Users
 
         private UserUpdateDto user = new UserUpdateDto();
         private List<Role> roles = new List<Role>();
+
+        private string pageroles = "Администратор, Отдел кадров";
         protected override void OnInitialized()
         {
             if (userEdit != null) 
@@ -92,7 +94,7 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(pageroles.Split(", ").ToList()))
                 {
                     await HandleEdit();
                 }

@@ -48,6 +48,8 @@ namespace WEB.Pages.DataPages.EquipmentTypes
         [Inject]
         private ContextMenuService? ContextMenuService { get; set; }
 
+        private string roles = "Администратор, Технический писатель";
+
         private async Task ContextMenuSelector(DataGridCellMouseEventArgs<TypeEquipment> args, MenuItemEventArgs value)
         {
             switch (value.Value)
@@ -79,8 +81,7 @@ namespace WEB.Pages.DataPages.EquipmentTypes
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Технический писатель"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadData(args);
                 }
@@ -124,8 +125,7 @@ namespace WEB.Pages.DataPages.EquipmentTypes
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Технический писатель"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await EditRecord(data);
                 }
@@ -159,8 +159,7 @@ namespace WEB.Pages.DataPages.EquipmentTypes
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Технический писатель"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await DeleteRecord(data);
                 }

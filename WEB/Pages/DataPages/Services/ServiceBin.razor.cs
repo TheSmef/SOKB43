@@ -81,6 +81,8 @@ namespace WEB.Pages.DataPages.Services
         [Parameter]
         public Equipment? equipment { get; set; }
 
+        private string roles = "Администратор, Менеджер по работе с клиентами, Отдел обслуживания";
+
         private async Task LoadData(LoadDataArgs args)
         {
             try
@@ -94,8 +96,7 @@ namespace WEB.Pages.DataPages.Services
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadData(args);
                 }
@@ -131,8 +132,7 @@ namespace WEB.Pages.DataPages.Services
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await RestoreRecord(model);
                 }
@@ -165,8 +165,7 @@ namespace WEB.Pages.DataPages.Services
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await DeleteRecord(data);
                 }

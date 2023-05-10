@@ -33,6 +33,8 @@ namespace WEB.Pages.Admin
         [Inject]
         private IBackUpService? BackUpService { get; set; }
 
+        private string roles = "Администратор";
+
         private async Task GetBackUpFile()
         {
             try
@@ -42,7 +44,7 @@ namespace WEB.Pages.Admin
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await GetBackUpFile();
                 }
@@ -72,7 +74,7 @@ namespace WEB.Pages.Admin
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await RestoreDatabase(file);
                 }

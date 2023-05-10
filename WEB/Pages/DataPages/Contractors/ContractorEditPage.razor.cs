@@ -41,6 +41,8 @@ namespace WEB.Pages.DataPages.Contractors
         [Parameter]
         public Contractor? contractor { get; set; }
 
+        private string roles = "Администратор, Менеджер по работе с клиентами";
+
         protected override void OnInitialized()
         {
             if (contractor == null)
@@ -61,8 +63,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await HandleEdit();
                 }

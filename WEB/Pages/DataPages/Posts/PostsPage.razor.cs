@@ -51,6 +51,8 @@ namespace WEB.Pages.DataPages.Posts
         [Inject]
         private ContextMenuService? ContextMenuService { get; set; }
 
+        private string roles = "Администратор, Отдел кадров";
+
 
 
         private async Task ContextMenuSelector(DataGridCellMouseEventArgs<Post> args, MenuItemEventArgs value)
@@ -84,7 +86,7 @@ namespace WEB.Pages.DataPages.Posts
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadData(args);
                 }
@@ -129,7 +131,7 @@ namespace WEB.Pages.DataPages.Posts
 
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await EditPost(data);
                 }
@@ -163,7 +165,7 @@ namespace WEB.Pages.DataPages.Posts
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await DeletePost(data);
                 }

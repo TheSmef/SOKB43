@@ -44,6 +44,8 @@ namespace WEB.Pages.DataPages.Statistic
         [Inject]
         private NotificationService? NotificationService { get; set; }
 
+        private string roles = "Администратор, Менеджер по работе с клиентами";
+
         protected override async Task OnInitializedAsync()
         {
             await Load();
@@ -66,7 +68,7 @@ namespace WEB.Pages.DataPages.Statistic
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Менеджер по работе с клиентами" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await Load();
                 }

@@ -46,6 +46,8 @@ namespace WEB.Pages.DataPages.Services
         [Inject]
         private IServicesService? ServicesService { get; set; }
 
+        private string roles = "Администратор, Менеджер по работе с клиентами, Отдел обслуживания";
+
         protected override void OnInitialized()
         {
             if (equipment == null)
@@ -67,8 +69,7 @@ namespace WEB.Pages.DataPages.Services
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await HandleAdd();
                 }

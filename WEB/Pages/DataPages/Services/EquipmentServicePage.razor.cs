@@ -56,6 +56,8 @@ namespace WEB.Pages.DataPages.Services
             }
         }
 
+        private string roles = "Администратор, Менеджер по работе с клиентами, Отдел обслуживания";
+
         private RadzenDataGrid<Service>? childgrid;
         private RadzenDataGrid<Equipment>? grid;
         private EquipmentDtoGetModel? records = new EquipmentDtoGetModel()
@@ -103,8 +105,7 @@ namespace WEB.Pages.DataPages.Services
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() {
-                    "Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await GetServiceDocument(model);
                 }
@@ -135,8 +136,7 @@ namespace WEB.Pages.DataPages.Services
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() {
-                    "Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await ImportExcel(file, id);
                 }
@@ -168,8 +168,7 @@ namespace WEB.Pages.DataPages.Services
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadChildData(args, model);
                 }
@@ -206,8 +205,7 @@ namespace WEB.Pages.DataPages.Services
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await DeleteService(model);
                 }
@@ -246,8 +244,7 @@ namespace WEB.Pages.DataPages.Services
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await EditService(model);
                 }
@@ -284,8 +281,7 @@ namespace WEB.Pages.DataPages.Services
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await ExportServices();
                 }
@@ -325,8 +321,7 @@ namespace WEB.Pages.DataPages.Services
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами", "Отдел обслуживания"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadData(args);
                 }

@@ -57,6 +57,8 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
             }
         }
 
+        private string roles = "Администратор, Отдел кадров";
+
         private RadzenDataGrid<UserPost>? grid;
         private UserPostsGetDtoModel? bin = new UserPostsGetDtoModel()
         {CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0};
@@ -92,7 +94,7 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadData(args);
                 }
@@ -131,7 +133,7 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await RestoreUserPost(model);
                 }
@@ -164,7 +166,7 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await DeleteUserPost(data);
                 }

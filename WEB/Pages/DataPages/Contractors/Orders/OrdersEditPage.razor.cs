@@ -41,6 +41,7 @@ namespace WEB.Pages.DataPages.Contractors.Orders
         public Order? orderEdit { get; set; }
 
         private OrderDto order = new OrderDto();
+        private string roles = "Администратор, Менеджер по работе с клиентами";
         protected override void OnInitialized()
         {
             try
@@ -66,8 +67,7 @@ namespace WEB.Pages.DataPages.Contractors.Orders
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await HandleAdd();
                 }

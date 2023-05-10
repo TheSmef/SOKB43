@@ -47,6 +47,8 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
         [Inject]
         private IMapper? Mapper { get; set; }
 
+        private string roles = "Администратор, Менеджер по работе с клиентами";
+
         private TechnicalTasksGetDtoModel tasks = new TechnicalTasksGetDtoModel()
         {CurrentPageIndex = 0, ElementsCount = 0, TotalPages = 0};
         private QuerySupporter query = new QuerySupporter();
@@ -83,8 +85,7 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadData(args);
                 }
@@ -114,8 +115,7 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await HandleEdit();
                 }

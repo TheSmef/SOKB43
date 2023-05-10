@@ -44,6 +44,8 @@ namespace WEB.Pages.DataPages.Users
 
         private UserDto user = new UserDto();
         private List<Role> roles = new List<Role>();
+
+        private string pageroles = "Администратор, Отдел кадров";
         protected override void OnInitialized()
         {
             foreach (string value in EnumUtility.GetStringsValues(typeof(Role.NameRole)))
@@ -67,7 +69,7 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(pageroles.Split(", ").ToList()))
                 {
                     await HandleAdd();
                 }

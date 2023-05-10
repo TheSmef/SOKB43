@@ -17,11 +17,7 @@
 <PageTitle>Технические задания</PageTitle>
 
 
-
-
-
-
-<AuthorizeView Roles="Администратор, Технический писатель">
+<AuthorizeView Roles="@roles">
     <Authorized>
         <RadzenContent Container="main">
             <ChildContent>

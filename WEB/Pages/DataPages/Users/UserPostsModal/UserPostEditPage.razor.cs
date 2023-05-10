@@ -49,6 +49,8 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
         [Parameter]
         public UserPost? userpost { get; set; }
         private UserPostDto userpostDto = new UserPostDto();
+
+        private string roles = "Администратор, Отдел кадров";
         protected override void OnInitialized()
         {
             if (userpost == null)
@@ -71,7 +73,7 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadData(args);
                 }
@@ -104,7 +106,7 @@ namespace WEB.Pages.DataPages.Users.UserPostsModal
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await HandleEdit();
                 }

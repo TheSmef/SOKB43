@@ -56,6 +56,8 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
         [Inject]
         private IMapper? Mapper { get; set; }
 
+        private string roles = "Администратор, Менеджер по работе с клиентами";
+
         protected override void OnInitialized()
         {
             if (order == null)
@@ -96,8 +98,7 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadData(args);
                 }
@@ -136,8 +137,7 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
                 }
                 catch (UnAuthException)
                 {
-                    if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                    {"Администратор", "Менеджер по работе с клиентами"}))
+                    if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                     {
                         await DeleteRecord(model);
                     }
@@ -172,8 +172,7 @@ namespace WEB.Pages.DataPages.Contractors.Orders.Equipments
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await DeleteRecord(model);
                 }

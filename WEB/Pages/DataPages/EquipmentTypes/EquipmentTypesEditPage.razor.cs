@@ -42,6 +42,8 @@ namespace WEB.Pages.DataPages.EquipmentTypes
         [Parameter]
         public TypeEquipment? type { get; set; }
 
+        private string roles = "Администратор, Технический писатель";
+
         protected override void OnInitialized()
         {
             if (type == null)
@@ -62,8 +64,7 @@ namespace WEB.Pages.DataPages.EquipmentTypes
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Технический писатель"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await HandleEdit();
                 }

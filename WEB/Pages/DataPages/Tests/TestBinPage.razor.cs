@@ -81,6 +81,8 @@ namespace WEB.Pages.DataPages.Tests
         [Parameter]
         public Equipment? equipment { get; set; }
 
+        private string roles = "Администратор, Отдел тестирования";
+
         private async Task LoadData(LoadDataArgs args)
         {
             try
@@ -94,8 +96,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Отдел тестирования"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadData(args);
                 }
@@ -132,8 +133,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Отдел тестирования"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await RestoreTest(model);
                 }
@@ -166,8 +166,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Отдел тестирования"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await DeleteTest(data);
                 }

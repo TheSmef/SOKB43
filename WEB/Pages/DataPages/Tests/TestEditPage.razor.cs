@@ -49,6 +49,8 @@ namespace WEB.Pages.DataPages.Tests
         [Inject]
         private IMapper? Mapper { get; set; }
 
+        private string roles = "Администратор, Отдел тестирования";
+
         protected override void OnInitialized()
         {
             try
@@ -80,8 +82,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Отдел тестирования"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await HandleEdit();
                 }

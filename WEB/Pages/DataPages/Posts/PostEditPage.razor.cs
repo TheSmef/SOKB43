@@ -42,6 +42,8 @@ namespace WEB.Pages.DataPages.Posts
         [Parameter]
         public Post? record { get; set; }
 
+        private string roles = "Администратор, Отдел кадров";
+
         protected override void OnInitialized()
         {
             if (record == null)
@@ -62,7 +64,7 @@ namespace WEB.Pages.DataPages.Posts
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await HandleEdit();
                 }

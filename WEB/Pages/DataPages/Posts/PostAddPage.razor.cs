@@ -19,7 +19,6 @@ using Blazored.LocalStorage;
 using Models.Entity;
 using WEB.Data.Services.Base;
 using WEB.Utility;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using WEB.Data.UtilityServices;
 using WEB.Data.UtilityServices.Base;
 
@@ -40,6 +39,8 @@ namespace WEB.Pages.DataPages.Posts
         private DialogService? DialogService { get; set; }
 
         private Post post = new Post();
+
+        private string roles = "Администратор, Отдел кадров";
         private async Task HandleAdd()
         {
             try
@@ -50,7 +51,7 @@ namespace WEB.Pages.DataPages.Posts
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await HandleAdd();
                 }

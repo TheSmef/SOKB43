@@ -38,6 +38,7 @@ namespace WEB.Pages.DataPages.Contractors
         private DialogService? DialogService { get; set; }
 
         private Contractor contractor = new Contractor();
+        private string roles = "Администратор, Менеджер по работе с клиентами";
         private async Task HandleAdd()
         {
             try
@@ -48,8 +49,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await HandleAdd();
                 }

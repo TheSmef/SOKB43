@@ -62,10 +62,8 @@ namespace WEB.Pages.DataPages.Users
         private IMapper? Mapper { get; set; }
 
         private List<Role> roles = new List<Role>();
-        protected override void OnInitialized()
-        {
-            
-        }
+
+        private string pageroles = "Администратор, Отдел кадров";
         private async Task RowExpended(User user)
         {
             roles.Clear();
@@ -111,7 +109,7 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(pageroles.Split(", ").ToList()))
                 {
                     await ChangeRoles(model);
                 }
@@ -181,7 +179,7 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(pageroles.Split(", ").ToList()))
                 {
                     await LoadChildData(args, data);
                 }
@@ -228,7 +226,7 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(pageroles.Split(", ").ToList()))
                 {
                     await DeleteUserPost(model);
                 }
@@ -266,7 +264,7 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(pageroles.Split(", ").ToList()))
                 {
                     await EditUserPost(model);
                 }
@@ -299,7 +297,7 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(pageroles.Split(", ").ToList()))
                 {
                     await LoadData(args);
                 }
@@ -327,8 +325,7 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Отдел кадров"}))
+                if (await AuthInterceptor!.ReloadAuthState(pageroles.Split(", ").ToList()))
                 {
                     await ExportUsers();
                 }
@@ -380,7 +377,7 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(pageroles.Split(", ").ToList()))
                 {
                     await EditUser(data);
                 }
@@ -414,7 +411,7 @@ namespace WEB.Pages.DataPages.Users
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел кадров" }))
+                if (await AuthInterceptor!.ReloadAuthState(pageroles.Split(", ").ToList()))
                 {
                     await DeleteUser(data);
                 }

@@ -59,6 +59,8 @@ namespace WEB.Pages.DataPages.Contractors
         [Inject]
         private ContextMenuService? ContextMenuService { get; set; }
 
+        private string roles = "Администратор, Менеджер по работе с клиентами";
+
         private async Task RowExpended(Contractor record)
         {
             orders = new OrderGetDtoModel()
@@ -87,8 +89,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await EditOrder(model);
                 }
@@ -130,8 +131,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await DeleteOrder(order);
                 }
@@ -164,8 +164,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Отдел кадров"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadChildData(args, contractor);
                 }
@@ -223,8 +222,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await GetOrderDocument(model);
                 }
@@ -254,8 +252,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await CheckEquipment(model);
                 }
@@ -306,8 +303,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadData(args);
                 }
@@ -338,7 +334,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Менеджер по работе с клиентами" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await ImportExcel(file);
                 }
@@ -373,8 +369,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await ExportContractors();
                 }
@@ -424,8 +419,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await EditRecord(data);
                 }
@@ -459,8 +453,7 @@ namespace WEB.Pages.DataPages.Contractors
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Менеджер по работе с клиентами"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await DeleteRecord(data);
                 }

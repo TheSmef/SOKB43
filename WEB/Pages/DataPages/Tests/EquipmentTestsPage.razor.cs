@@ -50,6 +50,8 @@ namespace WEB.Pages.DataPages.Tests
             }
         }
 
+        private string roles = "Администратор, Отдел тестирования";
+
         private RadzenDataGrid<Equipment>? grid;
         private RadzenDataGrid<TechnicalTest>? childgrid;
         private EquipmentDtoGetModel? records = new EquipmentDtoGetModel()
@@ -105,8 +107,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Отдел тестирования"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await ExportTests();
                 }
@@ -137,7 +138,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>() { "Администратор", "Отдел тестирования" }))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await ImportExcel(file, id);
                 }
@@ -183,8 +184,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Отдел тестирования"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await EditTest(model);
                 }
@@ -219,8 +219,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Отдел тестирования"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await ChangeStatus(model);
                 }
@@ -253,8 +252,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Отдел тестирования"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadChildData(args, model);
                 }
@@ -286,8 +284,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Отдел тестирования"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await LoadData(args);
                 }
@@ -324,8 +321,7 @@ namespace WEB.Pages.DataPages.Tests
             }
             catch (UnAuthException)
             {
-                if (await AuthInterceptor!.ReloadAuthState(new List<string>()
-                {"Администратор", "Отдел тестирования"}))
+                if (await AuthInterceptor!.ReloadAuthState(roles.Split(", ").ToList()))
                 {
                     await DeleteTest(model);
                 }
