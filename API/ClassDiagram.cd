@@ -23,7 +23,7 @@
   <Class Name="API.Controllers.DataControllers.ContractorsController">
     <Position X="3.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAABAAABAAAABAAAACAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QAABAAABAAAABAAAACAAIAAAAAAAAAAAAAAAAAAABAg=</HashCode>
       <FileName>Controllers\DataControllers\ContractorsController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -33,7 +33,7 @@
   <Class Name="API.Controllers.DataControllers.EquipmentController">
     <Position X="9.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAABBAAAAABAAACAAAAAAACCAAACAAAAAA=</HashCode>
+      <HashCode>AAAAAEAAAAAABDAAAAABAAACAAAAAAACCAAACAAAAAA=</HashCode>
       <FileName>Controllers\DataControllers\EquipmentController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -53,7 +53,7 @@
   <Class Name="API.Controllers.DataControllers.OrdersController">
     <Position X="6.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAgABAAAAFAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <HashCode>AAACAAAAgAgAFAAAAFAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
       <FileName>Controllers\DataControllers\OrdersController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -73,7 +73,7 @@
   <Class Name="API.Controllers.DataControllers.ServicesController">
     <Position X="3.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAEBAAAAAABEAgAAAACAAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAEBAAAAAABEAgAAAACAAAACgAAABgAAAA=</HashCode>
       <FileName>Controllers\DataControllers\ServicesController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -93,7 +93,7 @@
   <Class Name="API.Controllers.DataControllers.TechnicalTestsController">
     <Position X="0.5" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAABAAAAAABAAIAAAAAAAAAAAAAIAAAgEg=</HashCode>
+      <HashCode>AAAAAAAAAAAAhAAAAAABAAIAAAAAAAAAAAAAIAAAgEw=</HashCode>
       <FileName>Controllers\DataControllers\TechnicalTestsController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -113,7 +113,7 @@
   <Class Name="API.Controllers.DataControllers.UsersController">
     <Position X="9.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAACAAAAAABAAAAAABAAAAAAAiAAAAAAAAAAAAAAQ=</HashCode>
+      <HashCode>AAgAACAACAAABAAAAAABAAAAAAAiAAAAAAAAAAAAAAQ=</HashCode>
       <FileName>Controllers\DataControllers\UsersController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -130,7 +130,7 @@
   <Class Name="API.Data.DataContext">
     <Position X="6.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAEAACAAAAAAAMAABABAAAAAEgAABACAAAAgAAABAgA=</HashCode>
+      <HashCode>gAEAACAAAAAAAMAABABAAAQAEgAAAACAAAAgAAABAgA=</HashCode>
       <FileName>Data\DataContext.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -138,7 +138,7 @@
     <Position X="11.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
-      <FileName>Migrations\20230317101642_InitialCreate.cs</FileName>
+      <FileName>Migrations\20230508235910_InitialCreate.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="API.Migrations.DataContextModelSnapshot">
@@ -168,6 +168,30 @@
       <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>Utility\TokenHandler.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="API.Utility.ExcelExporter">
+    <Position X="1.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAIAAAAAAAAAA=</HashCode>
+      <FileName>Utility\ExcelExporter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="API.Utility.WordHelper">
+    <Position X="1.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAIAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\WordHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="API.Controllers.UtilityControllers.BackUpController">
+    <Position X="11.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAACAAABAAAAAAAAABAAAAAAAAIAAEAAAAAAEA=</HashCode>
+      <FileName>Controllers\UtilityControllers\BackUpController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

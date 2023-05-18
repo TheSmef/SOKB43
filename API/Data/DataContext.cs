@@ -51,7 +51,6 @@ namespace API.Data
             modelBuilder.Entity<Token>().HasIndex(e => e.TokenStr).IsUnique(true);
 
 
-            modelBuilder.Entity<User>().Property(e => e.Otch).IsRequired(false);
 
 
 

@@ -1,47 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="WEB.Data.Services.AuthService" BaseTypeListCollapsed="true">
-    <Position X="29.5" Y="25.25" Width="1.5" />
+    <Position X="32.25" Y="14.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAACBBCAAAA=</HashCode>
       <FileName>Data\Services\AuthService.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="WEB.Data.Services.ContractorService" BaseTypeListCollapsed="true">
-    <Position X="32" Y="22.75" Width="1.75" />
+    <Position X="27.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAABAABAAAABEIAAAA=</HashCode>
+      <HashCode>AAAAAAAACAAAAAAAAEAAAAIAAAAgBAABAAAABEIAAAA=</HashCode>
       <FileName>Data\Services\ContractorService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="WEB.Data.Services.EquipmentService" BaseTypeListCollapsed="true">
-    <Position X="29" Y="2.5" Width="1.75" />
+    <Position X="32.25" Y="9.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgAAAAAAQAAAAAAEAAIBAAAAAABAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgACAAAAQAAEIAAEAAIBAAAAAABAAAAAA=</HashCode>
       <FileName>Data\Services\EquipmentService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="WEB.Data.Services.EquipmentTypeService" BaseTypeListCollapsed="true">
-    <Position X="29.5" Y="22.25" Width="2" />
+    <Position X="30.25" Y="15.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAACAAAIAAAAAAAAAEAAAgAAAQABAAAAAA=</HashCode>
       <FileName>Data\Services\EquipmentTypeService.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="WEB.Data.Services.OrderService" BaseTypeListCollapsed="true">
-    <Position X="29.25" Y="12.25" Width="1.5" />
+    <Position X="31.25" Y="22" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAQAgAAAAAAAAAAAAAAAAAAAEAAAAAEAABAAAAAA=</HashCode>
+      <HashCode>AQAAAQAggAAAAAAAAAAAAIIAAAAEAAAAAEAABAAAAAA=</HashCode>
       <FileName>Data\Services\OrderService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="WEB.Data.Services.PostService" BaseTypeListCollapsed="true">
-    <Position X="31" Y="5.5" Width="1.5" />
+    <Position X="27.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAQAAAAAAAAAAAAAAAAIEAABgAAAAA=</HashCode>
       <FileName>Data\Services\PostService.cs</FileName>
@@ -49,7 +49,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="WEB.Data.Services.ProfileService" BaseTypeListCollapsed="true">
-    <Position X="31.25" Y="18.75" Width="2.25" />
+    <Position X="31.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAARAAAAAAAAAAAgAAAAEAAAAAAQAABAACBAAAAAA=</HashCode>
       <FileName>Data\Services\ProfileService.cs</FileName>
@@ -57,15 +57,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="WEB.Data.Services.ServicesService" BaseTypeListCollapsed="true">
-    <Position X="29.25" Y="15.5" Width="1.5" />
+    <Position X="31.5" Y="18.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAFCAABAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAACgAAAJIAAAAIAAAAAAAAFCAABAA=</HashCode>
       <FileName>Data\Services\ServicesService.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="WEB.Data.Services.TechnicalTaskService" BaseTypeListCollapsed="true">
-    <Position X="31.25" Y="12.5" Width="1.75" />
+    <Position X="28.75" Y="24.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAABAIAAAA=</HashCode>
       <FileName>Data\Services\TechnicalTaskService.cs</FileName>
@@ -73,15 +73,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="WEB.Data.Services.TechnicalTestsService" BaseTypeListCollapsed="true">
-    <Position X="29.25" Y="5.5" Width="1.5" />
+    <Position X="29.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAgAAAABAAAABAAAAQAAAAACAAAABAAAAAA=</HashCode>
+      <HashCode>AAAAgAAAAAgAAAABAAAABAIAAQAAAAACAAAABAAQAAA=</HashCode>
       <FileName>Data\Services\TechnicalTestsService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="WEB.Data.Services.UserPostService" BaseTypeListCollapsed="true">
-    <Position X="29.25" Y="18.5" Width="1.5" />
+    <Position X="29.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACAAgAAAAAACAAAAAAAAAAABAAgAABAAAAAA=</HashCode>
       <FileName>Data\Services\UserPostService.cs</FileName>
@@ -89,15 +89,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="WEB.Data.Services.UserService" BaseTypeListCollapsed="true">
-    <Position X="31.75" Y="8.75" Width="1.5" />
+    <Position X="30.25" Y="9.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAIAAAAAAAEAAAAAAAAAQAAAAAgAAAABAAAAAA=</HashCode>
+      <HashCode>IAAAAAAIAAAAAAAEAAAAAAIAAQAAAAAgAAAIBAAAAAA=</HashCode>
       <FileName>Data\Services\UserService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="WEB.Data.UtilityServices.AuthInterceptor" BaseTypeListCollapsed="true">
-    <Position X="29.25" Y="9.75" Width="2.25" />
+    <Position X="30.25" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAgA=</HashCode>
       <FileName>Data\UtilityServices\AuthInterceptor.cs</FileName>
@@ -105,31 +105,31 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="WEB.Pages.DataPages.Contractors.Orders.Equipments.EquipmentAddPage">
-    <Position X="13" Y="21.25" Width="2" />
+    <Position X="7" Y="2" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgBQAQQAQAACEAAAAAAAAAEEAgACAAIAACAAIA=</HashCode>
+      <HashCode>AAAAAAgBQAQQAQAACEACAAAAAAAEAAgACAAIAACAAIA=</HashCode>
       <FileName>Pages\DataPages\Contractors\Orders\Equipments\EquipmentAddPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="TaskService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Contractors.Orders.Equipments.EquipmentBin">
-    <Position X="6" Y="7.25" Width="2" />
+    <Position X="26" Y="24.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAQAgBQAIQAQAAKEAAAAAAAAAAEAABCAAIAiCAAAA=</HashCode>
+      <HashCode>AAAAQAgBQAIQAQAAKEACAAAAAAAAAAABCAAIAiCAAAA=</HashCode>
       <FileName>Pages\DataPages\Contractors\Orders\Equipments\EquipmentBin.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="EquipmentService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Contractors.Orders.Equipments.EquipmentChildPage">
-    <Position X="18" Y="3" Width="2" />
+    <Position X="2" Y="22.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AABAwIgBQAIQAQAACEAAAAAAAAAAEAABCAAIAiCAAAA=</HashCode>
+      <HashCode>AABAwIgBQAIQAQAACEACAEAAAAAAAAABCAAIAiCAAAA=</HashCode>
       <FileName>Pages\DataPages\Contractors\Orders\Equipments\EquipmentChildPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -138,9 +138,9 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Contractors.Orders.Equipments.EquipmentEditPage">
-    <Position X="24" Y="8.25" Width="2" />
+    <Position X="26" Y="19" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAQAgAQAQQEQAACEAAAAAAAAAEEAgACAAIAACAAIA=</HashCode>
+      <HashCode>AAAAQAgAQAQQEQAACEACAAAAAAAEAAgACAAIAACAAIA=</HashCode>
       <FileName>Pages\DataPages\Contractors\Orders\Equipments\EquipmentEditPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -149,31 +149,31 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Contractors.Orders.OrdersAddPage">
-    <Position X="21" Y="9" Width="2" />
+    <Position X="2" Y="18.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgBAAAQAQAAAEAAAAAAAAAAEACCCAAAAACAAAA=</HashCode>
+      <HashCode>AAAAAAgBAAAQAQAAAEACAAAAAAAAAACCCAAAAACAAAA=</HashCode>
       <FileName>Pages\DataPages\Contractors\Orders\OrdersAddPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="OrderService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Contractors.Orders.OrdersEditPage">
-    <Position X="7" Y="19" Width="2" />
+    <Position X="17" Y="26.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAggBAAAQAQAAAEAAAAAAAAAAEAACCAAAAACAAAA=</HashCode>
+      <HashCode>AAAAAggBAAAQAQAAAEACAAAAAAAAAAACCAAAAACAAAA=</HashCode>
       <FileName>Pages\DataPages\Contractors\Orders\OrdersEditPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="OrderService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Contractors.ContractorAddPage">
-    <Position X="25" Y="14" Width="2" />
+    <Position X="26" Y="14.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAQAQAAAEAAAAAAAAAAEACAAAAAAACAAAA=</HashCode>
+      <HashCode>AAAAAAgAAAAQAQAAAEACAAAAAAAAAACAAAAAAACAAAA=</HashCode>
       <FileName>Pages\DataPages\Contractors\ContractorAddPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -182,31 +182,31 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Contractors.ContractorEditPage">
-    <Position X="9" Y="2.25" Width="2" />
+    <Position X="2" Y="14.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAAEQAAAEAAAAAAAAAAEACACAAAAACAAAA=</HashCode>
+      <HashCode>AAAAAAgAAAAAEQAAAEACAAAAAAAAAACACAAAAACAAAA=</HashCode>
       <FileName>Pages\DataPages\Contractors\ContractorEditPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="ContractorService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Contractors.ContractorsPage">
-    <Position X="10" Y="12.5" Width="2.25" />
+    <Position X="25" Y="2.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAQAwIghABIQAQAAAEEAAAAAAAAAEAADgEAKAiAIAAA=</HashCode>
+      <HashCode>AAQAwIgjABIQAQAAAEECAAAAAAAAAABTgEAKCiAIAAA=</HashCode>
       <FileName>Pages\DataPages\Contractors\ContractorsPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="OrderService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.EquipmentTypes.EquipmentTypesAddPage">
-    <Position X="19" Y="22" Width="2" />
+    <Position X="25" Y="10.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AIAAAAgAAAAQAQAAAEAAAAAAAAABEAAAAAAAAACAAAA=</HashCode>
+      <HashCode>AIAAAAgAAAAQAQAAAEACAAAAAAABAAAAAAAAAACAAAA=</HashCode>
       <FileName>Pages\DataPages\EquipmentTypes\EquipmentTypesAddPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -215,42 +215,42 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.EquipmentTypes.EquipmentTypesEditPage">
-    <Position X="19" Y="18.25" Width="2" />
+    <Position X="13" Y="3.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AIAAAAgAAAAAEQAAAEAAAAAAAAABEAAACAAAAACAAAA=</HashCode>
+      <HashCode>AIAAAAgAAAAAEQAAAEACAAAAAAABAAAACAAAAACAAAA=</HashCode>
       <FileName>Pages\DataPages\EquipmentTypes\EquipmentTypesEditPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="TypeService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.EquipmentTypes.EquipmentTypesPage">
-    <Position X="3" Y="8.5" Width="2" />
+    <Position X="5" Y="24.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AIAAwIgAAAIQAQAAAEAAAAAAAAAAEAABAAAIAiAAAAA=</HashCode>
+      <HashCode>AIAAwIgAAAIQAQAAAEACAAAAAAAAAAABAAAIAiAAAAA=</HashCode>
       <FileName>Pages\DataPages\EquipmentTypes\EquipmentTypesPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="TypeService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Posts.PostAddPage">
-    <Position X="10" Y="20" Width="2" />
+    <Position X="8" Y="24.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAwAAAAQAQAAAEAAAAAAAAAAEAgAAAAAAACAAAA=</HashCode>
+      <HashCode>AAAAAAwAAAAQAQAAAEACAAAAAAAAAAgAAAAAAACAAAA=</HashCode>
       <FileName>Pages\DataPages\Posts\PostAddPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="PostService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Posts.PostEditPage">
-    <Position X="3" Y="5.25" Width="2" />
+    <Position X="22" Y="4.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAEAAwAAAAAEQAAAEAAAAAAAAAAEAAACAAAAACAAAA=</HashCode>
+      <HashCode>AAAEAAwAAAAAEQAAAEACAAAAAAAAAAAACAAAAACAAAA=</HashCode>
       <FileName>Pages\DataPages\Posts\PostEditPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -259,32 +259,32 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Posts.PostsPage">
-    <Position X="1" Y="18.5" Width="2" />
+    <Position X="19" Y="4.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAQAwAAAYUAQAAAEAAAAEAAAAAEAAAAAAIAgAAAAA=</HashCode>
+      <HashCode>AAAAQAwAAAYUAQAAAEACAAEAAAAAAAAAAAAIAgAAAAA=</HashCode>
       <FileName>Pages\DataPages\Posts\PostsPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="PostService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Services.EquipmentServicePage">
-    <Position X="25" Y="18" Width="2" />
+    <Position X="4" Y="3.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AQAAQAgAQAIQARAACEEAAABEAAAAEAAAAEAIEiAIAAA=</HashCode>
+      <HashCode>AQAAQAgCQAIQARAACkECIABEAAAAAABAAEAIEiAIAAA=</HashCode>
       <FileName>Pages\DataPages\Services\EquipmentServicePage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="EquipmentService" />
+      <Property Name="AuthInterceptor" />
       <Property Name="ServicesService" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Services.ServiceAddPage">
-    <Position X="13" Y="17" Width="2" />
+    <Position X="4" Y="10.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AQAAAAgAAAAQAQAAAEAAAAAAAAAEEAAACEAAAACAAAA=</HashCode>
+      <HashCode>AQAAAAgAAAAQAQAAAEACAAAAAAAEAAAACEAAAACAAAA=</HashCode>
       <FileName>Pages\DataPages\Services\ServiceAddPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -293,20 +293,20 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Services.ServiceBin">
-    <Position X="4" Y="23.25" Width="2" />
+    <Position X="23" Y="20.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AQAAQAgAAAIYAQAAKEAAAAAAAAAEEAABCAAIAgCAAAA=</HashCode>
+      <HashCode>AQAAQAgAAAIYAQAAKEACAAAAAAAEAAABCAAIAgCAAAA=</HashCode>
       <FileName>Pages\DataPages\Services\ServiceBin.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="ServicesService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Services.ServiceEditPage">
-    <Position X="1" Y="13.75" Width="2" />
+    <Position X="20" Y="23.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AQAEAAgAAAAQAQAACEAAAAAAAAAAEAAACEAAAACAAAA=</HashCode>
+      <HashCode>AQAEAAgAAAAQAQAACEACAAAAAAAAAAAACEAAAACAAAA=</HashCode>
       <FileName>Pages\DataPages\Services\ServiceEditPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -315,21 +315,21 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.TechnicalTasks.TechnicalTaskAddPage">
-    <Position X="15" Y="4.75" Width="2" />
+    <Position X="5" Y="19.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AIAAAAgAAAAQAQAAAEAAAAAAAAAAEAAACAAIAALAAIA=</HashCode>
+      <HashCode>AIAAAAgAAAAQAQAAAEACAAAAAAAAAAAACAAIAALAAIA=</HashCode>
       <FileName>Pages\DataPages\TechnicalTasks\TechnicalTaskAddPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="TypeService" />
       <Property Name="TaskService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.TechnicalTasks.TechnicalTaskEditPage">
-    <Position X="4" Y="13.5" Width="2" />
+    <Position X="16" Y="5.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AIAAAAgAAAAQCQAAAEAAAAAAAAAAEAAACAAIAALAAIA=</HashCode>
+      <HashCode>AIAAAAgAAAAQCQAAAEACAAAAAAAAAAAACAAIAALAAIA=</HashCode>
       <FileName>Pages\DataPages\TechnicalTasks\TechnicalTaskEditPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -339,9 +339,9 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.TechnicalTasks.TechnicalTaskPage">
-    <Position X="7" Y="13.25" Width="2" />
+    <Position X="14" Y="23" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAQCgQAAIQgQAAAEAAAAAAABAAEAgAAAAIAgAAAIA=</HashCode>
+      <HashCode>AAAAQCgQAAIQgQAAAEACAAAAABAAAAgAAAAIAgAAAIA=</HashCode>
       <FileName>Pages\DataPages\TechnicalTasks\TechnicalTaskPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -350,21 +350,21 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Tests.EquipmentTestsPage">
-    <Position X="22" Y="20.75" Width="2" />
+    <Position X="23" Y="14.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAQBgAQAIQARABCFEAAABAAAQAEABCAAAIAiAIAAA=</HashCode>
+      <HashCode>AAAAQBgCQAIQARABCFECAABAAAQAAABCAAAIAiAYAAA=</HashCode>
       <FileName>Pages\DataPages\Tests\EquipmentTestsPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
-      <Property Name="TechnicalTestsService" />
       <Property Name="EquipmentService" />
+      <Property Name="TechnicalTestsService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Tests.TestAddPage">
-    <Position X="21" Y="4" Width="2" />
+    <Position X="5" Y="14.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAQAQAAAEAAAAAQAAAEEAAICAAAAACAAAA=</HashCode>
+      <HashCode>AAAAAAgAAAAQAQAAAEACAAAQAAAEAAAICAAAAACAAAA=</HashCode>
       <FileName>Pages\DataPages\Tests\TestAddPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -373,9 +373,9 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Tests.TestBinPage">
-    <Position X="24" Y="2.25" Width="2" />
+    <Position X="22" Y="8.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAQAgAAAIYAQAACEAAAAEAAAAEEABCCAAIAgCAAAA=</HashCode>
+      <HashCode>AAAAQAgAAAIYAQAACEACAAEAAAAEAABCCAAIAgCAAAA=</HashCode>
       <FileName>Pages\DataPages\Tests\TestBinPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -384,9 +384,9 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Tests.TestEditPage">
-    <Position X="12" Y="1.75" Width="2" />
+    <Position X="17" Y="22.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAAEQAACEAAAAAQAAAAEACICAAAAACAAAA=</HashCode>
+      <HashCode>AAAAAAgAAAAAEQAACEACAAAQAAAAAACICAAAAACAAAA=</HashCode>
       <FileName>Pages\DataPages\Tests\TestEditPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -395,44 +395,44 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Users.UserPostsModal.UserPostAddPage">
-    <Position X="19" Y="13.5" Width="2" />
+    <Position X="11" Y="22.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAwQAAAUAQAAAEgAAAAAAAAAEAAACAAIAACAAQA=</HashCode>
+      <HashCode>AAAAAAwQAAAUAQAAAEgCAAAAAAAAAAAACAAIAACAAQA=</HashCode>
       <FileName>Pages\DataPages\Users\UserPostsModal\UserPostAddPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="PostService" />
       <Property Name="UserPostService" />
       <Property Name="AuthInterceptor" />
-      <Property Name="PostService" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Users.UserPostsModal.UserPostBin">
-    <Position X="7" Y="23.25" Width="2" />
+    <Position X="7" Y="7" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAQAgQAAIYAQAAAEAIAAAAAAAAEAAACgAIAgCAAQA=</HashCode>
+      <HashCode>AAAAQAgQAAIYAQAAAEAKAAAAAAAAAAAACgAIAgCAAQA=</HashCode>
       <FileName>Pages\DataPages\Users\UserPostsModal\UserPostBin.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="UserPostService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Users.UserPostsModal.UserPostEditPage">
-    <Position X="6" Y="2.5" Width="2" />
+    <Position X="8" Y="20.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAwQAAAUEQAAAEgAAAAAAAAAEAAACAAIAACEAAA=</HashCode>
+      <HashCode>AAAAAAwQAAAUEQAAAEgCAAAAAAAAAAAACAAIAACEAAA=</HashCode>
       <FileName>Pages\DataPages\Users\UserPostsModal\UserPostEditPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="PostService" />
       <Property Name="UserPostService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Users.UserAddPage">
-    <Position X="16" Y="14" Width="2" />
+    <Position X="20" Y="19.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAQAQAAAEACgAAAAAAAEAAACAAAAACAAQA=</HashCode>
+      <HashCode>AAAAAAgAAAAQAQAAAEACiAAAAAAAAAAACAAAAACAAQA=</HashCode>
       <FileName>Pages\DataPages\Users\UserAddPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -441,30 +441,30 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Users.UserEditPage">
-    <Position X="16" Y="18.75" Width="2" />
+    <Position X="20" Y="14.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAAEQAACEAGgAAAAAAAEAAACAAAAACAAQA=</HashCode>
+      <HashCode>AAAAAAgAAAAAEQAACEAGiAAAAAAAAAAACAAAAACAAQA=</HashCode>
       <FileName>Pages\DataPages\Users\UserEditPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="UserService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.DataPages.Users.UsersPage">
-    <Position X="22" Y="13.25" Width="2.25" />
+    <Position X="8" Y="12.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>IARAQIgQAAIQAQAECEECgAAgAAAAEABgAgAKAgAIIgA=</HashCode>
+      <HashCode>IARAQIgQAAIQAQAECEECiAAgAAAAAABgAgAKAgAIIgA=</HashCode>
       <FileName>Pages\DataPages\Users\UsersPage.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="AuthInterceptor" />
       <Property Name="UserService" />
       <Property Name="UserPostService" />
-      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.Login.Login">
-    <Position X="14.75" Y="0.5" Width="2.25" />
+    <Position X="18.75" Y="9.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAACAAEAAYACAUAAAAAACAAAEAACEAAAAAAAAAA=</HashCode>
       <FileName>Pages\Login\Login.razor.cs</FileName>
@@ -474,7 +474,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.Login.Registration">
-    <Position X="17.75" Y="8.75" Width="2.25" />
+    <Position X="21.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAACAAIAAYAAAUIAAAAACAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>Pages\Login\Registration.razor.cs</FileName>
@@ -484,47 +484,47 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.Profile.ChangeProfile">
-    <Position X="10" Y="23.75" Width="2" />
+    <Position X="17" Y="18.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAACAAEQAACEAAAAAAAAAAEAAACAAAAACAAQA=</HashCode>
       <FileName>Pages\Profile\ChangeProfile.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="ProfileService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.Profile.Profile">
-    <Position X="16" Y="23" Width="2" />
+    <Position X="11" Y="18.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAQgAACAAAQAAAMAAAAAAAAAAEAACAAAAAAAAAQA=</HashCode>
+      <HashCode>AAAAAQgAACAAAQAAAMAAAAAAAAAAAAACAAAAAAAAAQA=</HashCode>
       <FileName>Pages\Profile\Profile.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="ProfileService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.Profile.Tokens">
-    <Position X="4" Y="18.5" Width="2" />
+    <Position X="14" Y="18.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAEAQAwAACIRAQAAAEAAAAAAAAAAEAACAAAIAAAAAAA=</HashCode>
+      <HashCode>AAEAQAwAACIRAQAAAEAAAAAAAAAAAAACAAAIAAAAAAA=</HashCode>
       <FileName>Pages\Profile\Tokens.razor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AuthInterceptor" />
       <Property Name="ProfileService" />
+      <Property Name="AuthInterceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Pages.ErrorModel">
-    <Position X="31.25" Y="15.25" Width="1.5" />
+    <Position X="29.25" Y="18.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAIAAQAAAAAAAAAIAAAAAAAAAQAAAAAAAA=</HashCode>
       <FileName>Pages\Error.cshtml.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WEB.Security.AuthProvider">
-    <Position X="11.75" Y="9.25" Width="2.25" />
+    <Position X="12.75" Y="10" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAACBAAAAAA=</HashCode>
       <FileName>Security\AuthProvider.cs</FileName>
@@ -533,15 +533,8 @@
       <Field Name="authService" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="WEB.Shared.LoginLayout">
-    <Position X="28.75" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Shared\LoginLayout.razor.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="WEB.Shared.MainLayout">
-    <Position X="8.75" Y="6" Width="2" />
+    <Position X="9.75" Y="6.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACABAAAAAUAAAAAAEAAAEAACAAAAAAAEAAA=</HashCode>
       <FileName>Shared\MainLayout.razor.cs</FileName>
@@ -551,126 +544,171 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="WEB.Utility.AppException">
-    <Position X="27" Y="1.25" Width="1.5" />
+    <Position X="25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utility\AppException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WEB.Utility.ConstantValues">
-    <Position X="33.75" Y="7.75" Width="2" />
+    <Position X="34.25" Y="9.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EBFgAQAaDAA7AAAGAAYBAgCBBEAgEQUCABQkEkoFggg=</HashCode>
+      <HashCode>EBFgAQEaDAA7AAAGAgYBAgCBBEAgEQUCABQkEkoFggg=</HashCode>
       <FileName>Utility\ConstantValues.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WEB.Utility.QueryMapper">
-    <Position X="27" Y="3.25" Width="1.5" />
+    <Position X="32.25" Y="12.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utility\QueryMapper.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WEB.Utility.UnAuthException">
-    <Position X="29.25" Y="8.25" Width="1.5" />
+    <Position X="26.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utility\UnAuthException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider">
-    <Position X="11.75" Y="6.5" Width="2" />
+    <Position X="12.75" Y="7.25" Width="2" />
     <TypeIdentifier />
   </Class>
+  <Class Name="WEB.Pages.Admin.AdminPage">
+    <Position X="17.25" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAgAAQAAAAAAAEACAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\Admin\AdminPage.razor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AuthInterceptor" />
+      <Property Name="BackUpService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="WEB.Pages.DataPages.Statistic.StatsPage">
+    <Position X="11.25" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAgAgAQAAAAAAAAEACAAAAAIAAAgACAAAIAAAAAAA=</HashCode>
+      <FileName>Pages\DataPages\Statistic\StatsPage.razor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AuthInterceptor" />
+      <Property Name="EquipmentService" />
+      <Property Name="OrderService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="WEB.Data.Services.BackUpService" BaseTypeListCollapsed="true">
+    <Position X="29" Y="21.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAIACAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Data\Services\BackUpService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WEB.Utility.Formater">
+    <Position X="33" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Formater.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="WEB.Data.Services.Base.IAuthService">
-    <Position X="15.25" Y="9.5" Width="1.5" />
+    <Position X="16.25" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAABCAAAA=</HashCode>
       <FileName>Data\Services\Base\IAuthService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="WEB.Data.Services.Base.IContractorService">
-    <Position X="21.25" Y="0.5" Width="1.75" />
+    <Position X="1.25" Y="8" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAABAABAAAAAEIAAAA=</HashCode>
+      <HashCode>AAAAAAAACAAAAAAAAEAAAAAAAAAgBAABAAAAAEIAAAA=</HashCode>
       <FileName>Data\Services\Base\IContractorService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="WEB.Data.Services.Base.IEquipmentService">
-    <Position X="27" Y="4.75" Width="1.75" />
+    <Position X="23.25" Y="26.25" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgAAAAAAQAAAAAAEAAIBAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgACAAAAQAAEAAAEAAIBAAAAAAAAAAAAA=</HashCode>
       <FileName>Data\Services\Base\IEquipmentService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="WEB.Data.Services.Base.IEquipmentTypeService">
-    <Position X="13" Y="12" Width="2" />
+    <Position X="15.75" Y="2.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAACAAAIAAAAAAAAAEAAAgAAAQAAAAAAAA=</HashCode>
       <FileName>Data\Services\Base\IEquipmentTypeService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="WEB.Data.Services.Base.IOrderService">
-    <Position X="19" Y="26.5" Width="1.5" />
+    <Position X="20" Y="27.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAQAgAAAAAAAAAAAAAAAAAAAEAAAAAEAAAAAAAAA=</HashCode>
+      <HashCode>AQAAAQAggAAAAAAAAAAAAIAAAAAEAAAAAEAAAAAAAAA=</HashCode>
       <FileName>Data\Services\Base\IOrderService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="WEB.Data.Services.Base.IPostService">
-    <Position X="9" Y="9.75" Width="1.5" />
+    <Position X="10.75" Y="27" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAQAAAAAAAAAAAAAAAAIEAAAgAAAAA=</HashCode>
       <FileName>Data\Services\Base\IPostService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="WEB.Data.Services.Base.IProfileService">
-    <Position X="15.25" Y="27.5" Width="1.5" />
+    <Position X="8.25" Y="29.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAARAAAAAAAAAAAgAAAAAAAAAAAQAABAAAAAAAAAA=</HashCode>
       <FileName>Data\Services\Base\IProfileService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="WEB.Data.Services.Base.IServicesService">
-    <Position X="13" Y="27" Width="1.5" />
+    <Position X="1" Y="11.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAECAABAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAACgAAAJAAAAAIAAAAAAAAECAABAA=</HashCode>
       <FileName>Data\Services\Base\IServicesService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="WEB.Data.Services.Base.ITechnicalTaskService">
-    <Position X="2.75" Y="2.25" Width="1.75" />
+    <Position X="9.75" Y="3.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>ABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAIAAAA=</HashCode>
       <FileName>Data\Services\Base\ITechnicalTaskService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="WEB.Data.Services.Base.ITechnicalTestsService">
-    <Position X="27" Y="8.25" Width="1.75" />
+    <Position X="28" Y="11" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAgAAAABAAAABAAAAQAAAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAgAAAAAgAAAABAAAABAAAAQAAAAACAAAAAAAQAAA=</HashCode>
       <FileName>Data\Services\Base\ITechnicalTestsService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="WEB.Data.Services.Base.IUserPostService">
-    <Position X="24.75" Y="24.5" Width="1.5" />
+    <Position X="13.75" Y="13" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACAAgAAAAAACAAAAAAAAAAABAAgAAAAAAAAA=</HashCode>
       <FileName>Data\Services\Base\IUserPostService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="WEB.Data.Services.Base.IUserService">
-    <Position X="27.25" Y="24.5" Width="1.5" />
+    <Position X="14.25" Y="28.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAIAAAAAAAEAAAAAAAAAQAAAAAgAAAAAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAIAAAAAAAEAAAAAAAAAQAAAAAgAAAIAAAAAAA=</HashCode>
       <FileName>Data\Services\Base\IUserService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="WEB.Data.UtilityServices.Base.IAuthInterceptor">
-    <Position X="13.25" Y="15" Width="1.5" />
+    <Position X="14.25" Y="15.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
       <FileName>Data\UtilityServices\Base\IAuthInterceptor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WEB.Data.Services.Base.IBackUpService">
+    <Position X="28.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Services\Base\IBackUpService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
