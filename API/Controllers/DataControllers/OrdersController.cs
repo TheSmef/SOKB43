@@ -39,7 +39,7 @@ namespace API.Controllers.DataControllers
             {
                 return BadRequest("Данный заказ не существует");
             }
-            if (!_context.Equipments.Where(x => x.Order!.Id == orderId).Any())
+            if (!_context.Equipments.Where(x => x.Order!.Id == orderId && x.Deleted == false).Any())
             {
                 return BadRequest("Данный заказ не содержит оборудования");
             }
