@@ -70,7 +70,8 @@ namespace API.Controllers.DataControllers
             else if (id != null)
             {
                 orders = orders.Where(x => x.Contractor!.Id == id);
-                services = _context.Services.Where(x => x.Equipment!.Order!.Contractor!.Id == id);
+                services = _context.Services.Where(x => x.Date >= query.StartDate && x.Date <= query.EndDate && x.Deleted == false 
+                    && x.Equipment!.Order!.Contractor!.Id == id);
             }
             List<DateTime> dates = await orders.Select(x => x.Date).GroupBy(x => x.Date).Select(x => x.First()).ToListAsync();
             dates.AddRange(await services.Select(x => x.Date)

@@ -214,7 +214,7 @@ namespace WEB.Pages.DataPages.Tests
                 eqDto.OrderId = eq.Order!.Id;
                 eqDto.TechnicalTaskId = eq.TechnicalTask!.Id;
                 await EquipmentService!.UpdateEquipment(eqDto, eq.Id);
-                NotificationService!.Notify(NotificationSeverity.Success, "Успешное изменение!", "Статус оборудование успешно изменено", 4000);
+                NotificationService!.Notify(NotificationSeverity.Success, "Успешное изменение!", "Статус оборудование успешно изменён", 4000);
                 await grid!.Reload();
             }
             catch (UnAuthException)
