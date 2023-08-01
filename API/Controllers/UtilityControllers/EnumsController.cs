@@ -6,6 +6,7 @@ using Models.Utility;
 using NuGet.Protocol;
 using System.Data;
 using static Models.Entity.Equipment;
+using static Models.Entity.Role;
 using static Models.Entity.Service;
 using static Models.Entity.TechnicalTest;
 
@@ -48,7 +49,7 @@ namespace API.Controllers.UtilityControllers
         [Authorize(Roles = "Администратор, Отдел кадров")]
         public ActionResult<List<string>> getRoles()
         {
-            return Ok(EnumUtility.GetStringsValues(typeof(TestPriorityEnum)));
+            return Ok(EnumUtility.GetStringsValues(typeof(NameRole)));
         }
     }
 }
