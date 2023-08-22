@@ -31,18 +31,17 @@ namespace WEB.Security
                 var refreshtoken = await storage.GetItemAsStringAsync("token");
                 if (refreshtoken != null)
                 {
-                    await authService.getToken();
-                }
-                var token = await storage.GetItemAsStringAsync("jwttoken");
-                if (token != null)
-                {
-                    var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
-                    if (jwt.Claims.Any())
+                    var token = await authService.getToken();
+                    if (token != null)
                     {
-                        var identity = new ClaimsIdentity(ConstantValues.USER_AUTH_TYPE);
-                        identity.AddClaims(jwt.Claims);
-                        state = new AuthenticationState(new ClaimsPrincipal(identity));
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Replace("\n", ""));
+                        var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+                        if (jwt.Claims.Any())
+                        {
+                            var identity = new ClaimsIdentity(ConstantValues.USER_AUTH_TYPE);
+                            identity.AddClaims(jwt.Claims);
+                            state = new AuthenticationState(new ClaimsPrincipal(identity));
+                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Replace("\n", ""));
+                        }
                     }
                 }
                 else

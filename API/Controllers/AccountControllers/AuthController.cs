@@ -39,7 +39,7 @@ namespace API.Controllers.AccountsController
         }
 
         [HttpPost]
-        public async Task<ActionResult<string>> signUn(RegModel model)
+        public async Task<ActionResult<string>> signUp(RegModel model)
         {
             User user = _mapper.Map<User>(model);
             user.Account = _mapper.Map<Account>(model);
@@ -85,19 +85,12 @@ namespace API.Controllers.AccountsController
             }
             if (HashProvider.CheckHash(model.Password, account.Password))
             {
-                if (!model.RememberMe)
-                {
-                    var jwt = Utility.TokenHandler.CreateJwtToken(account.User!, _configuration);
-                    return Ok(jwt);
-                }
                 string refresttoken = Utility.TokenHandler.GenerateRefreshToken();
                 Token token = new Token();
                 token.Account = account;
                 token.TokenStr = refresttoken;
                 await _context.Tokens.AddAsync(token);
                 await _context.SaveChangesAsync();
-
-
                 return Ok(refresttoken);
             }
             else
@@ -107,7 +100,7 @@ namespace API.Controllers.AccountsController
         }
 
         [HttpPut("GetToken")]
-        public async Task<ActionResult<string>> getJwtToken([FromBody] string refreshtoken)
+        public async Task<ActionResult<string>> getJWT([FromBody] string refreshtoken)
         {
             Token? token = await _context.Tokens.Where(x => x.TokenStr == refreshtoken)
                 .Include(x => x.Account).ThenInclude(x => x!.User)

@@ -6,6 +6,6 @@ namespace WEB.Data.Services.Base
     {
         public Task authUser(AuthModel model);
         public Task regUser(RegModel model);
-        public Task getToken();
+        public Task<string> getToken();
     }
 }

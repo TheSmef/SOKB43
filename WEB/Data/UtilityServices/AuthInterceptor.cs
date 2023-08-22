@@ -22,7 +22,6 @@ namespace WEB.Data.UtilityServices
         {
             try
             {
-                await storageService!.RemoveItemAsync("jwttoken");
                 AuthenticationState state = await authenticationStateProvider!.GetAuthenticationStateAsync();
                 if (state.User?.Identity != null)
                 {

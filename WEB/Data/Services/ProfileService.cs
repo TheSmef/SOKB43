@@ -50,7 +50,6 @@ namespace WEB.Data.Services
                     if ((await storage.GetItemAsStringAsync("token")).Equals(token))
                     {
                         await storage.RemoveItemAsync("token");
-                        await storage.RemoveItemAsync("jwttoken");
                         await authenticationStateProvider.GetAuthenticationStateAsync();
                     }
                 }
@@ -184,7 +183,6 @@ namespace WEB.Data.Services
                     if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.BadRequest)
                     {
                         await storage.RemoveItemAsync("token");
-                        await storage.RemoveItemAsync("jwttoken");
                         await authenticationStateProvider.GetAuthenticationStateAsync();
                     }
                     else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
@@ -198,7 +196,6 @@ namespace WEB.Data.Services
                 }
                 else
                 {
-                    await storage.RemoveItemAsync("jwttoken");
                     await authenticationStateProvider.GetAuthenticationStateAsync();
                 }
             }

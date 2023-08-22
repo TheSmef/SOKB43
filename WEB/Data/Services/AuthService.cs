@@ -27,14 +27,7 @@ namespace WEB.Data.Services
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    if (model.RememberMe)
-                    {
-                        await storage.SetItemAsStringAsync("token", await response.Content.ReadAsStringAsync());
-                    }
-                    else
-                    {
-                        await storage.SetItemAsStringAsync("jwttoken", await response.Content.ReadAsStringAsync());
-                    }
+                    await storage.SetItemAsStringAsync("token", await response.Content.ReadAsStringAsync());
                 }
                 else if (response.StatusCode == HttpStatusCode.NotFound)
                 {
@@ -55,7 +48,7 @@ namespace WEB.Data.Services
             }
         }
 
-        public async Task getToken()
+        public async Task<string> getToken()
         {
             try
             {
@@ -68,7 +61,7 @@ namespace WEB.Data.Services
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    await storage.SetItemAsStringAsync("jwttoken", await response.Content.ReadAsStringAsync());
+                    return await response.Content.ReadAsStringAsync();
                 }
                 else if (response.StatusCode == HttpStatusCode.NotFound)
                 {

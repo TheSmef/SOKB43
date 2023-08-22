@@ -71,16 +71,7 @@ namespace WEB.Pages.Login
         {
             try
             {
-                if (auth.RememberMe)
-                {
-                    await AuthService!.authUser(auth);
-                    await AuthService!.getToken();
-                }
-                else
-                {
-                    await AuthService!.authUser(auth);
-                }
-
+                await AuthService!.authUser(auth);
                 await AuthenticationStateProvider!.GetAuthenticationStateAsync();
                 if (!string.IsNullOrEmpty(returnUrl))
                 {

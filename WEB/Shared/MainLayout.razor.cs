@@ -18,6 +18,8 @@ using Radzen.Blazor;
 using Blazored.LocalStorage;
 using WEB.Data.Services.Base;
 using WEB.Utility;
+using WEB.Data.UtilityServices;
+using WEB.Data.UtilityServices.Base;
 
 namespace WEB.Shared
 {
@@ -31,7 +33,7 @@ namespace WEB.Shared
         private NotificationService? NotificationService { get; set; }
 
         [CascadingParameter]
-        private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+        private IAuthInterceptor? AuthInterceptor { get; set; }
 
         [Inject]
         private ILocalStorageService? StorageService { get; set; }
@@ -53,9 +55,8 @@ namespace WEB.Shared
                 }
                 catch (UnAuthException)
                 {
-                    if ((await AuthenticationStateTask!).User?.Identity != null)
+                    if (await AuthInterceptor!.ReloadAuthState(new List<string>()))
                     {
-                        await StorageService!.RemoveItemAsync("jwttoken");
                         await AuthenticationStateProvider!.GetAuthenticationStateAsync();
                         await ProfileMenuClick(args);
                     }
