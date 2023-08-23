@@ -36,29 +36,14 @@ namespace API.Controllers.DataControllers
 
         [HttpGet]
         public async Task<ActionResult<TechnicalTasksGetDtoModel>> getTechnicalTasks(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.TechnicalTasks.Include(x => x.TypeEquipment).AsQueryable();
+            var items = _context.TechnicalTasks.AsNoTracking().Include(x => x.TypeEquipment).AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             TechnicalTasksGetDtoModel tasksGetDtoModel = new TechnicalTasksGetDtoModel();
             if (query.Skip <= -1 || query.Top <= 0)
             {
@@ -69,16 +54,16 @@ namespace API.Controllers.DataControllers
             items = items.Skip(query.Skip);
             tasksGetDtoModel.CurrentPageIndex = tasksGetDtoModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);
-            tasksGetDtoModel.Collection = await items.ToListAsync();
+            tasksGetDtoModel.Collection = await items.ToListAsync(ct);
             return Ok(tasksGetDtoModel);
         }
 
         [HttpGet("single")]
-        public async Task<ActionResult<TechnicalTask>> getTechnicalTaskById(Guid id)
+        public async Task<ActionResult<TechnicalTask>> getTechnicalTaskById(Guid id, CancellationToken ct)
         {
             if (_context.TechnicalTasks.Where(x => x.Id == id).Any())
             {
-                return Ok(await _context.TechnicalTasks.Where(x => x.Id == id).Include(x => x.TypeEquipment).FirstAsync());
+                return Ok(await _context.TechnicalTasks.Where(x => x.Id == id).Include(x => x.TypeEquipment).AsNoTracking().FirstAsync(ct));
             }
             else
             {

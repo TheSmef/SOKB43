@@ -38,15 +38,15 @@ namespace API.Controllers.DataControllers
 
         [HttpGet("Document")]
         public async Task<ActionResult<FileModel>> GetServiceWordDocument(
-            [FromQuery] Guid serviceId)
+            [FromQuery] Guid serviceId, CancellationToken ct)
         {
             if (!_context.Services.Where(x => x.Id == serviceId).Any())
             {
                 return BadRequest("Данное обслуживание не существует");
             }
-            Service service = await _context.Services.Where(x => x.Id == serviceId).
+            Service service = await _context.Services.AsNoTracking().Where(x => x.Id == serviceId).
                 Include(x => x.Equipment).ThenInclude(x => x!.TechnicalTask).ThenInclude(x =>x!.TypeEquipment).
-                Include(x => x.Equipment).ThenInclude(x => x!.Order).ThenInclude(x => x!.Contractor).FirstAsync();
+                Include(x => x.Equipment).ThenInclude(x => x!.Order).ThenInclude(x => x!.Contractor).FirstAsync(ct);
             MemoryStream ms = WordHelper.GetServiceDocument(service);
 
             FileModel response = new FileModel() { Name = $"Договор_обслуживания_{service.Date.ToShortDateString()}.docx", Data = ms.ToArray() };
@@ -55,7 +55,7 @@ namespace API.Controllers.DataControllers
 
 
         [HttpPost("Import")]
-        public async Task<ActionResult> importServices(byte[] data, Guid id)
+        public async Task<ActionResult> importServices(byte[] data, Guid id, CancellationToken ct)
         {
             List<ServiceDto> services = new List<ServiceDto>();
             try
@@ -75,6 +75,7 @@ namespace API.Controllers.DataControllers
             {
                 return BadRequest("Данное оборудование не существует!");
             }
+            Equipment equipment = _context.Equipments.Where(x => x.Id == id).First();
             foreach (var service in services)
             {
                 service.EquipmentId = id;
@@ -84,42 +85,28 @@ namespace API.Controllers.DataControllers
                     return BadRequest($"Ошибка валидации внутри файла импортирования, исправьте ошибку валидации и повторите попытку (Ошибка на строке {services.IndexOf(service) + 2})");
                 }
                 Service item = _mapper.Map<Service>(service);
-                item.Equipment = _context.Equipments.Where(x => x.Id == service.EquipmentId).First();
+                item.Equipment = equipment;
                 itemsToAdd.Add(item);
             }
             await _context.Services.AddRangeAsync(itemsToAdd);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(ct);
             return Ok();
         }
 
         [HttpGet("Export")]
         public async Task<ActionResult<FileModel>> exportServices(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.Services.AsQueryable();
+            var items = _context.Services.AsNoTracking().AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             using (MemoryStream ms = new MemoryStream())
             {
                 List<ServiceDto> data = new List<ServiceDto>();
-                foreach (var item in await items.ToListAsync())
+                foreach (var item in await items.ToListAsync(ct))
                 {
                     data.Add(_mapper.Map<ServiceDto>(item));
                 }
@@ -133,9 +120,9 @@ namespace API.Controllers.DataControllers
 
         [HttpGet]
         public async Task<ActionResult<ServiceGetDtoModel>> getServices(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.Services.Include(x => x.Equipment)
+            var items = _context.Services.AsNoTracking().Include(x => x.Equipment)
                 .ThenInclude(x => x!.Order).ThenInclude(x => x!.Contractor)
                 .Include(x => x.Equipment).ThenInclude(x => x!.TechnicalTask)
                 .ThenInclude(x => x!.TypeEquipment).AsQueryable();
@@ -143,22 +130,7 @@ namespace API.Controllers.DataControllers
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             ServiceGetDtoModel serviceGetDtoModel = new ServiceGetDtoModel();
             if (query.Skip <= -1 || query.Top <= 0)
             {
@@ -169,20 +141,20 @@ namespace API.Controllers.DataControllers
             items = items.Skip(query.Skip);
             serviceGetDtoModel.CurrentPageIndex = serviceGetDtoModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);
-            serviceGetDtoModel.Collection = await items.ToListAsync();
+            serviceGetDtoModel.Collection = await items.ToListAsync(ct);
             serviceGetDtoModel.Total = items.Sum(x => x.Sum);
             return Ok(serviceGetDtoModel);
         }
 
         [HttpGet("single")]
-        public async Task<ActionResult<Service>> getServiceById(Guid id)
+        public async Task<ActionResult<Service>> getServiceById(Guid id, CancellationToken ct)
         {
             if (_context.Services.Where(x => x.Id == id).Any())
             {
                 return Ok(await _context.Services.Where(x => x.Id == id).Include(x => x.Equipment)
                 .ThenInclude(x => x!.Order).ThenInclude(x => x!.Contractor)
                 .Include(x => x.Equipment).ThenInclude(x => x!.TechnicalTask)
-                .ThenInclude(x => x!.TypeEquipment).FirstAsync());
+                .ThenInclude(x => x!.TypeEquipment).AsNoTracking().FirstAsync(ct));
             }
             else
             {

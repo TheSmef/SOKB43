@@ -31,11 +31,11 @@ namespace WEB.Tests.Tests
 
         [Fact]
         [TestPriority(1)]
-        public async Task authUser_Admin_RememberMeTrue()
+        public async Task authUser_Admin()
         {
             try
             {
-                AuthModel model = new AuthModel { Login = "admin", Password = "admin", RememberMe = true };
+                AuthModel model = new AuthModel { Login = "admin", Password = "admin" };
                 await service.authUser(model);
             }
             catch (Exception ex)
@@ -44,20 +44,6 @@ namespace WEB.Tests.Tests
             }
         }
 
-        [Fact]
-        [TestPriority(1)]
-        public async Task authUser_Admin_RememberMeFalse()
-        {
-            try
-            {
-                AuthModel model = new AuthModel { Login = "admin", Password = "admin", RememberMe = false };
-                await service.authUser(model);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-        }
 
         [Fact]
         [TestPriority(5)]

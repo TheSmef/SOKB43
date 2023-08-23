@@ -38,29 +38,14 @@ namespace API.Controllers.DataControllers
 
         [HttpGet]
         public async Task<ActionResult<PostsGetDtoModel>> getPosts(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.Posts.AsQueryable();
+            var items = _context.Posts.AsNoTracking().AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             PostsGetDtoModel postsGetDtoModel = new PostsGetDtoModel();
             if (query.Skip <= -1 || query.Top <= 0)
             {
@@ -71,16 +56,16 @@ namespace API.Controllers.DataControllers
             items = items.Skip(query.Skip);
             postsGetDtoModel.CurrentPageIndex = postsGetDtoModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);
-            postsGetDtoModel.Collection = await items.ToListAsync();
+            postsGetDtoModel.Collection = await items.ToListAsync(ct);
             return Ok(postsGetDtoModel);
         }
 
         [HttpGet("single")]
-        public async Task<ActionResult<Post>> getPostById(Guid id)
+        public async Task<ActionResult<Post>> getPostById(Guid id, CancellationToken ct)
         {
             if (_context.Posts.Where(x => x.Id == id).Any())
             {
-                return Ok(await _context.Posts.Where(x => x.Id == id).FirstAsync());
+                return Ok(await _context.Posts.Where(x => x.Id == id).AsNoTracking().FirstAsync(ct));
             }
             else
             {

@@ -34,7 +34,7 @@ namespace API.Controllers.UtilityControllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<FileModel>> BackupDatabase()
+        public async Task<ActionResult<FileModel>> BackupDatabase(CancellationToken ct)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace API.Controllers.UtilityControllers
                     using (var command = new SqlCommand(query, connection))
                     {
                         await connection.OpenAsync();
-                        await command.ExecuteNonQueryAsync();
+                        await command.ExecuteNonQueryAsync(ct);
                     }
                     using (FileStream reader = new FileStream(_backupFolderFullPath, FileMode.Open))
                     {
@@ -70,7 +70,7 @@ namespace API.Controllers.UtilityControllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> RestoreBatabase(byte[] data)
+        public async Task<ActionResult> RestoreBatabase(byte[] data, CancellationToken ct)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace API.Controllers.UtilityControllers
                     using (var command = new SqlCommand(query, connection))
                     {
                         await connection.OpenAsync();
-                        await command.ExecuteNonQueryAsync();
+                        await command.ExecuteNonQueryAsync(ct);
                     }
                 }
                 var entitiesList = _context.ChangeTracker.Entries().ToList();

@@ -41,31 +41,17 @@ namespace API.Controllers.DataControllers
 
         [HttpGet("Export")]
         public async Task<ActionResult<FileModel>> exportUsers(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.Users.AsQueryable();
+            var items = _context.Users.AsNoTracking().AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             using (MemoryStream ms = new MemoryStream())
             {
-                XLWorkbook wb = ExcelExporter.getExcelReport(await items.ToListAsync(), "Сотрудники");
+                XLWorkbook wb = ExcelExporter.getExcelReport(await items.ToListAsync(ct), "Сотрудники");
                 wb.SaveAs(ms);
                 FileModel response = new FileModel() { Name = $"Сотрудники_{DateTime.Today.ToShortDateString()}.xlsx", Data = ms.ToArray() };
                 return Ok(response);
@@ -75,29 +61,14 @@ namespace API.Controllers.DataControllers
 
         [HttpGet]
         public async Task<ActionResult<UsersGetDtoModel>> getUsers(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.Users.Include(x => x.Account).ThenInclude(x => x!.Roles).AsQueryable();
+            var items = _context.Users.Include(x => x.Account).ThenInclude(x => x!.Roles).AsNoTracking().AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             UsersGetDtoModel usersGetDtoModel = new UsersGetDtoModel();
             if (query.Skip <= -1 || query.Top <= 0)
             {
@@ -108,17 +79,19 @@ namespace API.Controllers.DataControllers
             items = items.Skip(query.Skip);
             usersGetDtoModel.CurrentPageIndex = usersGetDtoModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);
-            usersGetDtoModel.Collection = await items.ToListAsync();
+            usersGetDtoModel.Collection = await items.ToListAsync(ct);
             return Ok(usersGetDtoModel);
         }
 
         [HttpGet("single")]
-        public async Task<ActionResult<User>> getUserById(Guid id)
+        public async Task<ActionResult<User>> getUserById(Guid id, CancellationToken ct)
         {
             if (_context.Users.Where(x => x.Id == id).Any())
             {
                 return Ok(await _context.Users.Where(x => x.Id == id)
-                    .Include(x => x.Account).ThenInclude(x => x!.Roles).FirstAsync());
+                    .Include(x => x.Account).ThenInclude(x => x!.Roles)
+                    .AsNoTracking()
+                    .FirstAsync(ct));
             }
             else
             {

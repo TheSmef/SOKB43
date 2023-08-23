@@ -26,29 +26,14 @@ namespace API.Controllers.DataControllers
 
         [HttpGet]
         public async Task<ActionResult<EquipmentTypesGetDtoModel>> getEquipmentTypes(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.TypesEquipment.AsQueryable();
+            var items = _context.TypesEquipment.AsNoTracking().AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             EquipmentTypesGetDtoModel typesGetDtoModel = new EquipmentTypesGetDtoModel();
             if (query.Skip <= -1 || query.Top <= 0)
             {
@@ -59,16 +44,16 @@ namespace API.Controllers.DataControllers
             items = items.Skip(query.Skip);
             typesGetDtoModel.CurrentPageIndex = typesGetDtoModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);
-            typesGetDtoModel.Collection = await items.ToListAsync();
+            typesGetDtoModel.Collection = await items.ToListAsync(ct);
             return Ok(typesGetDtoModel);
         }
 
         [HttpGet("single")]
-        public async Task<ActionResult<TypeEquipment>> getTypeEquipmentById(Guid id)
+        public async Task<ActionResult<TypeEquipment>> getTypeEquipmentById(Guid id, CancellationToken ct)
         {
             if (_context.TypesEquipment.Where(x => x.Id == id).Any())
             {
-                return Ok(await _context.TypesEquipment.Where(x => x.Id == id).FirstAsync());
+                return Ok(await _context.TypesEquipment.Where(x => x.Id == id).AsNoTracking().FirstAsync(ct));
             }
             else
             {

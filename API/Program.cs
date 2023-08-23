@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(builder.Configuration.GetSection("AppSettings:CorsClients").Value!.Split(','))
         .WithHeaders(builder.Configuration.GetSection("AppSettings:AllowedHeaders").Value!.Split(','))
-        .AllowCredentials();
+        .AllowCredentials().AllowAnyMethod();
     });
 });
 
@@ -55,7 +55,7 @@ builder.Services.AddAuthentication(
     });
 
 
-builder.Services.AddDbContext<DataContext>(options =>
+builder.Services.AddDbContextPool<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection"))
 );
 

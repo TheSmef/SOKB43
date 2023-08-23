@@ -43,35 +43,20 @@ namespace API.Controllers.DataControllers
         [HttpGet("Export")]
         [Authorize(Roles = "Администратор, Менеджер по работе с клиентами")]
         public async Task<ActionResult<FileModel>> exportEquipment(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.Equipments.Include(x => x.TechnicalTask)
+            var items = _context.Equipments.AsNoTracking().Include(x => x.TechnicalTask)
                 .ThenInclude(x => x!.TypeEquipment).AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             List<EquipmentExportModel> export = new List<EquipmentExportModel>();
-            foreach(var item in await items.ToListAsync())
+            foreach(var item in await items.ToListAsync(ct))
             {
                 export.Add(SafeMapper.MapEquipmentForExport(item));
             }
-
             using (MemoryStream ms = new MemoryStream())
             {
                 XLWorkbook wb = ExcelExporter.getExcelReport(export, "Оборудование");
@@ -84,7 +69,7 @@ namespace API.Controllers.DataControllers
         [HttpGet("Stats")]
         [Authorize(Roles = "Администратор, Менеджер по работе с клиентами")]
         public async Task<ActionResult<List<EquipmentTypesStatsModel>>> GetTypesStats(
-            [FromQuery] DateQuery query, [FromQuery] Guid? id)
+            [FromQuery] DateQuery query, [FromQuery] Guid? id, CancellationToken ct)
         {
             if (query.StartDate.AddMonths(3) < query.EndDate)
             {
@@ -99,7 +84,9 @@ namespace API.Controllers.DataControllers
             {
                 items = items.Where(x => x.Order!.Contractor!.Id == id);
             }
-            List<TypeEquipment> types = await items.Select(x => x.TechnicalTask!.TypeEquipment!).GroupBy(x => x.Name).Select(x => x.First()).ToListAsync();
+            List<TypeEquipment> types = await items.Select(x => x.TechnicalTask!.TypeEquipment!).GroupBy(x => x.Name).Select(x => x.First())
+                .AsNoTracking()
+                .ToListAsync(ct);
             List<EquipmentTypesStatsModel> responce = new List<EquipmentTypesStatsModel>();
             foreach (var type in types)
             {
@@ -115,29 +102,15 @@ namespace API.Controllers.DataControllers
 
         [HttpGet]
         public async Task<ActionResult<EquipmentDtoGetModel>> getEquipments(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.Equipments.Include(x => x.Order).ThenInclude(x => x!.Contractor).Include(x => x.TechnicalTask).ThenInclude(x => x!.TypeEquipment).AsQueryable();
+            var items = _context.Equipments.AsNoTracking().Include(x => x.Order)
+                .ThenInclude(x => x!.Contractor).Include(x => x.TechnicalTask).ThenInclude(x => x!.TypeEquipment).AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             EquipmentDtoGetModel equipmentDtoGetModel = new EquipmentDtoGetModel();
             if (query.Skip <= -1 || query.Top <= 0)
             {
@@ -148,19 +121,20 @@ namespace API.Controllers.DataControllers
             items = items.Skip(query.Skip);
             equipmentDtoGetModel.CurrentPageIndex = equipmentDtoGetModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);
-            equipmentDtoGetModel.Collection = await items.ToListAsync();
+            equipmentDtoGetModel.Collection = await items.ToListAsync(ct);
             return Ok(equipmentDtoGetModel);
         }
 
         [HttpGet("single")]
-        public async Task<ActionResult<Equipment>> getEquipmentById(Guid id)
+        public async Task<ActionResult<Equipment>> getEquipmentById(Guid id, CancellationToken ct)
         {
             if (_context.Equipments.Where(x => x.Id == id).Any())
             {
                 return Ok(await _context.Equipments.Where(x => x.Id == id)
                     .Include(x => x.Order).ThenInclude(x => x!.Contractor)
                     .Include(x => x.TechnicalTask).ThenInclude(x => x!.TypeEquipment)
-                    .FirstAsync());
+                    .AsNoTracking()
+                    .FirstAsync(ct));
             }
             else
             {

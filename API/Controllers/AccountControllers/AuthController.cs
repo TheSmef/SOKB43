@@ -100,12 +100,13 @@ namespace API.Controllers.AccountsController
         }
 
         [HttpPut("GetToken")]
-        public async Task<ActionResult<string>> getJWT([FromBody] string refreshtoken)
+        public async Task<ActionResult<string>> getJWT([FromBody] string refreshtoken, CancellationToken ct)
         {
             Token? token = await _context.Tokens.Where(x => x.TokenStr == refreshtoken)
                 .Include(x => x.Account).ThenInclude(x => x!.User)
                 .Include(x => x.Account).ThenInclude(x => x!.Roles)
-                .FirstOrDefaultAsync();
+                .AsNoTracking()
+                .FirstOrDefaultAsync(ct);
             if (token == null)
             {
                 return NotFound();

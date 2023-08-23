@@ -40,7 +40,7 @@ namespace API.Controllers.DataControllers
         }
 
         [HttpPost("Import")]
-        public async Task<ActionResult> importTechnicalTests(byte[] data, Guid id)
+        public async Task<ActionResult> importTechnicalTests(byte[] data, Guid id, CancellationToken ct)
         {
             List<TechnicalTestDto> tests = new List<TechnicalTestDto>();
             try
@@ -60,6 +60,9 @@ namespace API.Controllers.DataControllers
             {
                 return BadRequest("Данное оборудование не существует!");
             }
+            Equipment equipment = _context.Equipments.Where(x => x.Id == id).First();
+            Guid idUser = Guid.Parse(User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).First().Value);
+            User currentUser = _context.Users.Where(x => x.Id == idUser).First();
             foreach (var test in tests)
             {
                 test.EquipmentId = id;
@@ -69,45 +72,30 @@ namespace API.Controllers.DataControllers
                 {
                     return BadRequest($"Ошибка валидации внутри файла импортирования, исправьте ошибку валидации и повторите попытку (Ошибка на строке {tests.IndexOf(test) + 2})");
                 }
-                Guid idUser = Guid.Parse(User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).First().Value);
                 TechnicalTest item = _mapper.Map<TechnicalTest>(test);
-                item.User = _context.Users.Where(x => x.Id == idUser).First();
-                item.Equipment = _context.Equipments.Where(x => x.Id == test.EquipmentId).First();
+                item.User = currentUser;
+                item.Equipment = equipment;
                 itemsToAdd.Add(item);
             }
             await _context.TechnicalTests.AddRangeAsync(itemsToAdd);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(ct);
             return Ok();
         }
 
         [HttpGet("Export")]
         public async Task<ActionResult<FileModel>> exportTechnicalTests(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.TechnicalTests.AsQueryable();
+            var items = _context.TechnicalTests.AsNoTracking().AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             using (MemoryStream ms = new MemoryStream())
             {
                 List<TechnicalTestDto> data = new List<TechnicalTestDto>();
-                foreach (var item in await items.ToListAsync())
+                foreach (var item in await items.ToListAsync(ct))
                 {
                     data.Add(_mapper.Map<TechnicalTestDto>(item));
                 }
@@ -121,9 +109,9 @@ namespace API.Controllers.DataControllers
 
         [HttpGet]
         public async Task<ActionResult<TechnicalTestsGetDtoModel>> getTechnicalTests(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.TechnicalTests.Include(x => x.User)
+            var items = _context.TechnicalTests.AsNoTracking().Include(x => x.User)
                 .Include(x => x.Equipment).ThenInclude(x => x!.TechnicalTask)
                 .ThenInclude(x => x!.TypeEquipment)
                 .Include(x => x.Equipment)
@@ -133,22 +121,7 @@ namespace API.Controllers.DataControllers
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             TechnicalTestsGetDtoModel technicalTestsGetDtoModel = new TechnicalTestsGetDtoModel();
             if (query.Skip <= -1 || query.Top <= 0)
             {
@@ -159,12 +132,12 @@ namespace API.Controllers.DataControllers
             items = items.Skip(query.Skip);
             technicalTestsGetDtoModel.CurrentPageIndex = technicalTestsGetDtoModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);
-            technicalTestsGetDtoModel.Collection = await items.ToListAsync();
+            technicalTestsGetDtoModel.Collection = await items.ToListAsync(ct);
             return Ok(technicalTestsGetDtoModel);
         }
 
         [HttpGet("single")]
-        public async Task<ActionResult<TechnicalTest>> getTechnicalTestById(Guid id)
+        public async Task<ActionResult<TechnicalTest>> getTechnicalTestById(Guid id, CancellationToken ct)
         {
             if (_context.TechnicalTests.Where(x => x.Id == id).Any())
             {
@@ -173,7 +146,9 @@ namespace API.Controllers.DataControllers
                 .Include(x => x.Equipment).ThenInclude(x => x!.TechnicalTask)
                 .ThenInclude(x => x!.TypeEquipment)
                 .Include(x => x.Equipment)
-                .ThenInclude(x => x!.Order).ThenInclude(x => x!.Contractor).FirstAsync());
+                .ThenInclude(x => x!.Order).ThenInclude(x => x!.Contractor)
+                .AsNoTracking()
+                .FirstAsync(ct));
             }
             else
             {
@@ -182,7 +157,6 @@ namespace API.Controllers.DataControllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Администратор, Отдел тестирования")]
         public async Task<ActionResult<TechnicalTest>> postTechnicalTest(TechnicalTestDto testDto)
         {
             if (!_context.Equipments.Where(x => x.Id == testDto.EquipmentId).Any())
@@ -199,7 +173,6 @@ namespace API.Controllers.DataControllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Администратор, Отдел тестирования")]
         public async Task<ActionResult<TechnicalTest>> putTechnicalTest([FromQuery] Guid id, TechnicalTestDto testDto)
         {
             TechnicalTest? test = await _context.TechnicalTests.Where(x => x.Id == id).Include(x => x.User)
@@ -223,7 +196,6 @@ namespace API.Controllers.DataControllers
 
 
         [HttpDelete]
-        [Authorize(Roles = "Администратор, Отдел тестирования")]
         public async Task<ActionResult> deleteTechnicalTest([FromQuery] Guid id)
         {
             TechnicalTest? delete = await _context.TechnicalTests.Where(x => x.Id == id).FirstOrDefaultAsync();

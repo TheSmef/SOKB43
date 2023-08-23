@@ -30,30 +30,15 @@ namespace API.Controllers.DataControllers
 
         [HttpGet]
         public async Task<ActionResult<UserPostsGetDtoModel>> getUserPosts(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.UserPosts.Include(x => x.User)
-                .Include(x => x.Post).AsQueryable();
+            var items = _context.UserPosts.AsNoTracking().Include(x => x.User)
+                .Include(x => x.Post).AsNoTracking().AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             UserPostsGetDtoModel userPostsGetDtoModel = new UserPostsGetDtoModel();
             if (query.Skip <= -1 || query.Top <= 0)
             {
@@ -61,21 +46,23 @@ namespace API.Controllers.DataControllers
             }
             userPostsGetDtoModel.TotalPages = PageCounter.CountPages(items.Count(), query.Top);
             userPostsGetDtoModel.ElementsCount = items.Count();
-            userPostsGetDtoModel.Total = items.ToList().Sum(x => x.Salary);
+            userPostsGetDtoModel.Total = items.Sum(x => x.Salary);
             items = items.Skip(query.Skip);
             userPostsGetDtoModel.CurrentPageIndex = userPostsGetDtoModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);
-            userPostsGetDtoModel.Collection = await items.ToListAsync();
+            userPostsGetDtoModel.Collection = await items.ToListAsync(ct);
             return Ok(userPostsGetDtoModel);
         }
 
         [HttpGet("single")]
-        public async Task<ActionResult<UserPost>> getUserPostById(Guid id)
+        public async Task<ActionResult<UserPost>> getUserPostById(Guid id, CancellationToken ct)
         {
             if (_context.UserPosts.Where(x => x.Id == id).Any())
             {
                 return Ok(await _context.UserPosts.Include(x => x.User)
-                .Include(x => x.Post).Where(x => x.Id == id).FirstAsync());
+                .Include(x => x.Post).Where(x => x.Id == id)
+                .AsNoTracking()
+                .FirstAsync(ct));
             }
             else
             {

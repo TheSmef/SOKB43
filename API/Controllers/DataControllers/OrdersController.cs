@@ -33,7 +33,7 @@ namespace API.Controllers.DataControllers
 
         [HttpGet("Document")]
         public async Task<ActionResult<FileModel>> GetOrderWordDocument(
-            [FromQuery] Guid orderId)
+            [FromQuery] Guid orderId, CancellationToken ct)
         {
             if (!_context.Orders.Where(x => x.Id == orderId).Any())
             {
@@ -44,9 +44,9 @@ namespace API.Controllers.DataControllers
                 return BadRequest("Данный заказ не содержит оборудования");
             }
             Order order = await _context.Orders.Where(x => x.Id == orderId)
-                .Include(x => x.Contractor).FirstAsync();
+                .Include(x => x.Contractor).AsNoTracking().FirstAsync(ct);
             List<Equipment> equipments = await _context.Equipments.Where(x => x.Order!.Id == orderId && x.Deleted == false)
-                .Include(x => x.TechnicalTask).ThenInclude(x => x!.TypeEquipment).ToListAsync();
+                .Include(x => x.TechnicalTask).ThenInclude(x => x!.TypeEquipment).AsNoTracking().ToListAsync(ct);
             MemoryStream ms = WordHelper.GetOrderDocument(order, equipments);
 
             FileModel response = new FileModel() { Name = $"Договор_{order.Date.ToShortDateString()}.docx", Data = ms.ToArray() };
@@ -55,7 +55,7 @@ namespace API.Controllers.DataControllers
 
             [HttpGet("Stats")]
         public async Task<ActionResult<List<IncomeStatsModel>>> GetIncomeStats(
-            [FromQuery] DateQuery query, [FromQuery] Guid? id)
+            [FromQuery] DateQuery query, [FromQuery] Guid? id, CancellationToken ct)
         {
             if (query.StartDate.AddMonths(3) < query.EndDate)
             {
@@ -73,9 +73,9 @@ namespace API.Controllers.DataControllers
                 services = _context.Services.Where(x => x.Date >= query.StartDate && x.Date <= query.EndDate && x.Deleted == false 
                     && x.Equipment!.Order!.Contractor!.Id == id);
             }
-            List<DateTime> dates = await orders.Select(x => x.Date).GroupBy(x => x.Date).Select(x => x.First()).ToListAsync();
-            dates.AddRange(await services.Select(x => x.Date)
-                .GroupBy(x => x.Date).Select(x => x.First()).ToListAsync());
+            List<DateTime> dates = await orders.AsNoTracking().Select(x => x.Date).GroupBy(x => x.Date).Select(x => x.First()).ToListAsync(ct);
+            dates.AddRange(await services.AsNoTracking().Select(x => x.Date)
+                .GroupBy(x => x.Date).Select(x => x.First()).ToListAsync(ct));
             dates = dates.GroupBy(x => x).Select(x => x.First()).OrderBy(x => x).ToList();
             List<IncomeStatsModel> responce = new List<IncomeStatsModel>();
             foreach (var date in dates)
@@ -92,31 +92,16 @@ namespace API.Controllers.DataControllers
 
         [HttpGet]
         public async Task<ActionResult<OrderGetDtoModel>> getOrders(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
 
             var items = _context.Orders.Include(x => x.Contractor)
-                .AsQueryable();
+                .AsNoTracking().AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             OrderGetDtoModel ordersGetDtoModel = new OrderGetDtoModel();
             if (query.Skip <= -1 || query.Top <= 0)
             {
@@ -128,16 +113,16 @@ namespace API.Controllers.DataControllers
             items = items.Skip(query.Skip);
             ordersGetDtoModel.CurrentPageIndex = ordersGetDtoModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);
-            ordersGetDtoModel.Collection = await items.ToListAsync();
+            ordersGetDtoModel.Collection = await items.ToListAsync(ct);
             return Ok(ordersGetDtoModel);
         }
 
         [HttpGet("single")]
-        public async Task<ActionResult<UserPost>> getOrderId(Guid id)
+        public async Task<ActionResult<UserPost>> getOrderId(Guid id, CancellationToken ct)
         {
             if (_context.Orders.Where(x => x.Id == id).Any())
             {
-                return Ok(await _context.Orders.Where(x => x.Id == id).Include(x => x.Contractor).FirstAsync());
+                return Ok(await _context.Orders.Where(x => x.Id == id).Include(x => x.Contractor).AsNoTracking().FirstAsync(ct));
             }
             else
             {

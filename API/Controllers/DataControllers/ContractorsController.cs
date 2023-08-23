@@ -27,7 +27,7 @@ namespace API.Controllers.DataControllers
         }
 
         [HttpPost("Import")]
-        public async Task<ActionResult> importContractors(byte[] data)
+        public async Task<ActionResult> importContractors(byte[] data, CancellationToken ct)
         {
             List<Contractor> contractors = new List<Contractor>();
             try
@@ -56,37 +56,23 @@ namespace API.Controllers.DataControllers
                 }
             }
             await _context.Contractors.AddRangeAsync(contractors);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(ct);
             return Ok();
         }
 
         [HttpGet("Export")]
         public async Task<ActionResult<FileModel>> exportContractors(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.Contractors.AsQueryable();
+            var items = _context.Contractors.AsNoTracking().AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             using (MemoryStream ms = new MemoryStream())
             {
-                XLWorkbook wb = ExcelExporter.getExcelReport(await items.ToListAsync(), "Контрагенты");
+                XLWorkbook wb = ExcelExporter.getExcelReport(await items.ToListAsync(ct), "Контрагенты");
                 wb.SaveAs(ms);
                 FileModel response = new FileModel() { Name = $"Контрагенты_{DateTime.Today.ToShortDateString()}.xlsx", Data = ms.ToArray()};
                 return Ok(response);
@@ -95,29 +81,14 @@ namespace API.Controllers.DataControllers
 
         [HttpGet]
         public async Task<ActionResult<ContractorsGetDtoModel>> getContractors(
-            [FromQuery] QuerySupporter query)
+            [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.Contractors.AsQueryable();
+            var items = _context.Contractors.AsNoTracking().AsQueryable();
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items = QueryParamHelper.SetParams(items, query);
             ContractorsGetDtoModel contractorsGetDtoModel = new ContractorsGetDtoModel();
             if (query.Skip <= -1 || query.Top <= 0)
             {
@@ -128,17 +99,16 @@ namespace API.Controllers.DataControllers
             items = items.Skip(query.Skip);
             contractorsGetDtoModel.CurrentPageIndex = contractorsGetDtoModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);
-            contractorsGetDtoModel.Collection = await items.ToListAsync();
-            
+            contractorsGetDtoModel.Collection = await items.ToListAsync(ct);
             return Ok(contractorsGetDtoModel);
         }
 
         [HttpGet("single")]
-        public async Task<ActionResult<Contractor>> getContractorById(Guid id)
+        public async Task<ActionResult<Contractor>> getContractorById(Guid id, CancellationToken ct)
         {
             if (_context.Contractors.Where(x => x.Id == id).Any())
             {
-                return Ok(await _context.Contractors.Where(x => x.Id == id).FirstAsync());
+                return Ok(await _context.Contractors.Where(x => x.Id == id).AsNoTracking().FirstAsync(ct));
             }
             else
             {

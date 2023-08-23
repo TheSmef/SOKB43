@@ -34,11 +34,13 @@ namespace API.Controllers.AccountsController
         }
 
         [HttpGet]
-        public async Task<ActionResult<User>> getProfile()
+        public async Task<ActionResult<User>> getProfile(CancellationToken ct)
         {
             Guid id = Guid.Parse(User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).First().Value);
             User? user = await _context.Users.Where(x => x.Id == id)
-                .Include(x => x.Account).ThenInclude(x => x!.Roles).FirstOrDefaultAsync();
+                .Include(x => x.Account).ThenInclude(x => x!.Roles)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(ct);
             if (user == null)
             {
                 return Unauthorized();
@@ -47,30 +49,16 @@ namespace API.Controllers.AccountsController
         }
 
         [HttpGet("Tokens")]
-        public async Task<ActionResult<TokensGetDtoModel>> getCurrentTokens([FromQuery] QuerySupporter query)
+        public async Task<ActionResult<TokensGetDtoModel>> getCurrentTokens([FromQuery] QuerySupporter query,
+            CancellationToken ct)
         {
             Guid id = Guid.Parse(User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).First().Value);
-            var items = _context.Tokens.Where(x => x.Account!.UserId == id);
+            var items = _context.Tokens.AsNoTracking().Where(x => x.Account!.UserId == id);
             if (query == null)
             {
                 return BadRequest("Нет параметров для данных!");
             }
-            if (!string.IsNullOrEmpty(query.Filter))
-            {
-                if (query.FilterParams != null)
-                {
-                    items = items.Where(query.Filter, query.FilterParams);
-                }
-                else
-                {
-                    items = items.Where(query.Filter);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(query.OrderBy))
-            {
-                items = items.OrderBy(query.OrderBy);
-            }
+            items =  QueryParamHelper.SetParams(items, query);
             TokensGetDtoModel tokensGetDtoModel = new TokensGetDtoModel();
             if (query.Skip <= -1 || query.Top <= 0)
             {
@@ -81,7 +69,7 @@ namespace API.Controllers.AccountsController
             items = items.Skip(query.Skip);
             tokensGetDtoModel.CurrentPageIndex = tokensGetDtoModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);
-            tokensGetDtoModel.Collection = await items.ToListAsync();
+            tokensGetDtoModel.Collection = await items.ToListAsync(ct);
             return Ok(tokensGetDtoModel);
         }
 
