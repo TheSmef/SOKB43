@@ -32,7 +32,7 @@ namespace API.Controllers.DataControllers
         public async Task<ActionResult<UserPostsGetDtoModel>> getUserPosts(
             [FromQuery] QuerySupporter query, CancellationToken ct)
         {
-            var items = _context.UserPosts.AsNoTracking().Include(x => x.User)
+            var items = _context.UserPosts.Include(x => x.User)
                 .Include(x => x.Post).AsNoTracking().AsQueryable();
             if (query == null)
             {
@@ -46,7 +46,7 @@ namespace API.Controllers.DataControllers
             }
             userPostsGetDtoModel.TotalPages = PageCounter.CountPages(items.Count(), query.Top);
             userPostsGetDtoModel.ElementsCount = items.Count();
-            userPostsGetDtoModel.Total = items.Sum(x => x.Salary);
+            userPostsGetDtoModel.Total = (await items.ToListAsync(ct)).Sum(x => x.Salary);
             items = items.Skip(query.Skip);
             userPostsGetDtoModel.CurrentPageIndex = userPostsGetDtoModel.TotalPages + 1 - PageCounter.CountPages(items.Count(), query.Top);
             items = items.Take(query.Top);
